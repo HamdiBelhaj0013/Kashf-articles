@@ -1,0 +1,291 @@
+<!-- Cancer Statistics Widget - WordPress Compatible - No Overflow -->
+<style>
+#cancer-stats-kashf {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 15px 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    clear: both !important;
+}
+
+#cancer-stats-kashf * {
+    box-sizing: border-box !important;
+}
+
+.cancer-stats-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+.cancer-stats-chart-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 320px !important;
+    padding: 15px !important;
+    background: rgba(0,0,0,0.6) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    margin-bottom: 10px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+#cancerChart-kashf {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+.cancer-stats-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    margin-bottom: 15px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
+.cancer-stats-btn {
+    padding: 10px 18px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-family: 'Cairo', sans-serif !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+    min-width: 70px !important;
+    text-align: center !important;
+}
+
+@media (max-width: 768px) {
+    .cancer-stats-container {
+        padding: 12px !important;
+    }
+    
+    .cancer-stats-chart-container {
+        height: 280px !important;
+        padding: 12px !important;
+    }
+    
+    #cancer-stats-kashf h2 {
+        font-size: 16px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .cancer-stats-btn {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+        min-width: 65px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cancer-stats-container {
+        padding: 10px !important;
+    }
+    
+    .cancer-stats-chart-container {
+        height: 260px !important;
+        padding: 10px !important;
+    }
+    
+    #cancer-stats-kashf h2 {
+        font-size: 15px !important;
+    }
+    
+    .cancer-stats-btn {
+        padding: 7px 12px !important;
+        font-size: 12px !important;
+        min-width: 60px !important;
+    }
+    
+    .cancer-stats-buttons {
+        gap: 6px !important;
+    }
+}
+</style>
+
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+<div id="cancer-stats-kashf">
+    <div class="cancer-stats-container">
+        <h2 style="font-family:'Cairo',sans-serif; font-size:17px; margin:0 0 15px; color:#333; text-align:center; line-height:1.4; padding:0;">
+            📊 إحصائيات أكثر أنواع السرطان شيوعًا في تونس
+        </h2>
+        
+        <div class="cancer-stats-buttons">
+            <button id="menBtn-kashf" class="cancer-stats-btn" style="background-color:#F2730F;">الرجال</button>
+            <button id="womenBtn-kashf" class="cancer-stats-btn" style="background-color:#333;">النساء</button>
+        </div>
+        
+        <div class="cancer-stats-chart-container">
+            <canvas id="cancerChart-kashf"></canvas>
+        </div>
+        
+        <div style="font-size:12px; color:#666; margin-top:10px; text-align:center; font-family:'Cairo',sans-serif; padding:0;">
+            المصدر: معهد صالح عزيز
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    
+    // Ensure no global scope pollution
+    const CANCER_STATS_NAMESPACE = 'cancerStats_' + Math.random().toString(36).substr(2, 9);
+    
+    function initChart() {
+        if (typeof Chart === 'undefined') {
+            setTimeout(initChart, 100);
+            return;
+        }
+        setupChart();
+    }
+
+    function setupChart() {
+        const canvas = document.getElementById('cancerChart-kashf');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        let currentChart = null;
+        
+        // Data
+        const menData = {
+            types: ['سرطان الرئة', 'سرطان المثانة', 'سرطان البروستات', 'سرطان القولون', 'سرطان المستقيم'],
+            values: [35.2, 22.1, 19.5, 14.6, 9.5],
+            max: 40
+        };
+        
+        const womenData = {
+            types: ['سرطان الثدي', 'سرطان القولون', 'سرطان المستقيم', 'سرطان الغدة الدرقية', 'سرطان عنق الرحم'],
+            values: [74.9, 12.4, 6.0, 5.4, 3.1],
+            max: 80
+        };
+
+        function createChart(data) {
+            if (currentChart) {
+                currentChart.destroy();
+            }
+            
+            const gradient = ctx.createLinearGradient(0, 0, 300, 0);
+            gradient.addColorStop(0, '#ff6b6b');
+            gradient.addColorStop(0.5, '#ff8e53');
+            gradient.addColorStop(1, '#ffa726');
+            
+            currentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.types,
+                    datasets: [{
+                        label: 'نسبة الانتشار (%)',
+                        data: data.values,
+                        backgroundColor: gradient,
+                        borderColor: 'rgba(255, 255, 255, 0.7)',
+                        borderWidth: 1,
+                        borderRadius: 3
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 5
+                    },
+                    animation: {
+                        duration: 500
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white',
+                                font: { size: 11, family: "'Cairo', sans-serif" },
+                                boxWidth: 10,
+                                padding: 12
+                            },
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: { family: "'Cairo', sans-serif", size: 11 },
+                            bodyFont: { family: "'Cairo', sans-serif", size: 10 },
+                            padding: 6,
+                            cornerRadius: 3,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.x + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: data.max,
+                            ticks: {
+                                color: 'white',
+                                font: { size: 9, family: "'Cairo', sans-serif" },
+                                stepSize: 10,
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: { 
+                                color: 'rgba(255, 255, 255, 0.15)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: 'white',
+                                font: { size: 10, family: "'Cairo', sans-serif", weight: 'bold' },
+                                padding: 5
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        createChart(menData);
+
+        // Buttons
+        const menBtn = document.getElementById('menBtn-kashf');
+        const womenBtn = document.getElementById('womenBtn-kashf');
+        
+        if (menBtn && womenBtn) {
+            menBtn.addEventListener('click', function() {
+                menBtn.style.backgroundColor = '#F2730F';
+                womenBtn.style.backgroundColor = '#333';
+                createChart(menData);
+            });
+
+            womenBtn.addEventListener('click', function() {
+                menBtn.style.backgroundColor = '#333';
+                womenBtn.style.backgroundColor = '#F2730F';
+                createChart(womenData);
+            });
+        }
+    }
+
+    // Initialize
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initChart);
+    } else {
+        setTimeout(initChart, 10);
+    }
+})();
+</script>

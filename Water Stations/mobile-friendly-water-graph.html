@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تسعيرة استهلاك المياه</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --accent-color: #FF7043;
+            --text-dark: #37474F;
+            --text-medium: #607D8B;
+            --border-color: #E0E0E0;
+            --bg-light: #F5F7FA;
+            --bg-white: #FFFFFF;
+            --tier1-color: #E3F2FD;
+            --tier2-color: #BBDEFB;
+            --tier3-color: #90CAF9;
+            --tier4-color: #64B5F6;
+            --tier5-color: #42A5F5;
+            --tier6-color: #FFCCBC;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            font-family: 'Tajawal', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        /* Slider section */
+        .slider-section {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        .consumption-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 10px;
+            background: #ddd;
+            outline: none;
+            margin: 15px 0;
+        }
+
+        .consumption-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .consumption-slider::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .result-cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .result-card {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .result-label {
+            font-size: 1rem;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .consumption-value {
+            color: var(--primary-color);
+        }
+
+        .price-value {
+            color: var(--accent-color);
+        }
+
+        .unit {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            font-size: 0.9rem;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 5px;
+            background-color: var(--tier1-color);
+            font-weight: 500;
+        }
+
+        .tier-badge.tier-1 { background-color: var(--tier1-color); }
+        .tier-badge.tier-2 { background-color: var(--tier2-color); }
+        .tier-badge.tier-3 { background-color: var(--tier3-color); }
+        .tier-badge.tier-4 { background-color: var(--tier4-color); }
+        .tier-badge.tier-5 { background-color: var(--tier5-color); color: white; }
+        .tier-badge.tier-6 { background-color: var(--tier6-color); }
+
+        /* Graph section */
+        .graph-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .graph-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .graph-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 40px;
+        }
+
+        #priceGraph {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        .marker {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: none; /* Initially hidden */
+        }
+
+        /* Tier information section */
+        .tier-info-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tier-info-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .tier-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .tier-info-table th,
+        .tier-info-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tier-info-table th {
+            background-color: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .tier-info-table td.price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .tier-info-table tr.active {
+            background-color: rgba(33, 150, 243, 0.05);
+        }
+
+        .tier-info-table tr.active td {
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .footer {
+            background: var(--bg-light);
+            padding: 15px;
+            text-align: center;
+            color: var(--text-medium);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .slider-section, .graph-section, .tier-info-section {
+                padding: 15px;
+            }
+
+            .result-cards {
+                flex-direction: column;
+            }
+
+            .result-card {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .graph-container {
+                height: 240px;
+            }
+
+            .tier-info-table th, 
+            .tier-info-table td {
+                padding: 10px 5px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .graph-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>تعريفة استهلاك المياه في تونس</h1>
+        </div>
+
+        <div class="content">
+            <!-- Slider Section -->
+            <div class="slider-section">
+                <div class="slider-container">
+                    <input type="range" min="0" max="170" value="30" class="consumption-slider" id="consumptionSlider">
+                </div>
+                
+                <div class="result-cards">
+                    <div class="result-card">
+                        <div class="result-label">الاستهلاك</div>
+                        <div class="result-value consumption-value" id="consumptionValue">30</div>
+                        <div class="unit">م³</div>
+                        <div class="tier-badge tier-2" id="tierBadge">الشريحة 2</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">التسعيرة</div>
+                        <div class="result-value price-value" id="priceValue">740</div>
+                        <div class="unit">مليم / م³</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graph Section -->
+            <div class="graph-section">
+                <div class="graph-title">رسم بياني للتسعيرة حسب الاستهلاك</div>
+                
+                <div class="graph-container">
+                    <canvas id="priceGraph"></canvas>
+                    <div class="marker" id="currentMarker"></div>
+                </div>
+            </div>
+
+            <!-- Tier Information Section -->
+            <div class="tier-info-section">
+                <div class="tier-info-title">شرائح الاستهلاك والأسعار</div>
+                
+                <table class="tier-info-table">
+                    <thead>
+                        <tr>
+                            <th>الشريحة</th>
+                            <th>الاستهلاك</th>
+                            <th>السعر</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tierTableBody">
+                        <!-- Table rows will be added by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            المصدر: الشركة التونسية لاستغلال وتوزيع المياه (2024-2025)
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pricing data tiers
+            const tiers = [
+                { min: 0, max: 20, price: 200, name: 'الشريحة 1' },
+                { min: 21, max: 40, price: 740, name: 'الشريحة 2' },
+                { min: 41, max: 70, price: 1040, name: 'الشريحة 3' },
+                { min: 71, max: 100, price: 1490, name: 'الشريحة 4' },
+                { min: 101, max: 150, price: 1770, name: 'الشريحة 5' },
+                { min: 151, max: 170, price: 2310, name: 'الشريحة 6' }
+            ];
+            
+            // DOM elements
+            const slider = document.getElementById('consumptionSlider');
+            const consumptionValue = document.getElementById('consumptionValue');
+            const priceValue = document.getElementById('priceValue');
+            const tierBadge = document.getElementById('tierBadge');
+            const canvas = document.getElementById('priceGraph');
+            const marker = document.getElementById('currentMarker');
+            const tierTableBody = document.getElementById('tierTableBody');
+            
+            // Canvas context
+            const ctx = canvas.getContext('2d');
+            let canvasWidth, canvasHeight;
+            
+            // Tier colors
+            const tierColors = [
+                'rgb(227, 242, 253)', // tier1-color
+                'rgb(187, 222, 251)', // tier2-color
+                'rgb(144, 202, 249)', // tier3-color
+                'rgb(100, 181, 246)', // tier4-color
+                'rgb(66, 165, 245)',  // tier5-color
+                'rgb(255, 204, 188)'  // tier6-color
+            ];
+            
+            // Create price graph
+            initGraph();
+            
+            // Create tier table
+            createTierTable();
+            
+            // Set up the consumption slider
+            slider.addEventListener('input', updateConsumption);
+            
+            // Set up canvas click handling
+            canvas.addEventListener('click', handleCanvasClick);
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                initGraph();
+                updateConsumption();
+            });
+            
+            // Initial update
+            updateConsumption();
+            
+            // Initialize graph canvas
+            function initGraph() {
+                // Set canvas size to its container
+                const container = canvas.parentElement;
+                canvasWidth = container.clientWidth;
+                canvasHeight = container.clientHeight;
+                
+                // Set canvas display size (css pixels)
+                canvas.style.width = canvasWidth + 'px';
+                canvas.style.height = canvasHeight + 'px';
+                
+                // Set actual size in memory (scaled for retina)
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = canvasWidth * dpr;
+                canvas.height = canvasHeight * dpr;
+                
+                // Normalize coordinate system
+                ctx.scale(dpr, dpr);
+                
+                // Draw graph
+                drawGraph();
+            }
+            
+            // Draw the price graph
+            function drawGraph() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                
+                // Graph settings
+                const margin = { left: 50, right: 20, top: 20, bottom: 40 };
+                const graphWidth = canvasWidth - margin.left - margin.right;
+                const graphHeight = canvasHeight - margin.top - margin.bottom;
+                
+                // Maximum values
+                const maxConsumption = 170;
+                const maxPrice = 2500;
+                
+                // Scaling functions
+                const scaleX = value => (value / maxConsumption) * graphWidth + margin.left;
+                const scaleY = value => canvasHeight - margin.bottom - (value / maxPrice) * graphHeight;
+                
+                // Draw axis
+                ctx.beginPath();
+                ctx.strokeStyle = '#607D8B';
+                ctx.lineWidth = 1.5;
+                
+                // X axis
+                ctx.moveTo(margin.left, canvasHeight - margin.bottom);
+                ctx.lineTo(canvasWidth - margin.right, canvasHeight - margin.bottom);
+                
+                // Y axis
+                ctx.moveTo(margin.left, canvasHeight - margin.bottom);
+                ctx.lineTo(margin.left, margin.top);
+                
+                ctx.stroke();
+                
+                // Draw grid lines
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+                ctx.lineWidth = 1;
+                
+                // Horizontal grid lines
+                const yTicks = [500, 1000, 1500, 2000, 2500];
+                yTicks.forEach(tick => {
+                    const y = scaleY(tick);
+                    ctx.moveTo(margin.left, y);
+                    ctx.lineTo(canvasWidth - margin.right, y);
+                    
+                    // Draw y-axis labels
+                    ctx.fillStyle = '#37474F';
+                    ctx.font = '12px Tajawal';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(tick.toString(), margin.left - 10, y + 4);
+                });
+                
+                // Vertical grid lines
+                const xTicks = [0, 20, 40, 70, 100, 150, 170];
+                xTicks.forEach(tick => {
+                    const x = scaleX(tick);
+                    ctx.moveTo(x, canvasHeight - margin.bottom);
+                    ctx.lineTo(x, margin.top);
+                    
+                    // Draw x-axis labels
+                    ctx.fillStyle = '#37474F';
+                    ctx.font = '12px Tajawal';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(tick.toString(), x, canvasHeight - margin.bottom + 15);
+                });
+                
+                ctx.stroke();
+                
+                // Draw axis labels
+                ctx.fillStyle = '#37474F';
+                ctx.font = 'bold 14px Tajawal';
+                ctx.textAlign = 'center';
+                
+                // X-axis label
+                ctx.fillText('الاستهلاك (م³)', canvasWidth / 2, canvasHeight - 10);
+                
+                // Y-axis label
+                ctx.save();
+                ctx.translate(15, canvasHeight / 2);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText('السعر (مليم)', 0, 0);
+                ctx.restore();
+                
+                // Draw price step function
+                const steps = [
+                    { consumption: 0, price: 200 },
+                    { consumption: 20, price: 200 },
+                    { consumption: 21, price: 740 },
+                    { consumption: 40, price: 740 },
+                    { consumption: 41, price: 1040 },
+                    { consumption: 70, price: 1040 },
+                    { consumption: 71, price: 1490 },
+                    { consumption: 100, price: 1490 },
+                    { consumption: 101, price: 1770 },
+                    { consumption: 150, price: 1770 },
+                    { consumption: 151, price: 2310 },
+                    { consumption: 170, price: 2310 }
+                ];
+                
+                // Draw step function
+                ctx.beginPath();
+                ctx.strokeStyle = '#FF7043';
+                ctx.lineWidth = 3;
+                
+                let startX = scaleX(steps[0].consumption);
+                let startY = scaleY(steps[0].price);
+                
+                ctx.moveTo(startX, startY);
+                
+                for (let i = 1; i < steps.length; i++) {
+                    const x = scaleX(steps[i].consumption);
+                    const y = scaleY(steps[i].price);
+                    
+                    // If price changes (step), draw vertical line first
+                    if (i % 2 === 1) {
+                        ctx.lineTo(startX, y);
+                    }
+                    
+                    ctx.lineTo(x, y);
+                    startX = x;
+                    startY = y;
+                }
+                
+                ctx.stroke();
+                
+                // Draw fill under the curve
+                ctx.beginPath();
+                ctx.moveTo(scaleX(steps[0].consumption), scaleY(steps[0].price));
+                
+                for (let i = 1; i < steps.length; i++) {
+                    const x = scaleX(steps[i].consumption);
+                    const y = scaleY(steps[i].price);
+                    
+                    // If price changes (step), draw vertical line first
+                    if (i % 2 === 1) {
+                        ctx.lineTo(scaleX(steps[i-1].consumption), y);
+                    }
+                    
+                    ctx.lineTo(x, y);
+                }
+                
+                // Complete the fill path
+                ctx.lineTo(scaleX(steps[steps.length-1].consumption), canvasHeight - margin.bottom);
+                ctx.lineTo(scaleX(steps[0].consumption), canvasHeight - margin.bottom);
+                ctx.closePath();
+                
+                ctx.fillStyle = 'rgba(255, 112, 67, 0.1)';
+                ctx.fill();
+                
+                // Draw tier dividers
+                const tierBoundaries = [20, 40, 70, 100, 150];
+                
+                tierBoundaries.forEach((boundary, index) => {
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(255, 112, 67, 0.5)';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([4, 4]);
+                    
+                    const x = scaleX(boundary);
+                    ctx.moveTo(x, margin.top);
+                    ctx.lineTo(x, canvasHeight - margin.bottom);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw tier label
+                    ctx.fillStyle = '#37474F';
+                    ctx.font = 'bold 12px Tajawal';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(tiers[index].name, x, margin.top + 16);
+                });
+                
+                // Draw price points
+                steps.forEach((point, index) => {
+                    const x = scaleX(point.consumption);
+                    const y = scaleY(point.price);
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fill();
+                    ctx.strokeStyle = '#FF7043';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // Add price label for first point of each tier
+                    if (index % 2 === 0) {
+                        ctx.fillStyle = '#FF7043';
+                        ctx.font = 'bold 14px Tajawal';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(point.price.toString(), x + 8, y - 5);
+                    }
+                });
+            }
+            
+            // Handle click on the graph
+            function handleCanvasClick(event) {
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                // Graph settings
+                const margin = { left: 50, right: 20, top: 20, bottom: 40 };
+                const graphWidth = canvasWidth - margin.left - margin.right;
+                
+                // Calculate consumption from x position
+                const maxConsumption = 170;
+                const clickedConsumption = ((x - margin.left) / graphWidth) * maxConsumption;
+                
+                // Limit to valid range
+                const limitedConsumption = Math.max(0, Math.min(maxConsumption, clickedConsumption));
+                
+                // Update slider
+                slider.value = Math.round(limitedConsumption);
+                updateConsumption();
+            }
+            
+            // Create tier table
+            function createTierTable() {
+                tiers.forEach((tier, index) => {
+                    const row = document.createElement('tr');
+                    row.id = `tier-row-${index + 1}`;
+                    
+                    // Tier name
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = tier.name;
+                    row.appendChild(nameCell);
+                    
+                    // Consumption range
+                    const rangeCell = document.createElement('td');
+                    rangeCell.textContent = `${tier.min} - ${tier.max} م³`;
+                    row.appendChild(rangeCell);
+                    
+                    // Price
+                    const priceCell = document.createElement('td');
+                    priceCell.className = 'price';
+                    priceCell.textContent = `${tier.price} مليم`;
+                    row.appendChild(priceCell);
+                    
+                    tierTableBody.appendChild(row);
+                    
+                    // Make row clickable
+                    row.addEventListener('click', function() {
+                        // Set slider to midpoint of tier
+                        const midpoint = Math.floor((tier.min + tier.max) / 2);
+                        slider.value = midpoint;
+                        updateConsumption();
+                    });
+                });
+            }
+            
+            // Update based on consumption slider
+            function updateConsumption() {
+                const consumption = parseInt(slider.value);
+                
+                // Find tier for the consumption value
+                const tierIndex = getTierIndex(consumption);
+                const tier = tiers[tierIndex];
+                
+                // Update display
+                consumptionValue.textContent = consumption;
+                priceValue.textContent = tier.price;
+                tierBadge.textContent = tier.name;
+                tierBadge.className = `tier-badge tier-${tierIndex + 1}`;
+                
+                // Update marker position on graph
+                updateMarkerPosition(consumption, tier.price);
+                
+                // Update active states in table
+                updateActiveStates(tierIndex);
+            }
+            
+            // Update marker position on the graph
+            function updateMarkerPosition(consumption, price) {
+                // Graph settings
+                const margin = { left: 50, right: 20, top: 20, bottom: 40 };
+                const graphWidth = canvasWidth - margin.left - margin.right;
+                const graphHeight = canvasHeight - margin.top - margin.bottom;
+                
+                // Maximum values
+                const maxConsumption = 170;
+                const maxPrice = 2500;
+                
+                // Scaling functions
+                const scaleX = value => (value / maxConsumption) * graphWidth + margin.left;
+                const scaleY = value => canvasHeight - margin.bottom - (value / maxPrice) * graphHeight;
+                
+                // Calculate position
+                const x = scaleX(consumption);
+                const y = scaleY(price);
+                
+                // Update marker position
+                marker.style.left = x + 'px';
+                marker.style.top = y + 'px';
+                marker.style.display = 'block';
+                
+                // Redraw graph with current position
+                drawGraph();
+                
+                // Draw current point
+                ctx.beginPath();
+                ctx.arc(x, y, 8, 0, Math.PI * 2);
+                ctx.fillStyle = '#2196F3';
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Add current value label
+                ctx.fillStyle = 'white';
+                ctx.strokeStyle = '#2196F3';
+                ctx.lineWidth = 1;
+                
+                // Text background
+                ctx.beginPath();
+                const textWidth = 70;
+                const textHeight = 40;
+                const labelX = x - textWidth / 2;
+                const labelY = y - textHeight - 10;
+                ctx.roundRect(labelX, labelY, textWidth, textHeight, 5);
+                ctx.fill();
+                ctx.stroke();
+                
+                // Value text
+                ctx.fillStyle = '#37474F';
+                ctx.font = 'bold 14px Tajawal';
+                ctx.textAlign = 'center';
+                ctx.fillText(consumption + ' م³', x, labelY + 18);
+                ctx.fillText(price + ' مليم', x, labelY + 35);
+            }
+            
+            // Get tier index for consumption value
+            function getTierIndex(consumption) {
+                for (let i = 0; i < tiers.length; i++) {
+                    if (consumption >= tiers[i].min && consumption <= tiers[i].max) {
+                        return i;
+                    }
+                }
+                return 0; // Default to first tier
+            }
+            
+            // Update active states in chart and table
+            function updateActiveStates(activeTierIndex) {
+                // Remove active class from all rows
+                document.querySelectorAll('.tier-info-table tr').forEach(row => {
+                    row.classList.remove('active');
+                });
+                
+                // Add active class to selected tier
+                const activeRow = document.getElementById(`tier-row-${activeTierIndex + 1}`);
+                if (activeRow) activeRow.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول زمني: منع الهواتف في المدارس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        .timeline-article-block {
+            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
+            direction: rtl;
+            color: #1a1a1a;
+            line-height: 1.7;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        
+
+        .timeline-header {
+            padding: 32px 24px 16px;
+            border-bottom: 2px solid #f97316;
+        }
+        
+        .timeline-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .timeline-header .subtitle {
+            font-size: 1rem;
+            color: #666666;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+        
+
+        .filters {
+            background: #ffffff;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 6px 14px;
+            border: none;
+            background: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        
+        .filter-btn:hover {
+            background: #e2e8f0;
+            color: #1a1a1a;
+        }
+        
+        .filter-btn.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .filter-btn.all.active { background: #1a1a1a; }
+        .filter-btn.law.active { background: #3b82f6; }
+        .filter-btn.incident.active { background: #f97316; }
+        .filter-btn.decision.active { background: #000000; }
+        
+
+        .timeline-container {
+            padding: 24px;
+            position: relative;
+            min-height: 500px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 0;
+        }
+        
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 32px;
+            width: 1px;
+            background: #e5e7eb;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+
+        .year-divider {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f97316;
+            margin: 32px 0 24px;
+            position: relative;
+            padding-right: 60px;
+        }
+        
+        .year-divider::before {
+            content: '';
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: #f97316;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px #f97316;
+        }
+        
+        .year-divider::after {
+            content: '';
+            position: absolute;
+            right: 33px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100% - 33px);
+            height: 1px;
+            background: #e5e7eb;
+            z-index: 1;
+        }
+        
+        .year-divider span {
+            background: #ffffff;
+            padding-left: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            margin-right: 60px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.4s ease;
+        }
+        
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item.hidden {
+            display: none;
+        }
+        
+
+        .timeline-dot {
+            position: absolute;
+            right: -44px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border: 2px solid;
+            border-radius: 50%;
+            z-index: 4;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .timeline-dot i {
+            font-size: 10px;
+            transition: all 0.25s ease;
+        }
+        
+
+        .timeline-item.law .timeline-dot { 
+            border-color: #3b82f6; 
+            background: #fafafa;
+        }
+        .timeline-item.incident .timeline-dot { 
+            border-color: #f97316; 
+            background: #fafafa;
+        }
+        .timeline-item.decision .timeline-dot { 
+            border-color: #000000; 
+            background: #fafafa;
+        }
+        
+        .timeline-item.law .timeline-dot i { color: #3b82f6; }
+        .timeline-item.incident .timeline-dot i { color: #f97316; }
+        .timeline-item.decision .timeline-dot i { color: #000000; }
+        
+        .timeline-dot:hover {
+            transform: scale(1.1);
+        }
+        
+        .timeline-dot.active {
+            transform: scale(1.0);
+        }
+        
+        .timeline-item.law .timeline-dot.active { background: #3b82f6; border-color: #3b82f6; }
+        .timeline-item.incident .timeline-dot.active { background: #f97316; border-color: #f97316; }
+        .timeline-item.decision .timeline-dot.active { background: #000000; border-color: #000000; }
+        
+        .timeline-dot.active i { color: #ffffff; }
+
+
+        .timeline-preview {
+            padding: 16px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        
+        .timeline-preview:hover {
+            border-color: #f97316;
+            background: #fafafa;
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1a1a1a;
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .preview-date {
+            font-size: 0.85rem;
+            color: #666666;
+            white-space: nowrap;
+            margin-top: 4px;
+        }
+        
+
+        .detail-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 450px;
+            max-height: 70vh;
+            background: #ffffff;
+            border-radius: 12px;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .detail-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .detail-header {
+            background: #f97316;
+            color: #ffffff;
+            padding: 20px 24px;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+        }
+        
+        .detail-close {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.25s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .detail-close:hover {
+            color: #ffffff;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        .detail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-right: 50px;
+            line-height: 1.3;
+        }
+        
+        .detail-date {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .detail-content {
+            padding: 24px;
+        }
+        
+        .detail-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-type.law { background: #e0f2fe; color: #075985; }
+        .detail-type.incident { background: #ffedd5; color: #7c2d12; }
+        .detail-type.decision { background: #f3f4f6; color: #111827; }
+        
+        .detail-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+        }
+        
+        .detail-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .detail-tag {
+            background: #f3f4f6;
+            color: #4a5568;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer styles */
+        .timeline-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            color: #666666;
+            font-size: 0.9rem;
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-header {
+                padding: 24px 16px 16px;
+            }
+            
+            .timeline-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .filters {
+                padding: 12px 16px;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .timeline-container {
+                padding: 16px;
+            }
+            
+            .timeline::before {
+                right: 24px;
+            }
+            
+            .timeline-item {
+                margin-right: 48px;
+            }
+            
+            .timeline-dot {
+                right: -34px;
+                width: 20px;
+                height: 20px;
+            }
+            
+            .detail-popup {
+                width: 90%;
+                max-width: 400px;
+                max-height: 80vh;
+            }
+            
+            .timeline-footer {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timeline-article-block">
+        <div class="timeline-header">
+            <h1>منع الهواتف في المدارس التونسية</h1>
+            <p class="subtitle">جدول زمني تفاعلي (2018 - 2025)</p>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn all active" data-filter="all">
+                <i class="fas fa-th-large"></i>
+                جميع الأحداث
+            </button>
+            <button class="filter-btn law" data-filter="law">
+                <i class="fas fa-gavel"></i>
+                قانونية
+            </button>
+            <button class="filter-btn incident" data-filter="incident">
+                <i class="fas fa-exclamation-triangle"></i>
+                حوادث
+            </button>
+            <button class="filter-btn decision" data-filter="decision">
+                <i class="fas fa-file-alt"></i>
+                وزارية
+            </button>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline" id="timeline">
+                <!-- Timeline items will be inserted here -->
+            </div>
+        </div>
+        
+        <!-- Added footer -->
+        <div class="timeline-footer">
+            <p>تم تطوير هذا التسلسل الزمني استنادا إلى أحداث واقعية ومستندات رسمية تم التحقق منها من قبل فريق كشف ميديا.</p>
+        </div>
+        
+        <!-- Overlay for popup -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- Centered detail popup -->
+        <div class="detail-popup" id="detailPopup">
+            <div class="detail-header">
+                <button class="detail-close" onclick="closeDetail()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="detail-title"></h2>
+                <p class="detail-date"></p>
+            </div>
+            <div class="detail-content">
+                <div class="detail-type"></div>
+                <p class="detail-description"></p>
+                <div class="detail-tags"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const events = [
+            {
+                id: 1,
+                date: "17 سبتمبر 2018",
+                year: 2018,
+                title: "قرار المحكمة الابتدائية بتونس",
+                description: "الدائرة 38 بالمحكمة الابتدائية بتونس 1 تصدر قرارا بمنع استعمال الهواتف الذكية في المؤسسات التربوية وبرياض الأطفال والمحاضن المدرسية",
+                type: "law",
+                icon: "fa-gavel",
+                tags: ["قانوني", "تونس"]
+            },
+            {
+                id: 2,
+                date: "10 أكتوبر 2018",
+                year: 2018,
+                title: "قرار محكمة قابس",
+                description: "المحكمة الابتدائية بقابس تصدر قرارا بمنع استعمال الهواتف الذكية في المدارس نظرا لخطورتها على السلامة البدنية والمعنوية للطفل",
+                type: "law",
+                icon: "fa-gavel",
+                tags: ["قانوني", "قابس"]
+            },
+            {
+                id: 3,
+                date: "16 أكتوبر 2018",
+                year: 2018,
+                title: "قرار محكمة المنستير",
+                description: "قاضي الأسرة بالمحكمة الابتدائية بالمنستير يصدر قرارا بمنع استعمال الهواتف الذكية واللوحات الرقمية، باستثناء الاستعمال البيداغوجي",
+                type: "law",
+                icon: "fa-gavel",
+                tags: ["قانوني", "المنستير"]
+            },
+            {
+                id: 5,
+                date: "17 سبتمبر 2019",
+                year: 2019,
+                title: "منشور وزارة التربية",
+                description: "وزارة التربية تصدر منشورا يقضي بمنع استعمال الهواتف الذكية وتحجير اصطحابها إلى المؤسسات التربوية - وزير التربية حاتم بن سالم يتعهد بتطبيق القرار",
+                type: "decision",
+                icon: "fa-file-alt",
+                tags: ["حكومي", "وزارة التربية"]
+            },
+            {
+                id: 8,
+                date: "4 ديسمبر 2024",
+                year: 2024,
+                title: "واقعة اعتداء بسبيبة",
+                description: "التلميذة (ش) 17 سنة تعتدي على أستاذتها بسبب الهاتف الجوال في المعهد الثانوي بمدينة سبيبة بولاية القصرين",
+                type: "incident",
+                icon: "fa-exclamation-triangle",
+                tags: ["عنف", "سبيبة"]
+            },
+            {
+                id: 9,
+                date: "ديسمبر 2024",
+                year: 2024,
+                title: "مذكرة وزارة التربية الجديدة",
+                description: "وزارة التربية تصدر مذكرة جديدة تقضي بمنع استخدام الهواتف الذكية داخل المؤسسات التربوية ومنع الأساتذة من التصوير إلا بإذن مسبق",
+                type: "decision",
+                icon: "fa-file-alt",
+                tags: ["حكومي", "تحديث"]
+            },
+            {
+                id: 10,
+                date: "27 ديسمبر 2024",
+                year: 2024,
+                title: "دعوة الوزير للتطبيق الفوري",
+                description: "وزير التربية نور الدين النوري يدعو مديري المؤسسات التربوية إلى التطبيق الفوري لمنع استخدام الهواتف الذكية",
+                type: "decision",
+                icon: "fa-bullhorn",
+                tags: ["حكومي", "تطبيق فوري"]
+            },
+            {
+                id: 11,
+                date: "29 أفريل 2025",
+                year: 2025,
+                title: "الاعتداء على القيم",
+                description: "القيم فريد الحامدي يتعرض للصفع من قبل والدة تلميذة أمام الأساتذة والإداريين بعد أن قام بسحب الهاتف من ابنتها",
+                type: "incident",
+                icon: "fa-hand-paper",
+                tags: ["عنف", "2025"]
+            }
+        ];
+        
+        let activeFilter = 'all';
+        let activeDetail = null;
+        
+        // Initialize timeline
+        function initTimeline() {
+            const timeline = document.getElementById('timeline');
+            let currentYear = null;
+            
+            events.forEach((event, index) => {
+                // Add year divider
+                if (event.year !== currentYear) {
+                    currentYear = event.year;
+                    const yearDiv = document.createElement('div');
+                    yearDiv.className = 'year-divider';
+                    yearDiv.innerHTML = `<span>${currentYear}</span>`;
+                    timeline.appendChild(yearDiv);
+                }
+                
+                // Create timeline item
+                const item = document.createElement('div');
+                item.className = `timeline-item ${event.type}`;
+                item.dataset.id = event.id;
+                item.dataset.type = event.type;
+                item.style.animationDelay = `${index * 80}ms`;
+                
+                // Create timeline dot
+                const dot = document.createElement('div');
+                dot.className = 'timeline-dot';
+                dot.innerHTML = `<i class="fas ${event.icon}"></i>`;
+                dot.onclick = (e) => toggleDetail(event.id, e);
+                
+                // Create preview content (now without description)
+                const preview = document.createElement('div');
+                preview.className = 'timeline-preview';
+                preview.onclick = (e) => toggleDetail(event.id, e);
+                preview.innerHTML = `
+                    <div class="preview-header">
+                        <span class="preview-title">${event.title}</span>
+                        <span class="preview-date">${event.date}</span>
+                    </div>
+                `;
+                
+                item.appendChild(dot);
+                item.appendChild(preview);
+                timeline.appendChild(item);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    item.classList.add('show');
+                }, index * 80);
+            });
+        }
+        
+        // Filter functionality
+        function setupFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Update filter
+                    activeFilter = btn.dataset.filter;
+                    filterEvents();
+                });
+            });
+        }
+        
+        function filterEvents() {
+            const items = document.querySelectorAll('.timeline-item');
+            
+            items.forEach(item => {
+                const type = item.dataset.type;
+                
+                if (activeFilter === 'all' || activeFilter === type) {
+                    item.classList.remove('hidden');
+                    item.classList.add('show');
+                } else {
+                    item.classList.add('hidden');
+                    item.classList.remove('show');
+                }
+            });
+        }
+        
+        // Simple popup functionality
+        function toggleDetail(eventId, event) {
+            const eventData = events.find(e => e.id === eventId);
+            if (!eventData) return;
+            
+            const detailPopup = document.getElementById('detailPopup');
+            const overlay = document.getElementById('overlay');
+            
+            if (activeDetail === eventId) {
+                // Close detail
+                detailPopup.classList.remove('active');
+                overlay.classList.remove('active');
+                activeDetail = null;
+                
+                // Remove active state from all dots
+                document.querySelectorAll('.timeline-dot').forEach(dot => {
+                    dot.classList.remove('active');
+                });
+            } else {
+                // Open detail with simple popup animation
+                showDetail(eventData);
+                detailPopup.classList.add('active');
+                overlay.classList.add('active');
+                activeDetail = eventId;
+                
+                // Add active state to current dot
+                document.querySelectorAll('.timeline-dot').forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                const currentItem = document.querySelector(`[data-id="${eventId}"]`);
+                if (currentItem) {
+                    currentItem.querySelector('.timeline-dot').classList.add('active');
+                }
+            }
+        }
+        
+        function showDetail(event) {
+            const detailPopup = document.getElementById('detailPopup');
+            const typeLabels = {
+                law: 'قرار قانوني',
+                incident: 'حادثة عنف',
+                decision: 'قرار وزاري'
+            };
+            
+            detailPopup.querySelector('.detail-title').textContent = event.title;
+            detailPopup.querySelector('.detail-date').textContent = event.date;
+            detailPopup.querySelector('.detail-type').textContent = typeLabels[event.type];
+            detailPopup.querySelector('.detail-type').className = `detail-type ${event.type}`;
+            detailPopup.querySelector('.detail-description').textContent = event.description;
+            
+            // Add tags
+            const tagsContainer = detailPopup.querySelector('.detail-tags');
+            tagsContainer.innerHTML = event.tags.map(tag => 
+                `<span class="detail-tag">${tag}</span>`
+            ).join('');
+        }
+        
+        function closeDetail() {
+            const detailPopup = document.getElementById('detailPopup');
+            const overlay = document.getElementById('overlay');
+            
+            detailPopup.classList.remove('active');
+            overlay.classList.remove('active');
+            activeDetail = null;
+            
+            // Remove active state from all dots
+            document.querySelectorAll('.timeline-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+        }
+        
+        // Close detail when clicking outside
+        document.getElementById('overlay').addEventListener('click', closeDetail);
+        
+        // Escape key to close detail
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && activeDetail) {
+                closeDetail();
+            }
+        });
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initTimeline();
+            setupFilters();
+        });
+    </script>
+</body>
+</html>

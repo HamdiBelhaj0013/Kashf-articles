@@ -1,0 +1,680 @@
+<!-- Water Pricing Visualization for Kashf Media -->
+<div class="km-desal-water-widget">
+    <div class="km-desal-header">
+        <h2 class="km-desal-title">سعر إنتاج مياه البحر المحلاة</h2>
+    </div>
+
+    <div class="km-desal-content">
+        <!-- Price Cards -->
+        <div class="km-desal-cards">
+            <div class="km-desal-card km-desal-djerba" id="km-djerba-card">
+                <div class="km-station-name">محطة جربة</div>
+                <div class="km-price-value">3000</div>
+                <div class="km-price-unit">مليم / م³</div>
+            </div>
+            
+            <div class="km-desal-card km-desal-zarat" id="km-zarat-card">
+                <div class="km-station-name">محطة الزارات</div>
+                <div class="km-price-value">3200</div>
+                <div class="km-price-unit">مليم / م³</div>
+            </div>
+            
+            <div class="km-desal-card km-desal-sfax" id="km-sfax-card">
+                <div class="km-station-name">محطة صفاقس</div>
+                <div class="km-price-value">3500</div>
+                <div class="km-price-unit">مليم / م³</div>
+            </div>
+            
+            <div class="km-desal-card km-desal-selling" id="km-selling-card">
+                <div class="km-station-name">سعر البيع</div>
+                <div class="km-price-value">700-800</div>
+                <div class="km-price-unit">مليم / م³</div>
+            </div>
+        </div>
+
+        <!-- Price Comparison Visualization -->
+        <div class="km-desal-visualization">
+            <div class="km-viz-title">مقارنة سعر الإنتاج وسعر البيع</div>
+            <div class="km-bar-container" id="km-bar-container">
+                <!-- Bars will be added by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Subsidy Information -->
+        <div class="km-subsidy-info">
+            <div class="km-subsidy-title">الفرق بين سعر الإنتاج وسعر البيع</div>
+            <div class="km-subsidy-text">
+                كلفة إنتاج المتر المكعب من المياه المحلاّة تتراوح بين <span class="km-highlight">3000 و3500 مليم</span>، 
+                بينما سعر البيع يتراوح بين <span class="km-selling-highlight">700 و800 مليم</span> فقط.<br>
+                هذا يعني أن الماء الصالح للشرب <span class="km-highlight">مدعم بأكثر من 3 مرات</span>.
+            </div>
+        </div>
+    </div>
+
+    <div class="km-desal-footer">
+        المصدر: الشركة التونسية لاستغلال وتوزيع المياه (2024-2025)
+    </div>
+</div>
+
+<style>
+.km-desal-water-widget {
+    --km-primary-color: #2196F3;
+    --km-text-dark: #333333;
+    --km-text-medium: #666666;
+    --km-text-light: #999999;
+    --km-border-color: #E0E0E0;
+    --km-bg-light: #F5F7FA;
+    --km-bg-white: #FFFFFF;
+    --km-djerba-color: #4FC3F7;
+    --km-zarat-color: #2196F3;
+    --km-sfax-color: #1976D2;
+    --km-selling-color: #4CAF50;
+    --km-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --km-rounded-sm: 4px;
+    --km-rounded-md: 8px;
+    
+    font-family: 'Tajawal', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--km-bg-white);
+    box-shadow: var(--km-shadow);
+    border-radius: var(--km-rounded-md);
+    overflow: hidden;
+    direction: rtl;
+}
+
+.km-desal-header {
+    background: var(--km-primary-color);
+    color: white;
+    padding: 18px 16px;
+    text-align: center;
+}
+
+.km-desal-title {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: white;
+    margin-top: 0;
+}
+
+.km-desal-content {
+    padding: 20px 16px;
+}
+
+.km-desal-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    justify-content: center;
+}
+
+.km-desal-card {
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+    background: var(--km-bg-white);
+    border-radius: var(--km-rounded-md);
+    border-top: 4px solid var(--km-primary-color);
+    box-shadow: var(--km-shadow);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.km-desal-card:hover, .km-desal-card.active {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.km-desal-djerba {
+    border-top-color: var(--km-djerba-color);
+}
+
+.km-desal-zarat {
+    border-top-color: var(--km-zarat-color);
+}
+
+.km-desal-sfax {
+    border-top-color: var(--km-sfax-color);
+}
+
+.km-desal-selling {
+    border-top-color: var(--km-selling-color);
+}
+
+.km-station-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.km-price-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.km-desal-djerba .km-price-value {
+    color: var(--km-djerba-color);
+}
+
+.km-desal-zarat .km-price-value {
+    color: var(--km-zarat-color);
+}
+
+.km-desal-sfax .km-price-value {
+    color: var(--km-sfax-color);
+}
+
+.km-desal-selling .km-price-value {
+    color: var(--km-selling-color);
+}
+
+.km-price-unit {
+    color: var(--km-text-medium);
+    font-size: 0.9rem;
+}
+
+.km-desal-visualization {
+    background: var(--km-bg-white);
+    border-radius: var(--km-rounded-md);
+    box-shadow: var(--km-shadow);
+    padding: 16px 12px 45px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    position: relative;
+}
+
+.km-viz-title {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--km-text-dark);
+}
+
+.km-bar-container {
+    display: flex;
+    align-items: flex-end;
+    height: 250px;
+    position: relative;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.km-bar-axis {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--km-text-medium);
+    z-index: 1;
+}
+
+.km-bar-grid {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+.km-bar-label {
+    position: absolute;
+    right: -5px;
+    transform: translateX(100%);
+    font-size: 0.8rem;
+    color: var(--km-text-dark);
+    background: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    z-index: 2;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    margin-right: 5px;
+}
+
+.km-price-bar {
+    flex: 0 0 auto;
+    width: 60px;
+    background: var(--km-primary-color);
+    border-radius: 6px 6px 0 0;
+    transition: height 1s ease, opacity 0.5s ease;
+    position: relative;
+    opacity: 0.9;
+    z-index: 3;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.km-price-bar.km-desal-djerba {
+    background: var(--km-djerba-color);
+}
+
+.km-price-bar.km-desal-zarat {
+    background: var(--km-zarat-color);
+}
+
+.km-price-bar.km-desal-sfax {
+    background: var(--km-sfax-color);
+}
+
+.km-price-bar.km-desal-selling {
+    background: var(--km-selling-color);
+}
+
+.km-price-bar.highlighted {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 4;
+}
+
+.km-bar-label-bottom {
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--km-text-dark);
+    background: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    width: auto;
+}
+
+.km-bar-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: var(--km-text-dark);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    width: auto;
+}
+
+.km-subsidy-info {
+    background: var(--km-bg-white);
+    border-radius: var(--km-rounded-md);
+    box-shadow: var(--km-shadow);
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.km-subsidy-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.km-subsidy-text {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.km-highlight {
+    font-weight: 700;
+    color: var(--km-primary-color);
+}
+
+.km-selling-highlight {
+    font-weight: 700;
+    color: var(--km-selling-color);
+}
+
+.km-desal-footer {
+    padding: 12px;
+    text-align: center;
+    color: var(--km-text-medium);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--km-border-color);
+    background: var(--km-bg-light);
+}
+
+/* Enhanced Responsiveness */
+@media (max-width: 700px) {
+    .km-desal-water-widget {
+        border-radius: 0;
+    }
+    
+    .km-desal-title {
+        font-size: 1.4rem;
+    }
+    
+    .km-desal-content {
+        padding: 16px 12px;
+    }
+    
+    .km-desal-cards {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .km-desal-card {
+        min-width: 140px;
+        padding: 12px;
+    }
+    
+    .km-station-name {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .km-price-value {
+        font-size: 1.8rem;
+    }
+    
+    .km-viz-title {
+        font-size: 1rem;
+    }
+    
+    .km-bar-container {
+        height: 200px;
+    }
+    
+    .km-price-bar {
+        width: 55px;
+    }
+    
+    .km-subsidy-title {
+        font-size: 1rem;
+    }
+    
+    .km-subsidy-text {
+        font-size: 0.9rem;
+    }
+    
+    .km-desal-visualization {
+        padding: 16px 12px 40px;
+    }
+}
+
+@media (max-width: 500px) {
+    .km-desal-header {
+        padding: 14px 12px;
+    }
+    
+    .km-desal-title {
+        font-size: 1.2rem;
+    }
+    
+    .km-desal-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .km-desal-card {
+        width: 100%;
+        max-width: 280px;
+        min-width: 0;
+    }
+    
+    .km-bar-container {
+        height: 180px;
+    }
+
+    .km-price-bar {
+        width: 45px;
+    }
+    
+    .km-bar-value {
+        font-size: 0.8rem;
+        padding: 2px 4px;
+    }
+    
+    .km-bar-label-bottom {
+        font-size: 0.75rem;
+    }
+    
+    .km-bar-label {
+        font-size: 0.75rem;
+        padding: 1px 4px;
+    }
+    
+    .km-desal-visualization {
+        padding: 12px 8px 40px;
+    }
+}
+
+@media (max-width: 360px) {
+    .km-desal-content {
+        padding: 12px 8px;
+    }
+    
+    .km-desal-visualization,
+    .km-subsidy-info {
+        padding: 12px 8px 40px;
+    }
+    
+    .km-bar-container {
+        height: 150px;
+    }
+    
+    .km-price-bar {
+        width: 40px;
+    }
+    
+    .km-subsidy-text {
+        font-size: 0.85rem;
+    }
+    
+    .km-bar-value {
+        font-size: 0.75rem;
+        padding: 1px 3px;
+    }
+    
+    .km-bar-label {
+        font-size: 0.7rem;
+        padding: 1px 3px;
+    }
+    
+    .km-bar-label-bottom {
+        font-size: 0.7rem;
+    }
+}
+</style>
+
+<script>
+(function() {
+    // Use an immediately invoked function expression to avoid global scope
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if we're on a mobile device
+        const isMobile = window.matchMedia('(max-width: 700px)').matches;
+        const isVerySmall = window.matchMedia('(max-width: 500px)').matches;
+        
+        // Price data
+        const kmPriceData = [
+            { id: 'djerba', name: 'محطة جربة', price: 3000, color: 'km-desal-djerba' },
+            { id: 'zarat', name: 'محطة الزارات', price: 3200, color: 'km-desal-zarat' },
+            { id: 'sfax', name: 'محطة صفاقس', price: 3500, color: 'km-desal-sfax' },
+            { id: 'selling', name: 'سعر البيع', price: 750, color: 'km-desal-selling', range: '700-800' }
+        ];
+        
+        // Get the bar container
+        const kmBarContainer = document.getElementById('km-bar-container');
+        
+        // Create grid lines and labels
+        createKmGrid();
+        
+        // Create bars for each station
+        createKmBars();
+        
+        // Add click events to cards
+        setupKmCardInteractions();
+        
+        // Ensure chart is horizontally centered on small screens
+        centerBarsOnMobile();
+        
+        // Create grid lines and labels
+        function createKmGrid() {
+            if (!kmBarContainer) return; // Guard clause
+            
+            const maxPrice = 3500;
+            // Show fewer grid lines on smaller screens
+            const gridLines = isVerySmall ? 
+                [0, 1750, 3500] : 
+                isMobile ? 
+                    [0, 1000, 2000, 3500] : 
+                    [0, 1000, 2000, 3000, 3500];
+            
+            gridLines.forEach(value => {
+                // Calculate position
+                const bottom = (value / maxPrice) * 100 + '%';
+                
+                // Create grid line
+                const grid = document.createElement('div');
+                grid.className = 'km-bar-grid';
+                grid.style.bottom = bottom;
+                kmBarContainer.appendChild(grid);
+                
+                // No labels are created, as per request
+            });
+        }
+        
+        // Create bars for the visualization
+        function createKmBars() {
+            if (!kmBarContainer) return; // Guard clause
+            
+            const maxPrice = 3500;
+            
+            kmPriceData.forEach((item, index) => {
+                // Create bar element
+                const bar = document.createElement('div');
+                bar.className = `km-price-bar ${item.color}`;
+                bar.id = `km-${item.id}-bar`;
+                
+                // Set initial height to 0 for animation
+                bar.style.height = '0';
+                
+                // Add bottom label
+                const bottomLabel = document.createElement('div');
+                bottomLabel.className = 'km-bar-label-bottom';
+                bottomLabel.textContent = item.name;
+                bar.appendChild(bottomLabel);
+                
+                // Add value label
+                const valueLabel = document.createElement('div');
+                valueLabel.className = 'km-bar-value';
+                valueLabel.textContent = item.range || item.price.toLocaleString();
+                bar.appendChild(valueLabel);
+                
+                // Add to container
+                kmBarContainer.appendChild(bar);
+                
+                // Animate the bar after a short delay - faster on mobile
+                setTimeout(() => {
+                    const height = (item.price / maxPrice) * 100 + '%';
+                    bar.style.height = height;
+                }, isMobile ? (200 + (index * 100)) : (300 + (index * 150)));
+            });
+        }
+        
+        // Adjust scroll position to center bars on mobile
+        function centerBarsOnMobile() {
+            // No scrolling needed as bars now fit without scrolling
+        }
+        
+        // Setup interactive card highlighting
+        function setupKmCardInteractions() {
+            kmPriceData.forEach(item => {
+                const card = document.getElementById(`km-${item.id}-card`);
+                const bar = document.getElementById(`km-${item.id}-bar`);
+                
+                if (card && bar) {
+                    // Enhanced for touch devices
+                    if (isMobile) {
+                        // Touch event for cards
+                        card.addEventListener('touchstart', function(e) {
+                            // Remove highlights from all
+                            document.querySelectorAll('.km-price-bar').forEach(el => {
+                                el.classList.remove('highlighted');
+                            });
+                            document.querySelectorAll('.km-desal-card').forEach(el => {
+                                el.classList.remove('active');
+                            });
+                            
+                            // Add highlight
+                            bar.classList.add('highlighted');
+                            card.classList.add('active');
+                        });
+                        
+                        // Touch event for bars
+                        bar.addEventListener('touchstart', function(e) {
+                            // Prevent default to avoid scroll
+                            e.preventDefault();
+                            
+                            // Remove highlights from all
+                            document.querySelectorAll('.km-price-bar').forEach(el => {
+                                el.classList.remove('highlighted');
+                            });
+                            document.querySelectorAll('.km-desal-card').forEach(el => {
+                                el.classList.remove('active');
+                            });
+                            
+                            // Add highlight
+                            bar.classList.add('highlighted');
+                            card.classList.add('active');
+                            
+                            // Scroll card into view if needed
+                            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        });
+                    } else {
+                        // Desktop mouse events
+                        // Highlight on card hover
+                        card.addEventListener('mouseenter', () => {
+                            bar.classList.add('highlighted');
+                            card.classList.add('active');
+                        });
+                        
+                        card.addEventListener('mouseleave', () => {
+                            bar.classList.remove('highlighted');
+                            card.classList.remove('active');
+                        });
+                        
+                        // Highlight on bar hover
+                        bar.addEventListener('mouseenter', () => {
+                            bar.classList.add('highlighted');
+                            card.classList.add('active');
+                        });
+                        
+                        bar.addEventListener('mouseleave', () => {
+                            bar.classList.remove('highlighted');
+                            card.classList.remove('active');
+                        });
+                    }
+                    
+                    // Click interaction for both mobile and desktop
+                    card.addEventListener('click', () => {
+                        // Remove highlight from all bars and cards
+                        document.querySelectorAll('.km-price-bar').forEach(el => {
+                            el.classList.remove('highlighted');
+                        });
+                        document.querySelectorAll('.km-desal-card').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        
+                        // Add highlight to clicked card and corresponding bar
+                        bar.classList.add('highlighted');
+                        card.classList.add('active');
+                    });
+                }
+            });
+        }
+    });
+})();
+</script>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص أزمة المياه في تونس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="water-crisis-summary">
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+        <h1 class="main-title">
+            <span class="title-icon">🌊</span>
+            محطات تحلية مياه البحر في تونس
+        </h1>
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="stats">الإحصائيات</button>
+            <button class="tab-btn" data-tab="timeline">المسار الزمني</button>
+            <button class="tab-btn" data-tab="impact">التأثير والحلول</button>
+            <button class="tab-btn" data-tab="experts">آراء الخبراء</button>
+        </div>
+    </nav>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Statistics Tab -->
+        <div class="tab-panel active" id="stats">
+            <!-- Key Statistics -->
+            <section class="key-stats">
+                <div class="stats-grid">
+                    <div class="stat-item crisis">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-value">22.5%</div>
+                        <div class="stat-label">نسبة امتلاء السدود</div>
+                        <div class="stat-context">ديسمبر 2024</div>
+                    </div>
+                    
+                    <div class="stat-item ranking">
+                        <div class="stat-icon">🌍</div>
+                        <div class="stat-value">30</div>
+                        <div class="stat-label">الترتيب العالمي</div>
+                        <div class="stat-context">في ندرة المياه</div>
+                    </div>
+                    
+                    <div class="stat-item consumption">
+                        <div class="stat-icon">🚜</div>
+                        <div class="stat-value">80%</div>
+                        <div class="stat-label">نسبة المياه للفلاحة</div>
+                        <div class="stat-context">من إجمالي الاستهلاك</div>
+                    </div>
+                    
+                    <div class="stat-item centered-stat">
+                        <div class="stat-icon">📉</div>
+                        <div class="stat-value highlighted">30%</div>
+                        <div class="stat-label emphasized">نسبة الضياع</div>
+                        <div class="stat-context">في شبكات التوزيع</div>
+                        <div class="stat-impact">مشكلة حرجة تحتاج حلول عاجلة</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Water Crisis Quiz -->
+            <section class="quiz-section">
+                <div class="quiz-header">
+                    <h3 class="section-title">اختبر معرفتك بأزمة المياه في تونس</h3>
+                    <p class="quiz-description">أسئلة مبنية على الواقع الحالي لقطاع المياه في البلاد</p>
+                </div>
+                
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quizProgress"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">السؤال 1 من 5</span>
+                    </div>
+                    
+                    <div class="question-card" id="questionCard">
+                        <div class="question-number" id="questionNumber">1</div>
+                        <div class="question-text" id="questionText">
+                            متى يعود تاريخ قانون المياه المعمول به حالياً في تونس؟
+                        </div>
+                        <div class="answers-grid" id="answersGrid">
+                            <button class="answer-btn" data-answer="0">1965</button>
+                            <button class="answer-btn" data-answer="1">1975</button>
+                            <button class="answer-btn" data-answer="2">1985</button>
+                            <button class="answer-btn" data-answer="3">1995</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-actions">
+                        <button class="quiz-btn secondary" id="prevBtn" disabled>السؤال السابق</button>
+                        <button class="quiz-btn primary" id="nextBtn" disabled>السؤال التالي</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results hidden" id="quizResults">
+                    <div class="results-header">
+                        <div class="score-circle" id="scoreCircle">
+                            <span class="score-number" id="scoreNumber">0</span>
+                            <span class="score-total">/5</span>
+                        </div>
+                        <h4 class="results-title" id="resultsTitle">نتيجتك</h4>
+                        <p class="results-description" id="resultsDescription">وصف النتيجة</p>
+                    </div>
+                    
+                    <div class="results-insights">
+                        <div class="insight-item">
+                            <span class="insight-icon">💡</span>
+                            <span class="insight-text" id="personalizedTip">معلومة مهمة</span>
+                        </div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="quiz-btn primary" id="retakeBtn">إعادة الاختبار</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Timeline Tab -->
+        <div class="tab-panel" id="timeline">
+            <section class="timeline-section">
+                <h3 class="section-title">المسار الزمني لمحطات التحلية</h3>
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">محطة جربة</div>
+                            <div class="timeline-desc">أول محطة تحلية - 50 ألف م³/يوم</div>
+                            <div class="timeline-cost">169 مليون دينار</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item completed">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">محطتا الزارات وصفاقس</div>
+                            <div class="timeline-desc">توسع سريع في القدرات الإنتاجية</div>
+                            <div class="timeline-cost">أكثر من 1.3 مليار دينار</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item upcoming">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">محطة سوسة</div>
+                            <div class="timeline-desc">إكمال الشبكة الوطنية للتحلية</div>
+                            <div class="timeline-cost">133 مليون دينار</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item future">
+                        <div class="timeline-year">2050</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">مشاريع الهيدروجين الأخضر</div>
+                            <div class="timeline-desc">8.3 مليون طن سنوياً</div>
+                            <div class="timeline-cost">استثمارات ضخمة</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Impact & Solutions Tab -->
+        <div class="tab-panel" id="impact">
+            <!-- Economic Impact Analysis -->
+            <section class="impact-section">
+                <h3 class="section-title">التأثير الاقتصادي والبيئي</h3>
+                <div class="impact-grid">
+                    <div class="impact-card economic">
+                        <div class="impact-header">
+                            <span class="impact-icon">💰</span>
+                            <h4>العبء المالي</h4>
+                        </div>
+                        <div class="impact-content">
+                            <div class="impact-stat">
+                                <span class="stat-label">تكلفة الإنتاج:</span>
+                                <span class="stat-value">3000-3500 مليم/م³</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="stat-label">سعر البيع:</span>
+                                <span class="stat-value">700-800 مليم/م³</span>
+                            </div>
+                            <div class="impact-result">
+                                <strong>الدولة تدعم المياه بأكثر من 3 مرات</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-card environmental">
+                        <div class="impact-header">
+                            <span class="impact-icon">🌊</span>
+                            <h4>الأثر البيئي</h4>
+                        </div>
+                        <div class="impact-content">
+                            <div class="impact-stat">
+                                <span class="stat-label">كل متر مكعب محلى ينتج:</span>
+                                <span class="stat-value">1.4 م³ مياه مالحة</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="stat-label">تركيز الملوحة:</span>
+                                <span class="stat-value">70 غرام/لتر</span>
+                            </div>
+                            <div class="impact-result">
+                                <strong>تهديد للتوازن البيئي البحري</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-card policy">
+                        <div class="impact-header">
+                            <span class="impact-icon">⚖️</span>
+                            <h4>التحدي التشريعي</h4>
+                        </div>
+                        <div class="impact-content">
+                            <div class="impact-stat">
+                                <span class="stat-label">قانون المياه الحالي:</span>
+                                <span class="stat-value">1975</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="stat-label">مشروع قانون جديد:</span>
+                                <span class="stat-value">معطل منذ 10 سنوات</span>
+                            </div>
+                            <div class="impact-result">
+                                <strong>حاجة لتحديث الإطار القانوني</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-card alternatives">
+                        <div class="impact-header">
+                            <span class="impact-icon">🔄</span>
+                            <h4>البدائل المتاحة</h4>
+                        </div>
+                        <div class="impact-content">
+                            <div class="impact-stat">
+                                <span class="stat-label">المياه المعالجة المتاحة:</span>
+                                <span class="stat-value">300 مليون م³</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="stat-label">إمكانية الاسترجاع:</span>
+                                <span class="stat-value">معالجة ثلاثية</span>
+                            </div>
+                            <div class="impact-result">
+                                <strong>تقليل الاعتماد على التحلية</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Solutions Comparison -->
+            <section class="solutions-section">
+                <h3 class="section-title">مقارنة الحلول المطروحة</h3>
+                <div class="solutions-grid">
+                    <div class="solution-card current">
+                        <div class="solution-header">
+                            <h4>التحلية (الحل الحالي)</h4>
+                            <span class="solution-status current">قيد التنفيذ</span>
+                        </div>
+                        <div class="solution-pros">
+                            <h5>المميزات:</h5>
+                            <ul>
+                                <li>حل سريع لنقص المياه</li>
+                                <li>مياه عالية الجودة</li>
+                                <li>مصدر مستقل عن الأمطار</li>
+                            </ul>
+                        </div>
+                        <div class="solution-cons">
+                            <h5>العيوب:</h5>
+                            <ul>
+                                <li>تكلفة عالية جداً</li>
+                                <li>أثر بيئي سلبي</li>
+                                <li>استهلاك طاقة كبير</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-card alternative">
+                        <div class="solution-header">
+                            <h4>البدائل المقترحة</h4>
+                            <span class="solution-status proposed">مقترح</span>
+                        </div>
+                        <div class="solution-pros">
+                            <h5>الخيارات:</h5>
+                            <ul>
+                                <li>إصلاح شبكات التوزيع (30% ضياع)</li>
+                                <li>معالجة 300 مليون م³ مياه مستعملة</li>
+                                <li>تجميع مياه الأمطار</li>
+                                <li>ترشيد الاستهلاك الفلاحي</li>
+                            </ul>
+                        </div>
+                        <div class="solution-benefit">
+                            <strong>توفير مليارات الدنانير وحماية البيئة</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h3>التحدي مستمر</h3>
+                    <p>هل ستكون محطات التحلية الحل الأمثل أم أن هناك بدائل أكثر استدامة؟</p>
+                    <div class="cta-stats">
+                        <div class="cta-stat">
+                            <span class="cta-number">526.9</span>
+                            <span class="cta-label">مليون م³ مخزون السدود الحالي</span>
+                        </div>
+                        <div class="cta-stat">
+                            <span class="cta-number">1500</span>
+                            <span class="cta-label">تحرك احتجاجي للمطالبة بالمياه في 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Expert Opinions Tab -->
+        <div class="tab-panel" id="experts">
+            <section class="quotes-section">
+                <h3 class="section-title">آراء الخبراء</h3>
+                <div class="quotes-container">
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <p>"الماء سُخّر في القانون كما هو سُخّر عند أي مواطن.. لا نشعر بأهمية الماء إلا إذا فتحنا الحنفية ولم نجد ماء"</p>
+                        </div>
+                        <div class="quote-author">
+                            <span class="author-name">حسين الرحيلي</span>
+                            <span class="author-title">خبير في التنمية والموارد المائية</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <p>"تعامل أصحاب القرار في قطاع المياه مع الماء كسلعة تُباع وتُشترى"</p>
+                        </div>
+                        <div class="quote-author">
+                            <span class="author-name">علاء المرزوقي</span>
+                            <span class="author-title">رئيس المرصد التونسي للمياه</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-card featured-quote">
+                        <div class="quote-header">
+                            <span class="quote-importance">🚨</span>
+                            <span class="quote-topic">تحذير من مشاريع الهيدروجين</span>
+                        </div>
+                        <div class="quote-content">
+                            <p>"مشاريع الهيدروجين الأخضر لن تضيف لتونس شيئاً لا على المستوى الاقتصادي ولا الطاقي"</p>
+                        </div>
+                        <div class="quote-author">
+                            <span class="author-name">ياسر السويلمي</span>
+                            <span class="author-title">مهندس في الموارد الطبيعية</span>
+                        </div>
+                        <div class="quote-insight">
+                            <p>تحذير مهم من خبير يؤكد ضرورة إعادة النظر في استراتيجية الطاقة المستقبلية</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="summary-footer">
+        <p>تقرير شامل: محطات تحلية مياه البحر في تونس • المصدر: كشف ميديا 2024-2025</p>
+    </footer>
+</div>
+
+<style>
+:root {
+    --primary-blue: #1e3a8a;
+    --secondary-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --danger-red: #ef4444;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-gray: #f1f5f9;
+    --border-light: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+}
+
+.water-crisis-summary {
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    direction: rtl;
+    line-height: 1.6;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 50%, var(--accent-cyan) 100%);
+    color: white;
+    padding: clamp(20px, 4vw, 32px);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-md);
+}
+
+.main-title {
+    font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.title-icon {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+}
+
+.tab-buttons {
+    display: flex;
+    gap: clamp(8px, 2vw, 16px);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
+    border-radius: var(--radius-sm);
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: var(--bg-white);
+    color: var(--primary-blue);
+    border-color: var(--bg-white);
+    transform: translateY(-2px);
+}
+
+/* Tab Content */
+.tab-content {
+    min-height: 60vh;
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Key Statistics */
+.key-stats {
+    padding: clamp(24px, 5vw, 40px) clamp(16px, 4vw, 24px);
+    background: var(--bg-light);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(16px, 4vw, 24px);
+    max-width: 1000px;
+    margin: 0 auto;
+    place-items: center;
+}
+
+.stat-item {
+    background: var(--bg-white);
+    padding: clamp(20px, 4vw, 24px);
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 250px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.stat-item.crisis::before { background: var(--danger-red); }
+.stat-item.ranking::before { background: var(--warning-orange); }
+.stat-item.consumption::before { background: var(--secondary-blue); }
+.stat-item.waste::before { background: var(--accent-cyan); }
+
+/* Enhanced Centered Waste Stat */
+.stat-item.centered-stat {
+    background: linear-gradient(135deg, var(--bg-white) 0%, #fef9f9 100%);
+    border: 2px solid var(--accent-cyan);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 250px;
+    min-height: 180px;
+}
+
+.stat-item.centered-stat::before {
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--danger-red));
+}
+
+.stat-item.centered-stat .stat-value.highlighted {
+    color: var(--danger-red);
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.stat-item.centered-stat .stat-label.emphasized {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    text-align: center;
+}
+
+.stat-impact {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-red);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    font-weight: 600;
+    margin-top: 8px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    text-align: center;
+}
+
+.stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.stat-context {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Quiz Section */
+.quiz-section {
+    padding: clamp(24px, 5vw, 40px) clamp(16px, 4vw, 24px);
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.quiz-description {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.quiz-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-gray);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-left: 16px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 20%;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.question-card {
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+.question-number {
+    display: inline-block;
+    background: var(--secondary-blue);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.question-text {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.answers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.answer-btn {
+    background: var(--bg-white);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 16px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.answer-btn:hover {
+    border-color: var(--secondary-blue);
+    background: var(--bg-light);
+    transform: translateY(-2px);
+}
+
+.answer-btn.selected {
+    border-color: var(--secondary-blue);
+    background: var(--secondary-blue);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.answer-btn.correct {
+    border-color: var(--success-green);
+    background: var(--success-green);
+    color: white;
+}
+
+.answer-btn.incorrect {
+    border-color: var(--danger-red);
+    background: var(--danger-red);
+    color: white;
+}
+
+.quiz-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.quiz-btn {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.quiz-btn.primary {
+    background: var(--secondary-blue);
+    color: white;
+}
+
+.quiz-btn.primary:hover:not(:disabled) {
+    background: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+.quiz-btn.secondary {
+    background: var(--bg-gray);
+    color: var(--text-secondary);
+}
+
+.quiz-btn.secondary:hover:not(:disabled) {
+    background: var(--border-light);
+    transform: translateY(-2px);
+}
+
+.quiz-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Quiz Results */
+.quiz-results {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.results-header {
+    margin-bottom: 32px;
+}
+
+.score-circle {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--secondary-blue), var(--accent-cyan));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-lg);
+}
+
+.score-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.score-total {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.results-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.results-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.results-insights {
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.insight-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: right;
+}
+
+.insight-icon {
+    font-size: 1.5rem;
+}
+
+.insight-text {
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.results-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+/* Sections */
+.timeline-section,
+.impact-section,
+.quotes-section,
+.solutions-section {
+    padding: clamp(24px, 5vw, 40px) clamp(16px, 4vw, 24px);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.section-title {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: clamp(20px, 4vw, 32px);
+    text-align: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-blue), var(--accent-cyan));
+    border-radius: 2px;
+}
+
+/* Timeline */
+.timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--secondary-blue), var(--accent-cyan));
+    transform: translateX(50%);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+    text-align: left;
+}
+
+.timeline-item:nth-child(even) {
+    text-align: right;
+}
+
+.timeline-year {
+    background: var(--bg-white);
+    border: 3px solid var(--secondary-blue);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--secondary-blue);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.timeline-item.completed .timeline-year {
+    background: var(--success-green);
+    border-color: var(--success-green);
+    color: white;
+}
+
+.timeline-item.upcoming .timeline-year {
+    background: var(--warning-orange);
+    border-color: var(--warning-orange);
+    color: white;
+}
+
+.timeline-item.future .timeline-year {
+    background: var(--bg-white);
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+}
+
+.timeline-content {
+    flex: 1;
+    padding: 0 32px;
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    padding: 20px 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.timeline-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.timeline-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.timeline-cost {
+    font-size: 0.85rem;
+    color: var(--warning-orange);
+    font-weight: 600;
+}
+
+/* Impact Section */
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(16px, 4vw, 24px);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.impact-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: clamp(20px, 4vw, 24px);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.impact-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.impact-icon {
+    font-size: 1.5rem;
+}
+
+.impact-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.impact-content {
+    margin-bottom: 16px;
+}
+
+.impact-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.impact-stat:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.impact-result {
+    background: var(--bg-light);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+/* Quotes Section */
+.quotes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(16px, 4vw, 24px);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.quote-card {
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    border-right: 4px solid var(--secondary-blue);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Enhanced Featured Quote */
+.quote-card.featured-quote {
+    background: linear-gradient(135deg, #fef2f2 0%, #fef9f9 100%);
+    border-right: 6px solid var(--danger-red);
+    border: 2px solid rgba(239, 68, 68, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-card.featured-quote::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--danger-red), var(--warning-orange));
+}
+
+.quote-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.quote-importance {
+    font-size: 1.2rem;
+}
+
+.quote-topic {
+    font-weight: 600;
+    color: var(--danger-red);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.quote-insight {
+    background: rgba(239, 68, 68, 0.1);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    margin-top: 16px;
+    border-left: 3px solid var(--danger-red);
+}
+
+.quote-insight p {
+    font-size: 0.85rem;
+    color: var(--danger-red);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.quote-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.quote-content {
+    margin-bottom: 16px;
+}
+
+.quote-content p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.quote-author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.author-title {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Solutions Section */
+.solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: clamp(20px, 5vw, 32px);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.solution-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.solution-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.solution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.solution-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.solution-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.solution-status.current {
+    background: var(--secondary-blue);
+    color: white;
+}
+
+.solution-status.proposed {
+    background: var(--warning-orange);
+    color: white;
+}
+
+.solution-pros, .solution-cons {
+    margin-bottom: 16px;
+}
+
+.solution-pros h5, .solution-cons h5 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.solution-pros ul, .solution-cons ul {
+    list-style: none;
+    padding: 0;
+}
+
+.solution-pros li, .solution-cons li {
+    padding: 6px 0;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: right;
+}
+
+.solution-pros li::before {
+    content: '✓';
+    color: var(--success-green);
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.solution-cons li::before {
+    content: '✗';
+    color: var(--danger-red);
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.solution-benefit {
+    background: var(--bg-light);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+/* Call to Action */
+.cta-section {
+    padding: clamp(32px, 6vw, 48px) clamp(16px, 4vw, 24px);
+    background: linear-gradient(135deg, var(--bg-light), var(--bg-white));
+    text-align: center;
+}
+
+.cta-content h3 {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.cta-content p {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+}
+
+.cta-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.cta-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-blue);
+}
+
+.cta-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* Footer */
+.summary-footer {
+    background: var(--bg-gray);
+    padding: clamp(16px, 3vw, 20px);
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+}
+
+.summary-footer p {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .water-crisis-summary {
+        margin: 0;
+        border-radius: var(--radius-md);
+    }
+    
+    .tab-buttons {
+        gap: 8px;
+    }
+    
+    .tab-btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+    }
+    
+    .stat-item {
+        max-width: 180px;
+        min-height: 160px;
+    }
+    
+    .stat-item.centered-stat {
+        max-width: 180px;
+        min-height: 160px;
+    }
+    
+    .impact-grid, .solutions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quotes-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .answers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quiz-actions {
+        flex-direction: column;
+    }
+    
+    .results-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timeline::before {
+        right: 20px;
+        transform: none;
+    }
+    
+    .timeline-item {
+        flex-direction: row !important;
+        text-align: right !important;
+        padding-right: 60px;
+    }
+    
+    .timeline-year {
+        position: absolute;
+        right: 0;
+        width: 60px;
+        height: 60px;
+        font-size: 0.85rem;
+    }
+    
+    .timeline-content {
+        padding: 16px 20px;
+        margin-left: 0;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-item {
+        max-width: 220px;
+        min-height: 160px;
+    }
+    
+    .stat-item.centered-stat {
+        max-width: 220px;
+        min-height: 160px;
+    }
+    
+    .timeline-item {
+        padding-right: 50px;
+    }
+    
+    .timeline-year {
+        width: 50px;
+        height: 50px;
+        font-size: 0.8rem;
+    }
+    
+    .question-card {
+        padding: 24px 16px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .water-crisis-summary {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .tab-navigation {
+        background: #f0f0f0 !important;
+        color: #000 !important;
+    }
+    
+    .tab-panel {
+        display: block !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    function switchTab(targetTab) {
+        // Remove active class from all buttons and panels
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+
+        // Add active class to clicked button and corresponding panel
+        document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
+
+        // Trigger animations for newly visible content
+        const activePanel = document.getElementById(targetTab);
+        const animatedElements = activePanel.querySelectorAll('.stat-item, .impact-card, .quote-card, .solution-card, .timeline-item');
+        
+        animatedElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    }
+
+    // Add click event listeners to tab buttons
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.getAttribute('data-tab');
+            switchTab(targetTab);
+        });
+    });
+
+    // Quiz Data based on the article
+    const quizData = [
+        {
+            question: "متى يعود تاريخ قانون المياه المعمول به حالياً في تونس؟",
+            answers: ["1965", "1975", "1985", "1995"],
+            correct: 1,
+            explanation: "قانون المياه الحالي يعود إلى مارس 1975 ولا يتناسب مع التحديات المناخية الحالية"
+        },
+        {
+            question: "كم تبلغ نسبة ضياع المياه في شبكات التوزيع؟",
+            answers: ["20%", "25%", "30%", "35%"],
+            correct: 2,
+            explanation: "30% من المياه تضيع في شبكات التوزيع، مما يؤكد الحاجة لتحديث البنية التحتية"
+        },
+        {
+            question: "كم متر مكعب من المياه المالحة ينتج عن تحلية متر مكعب واحد؟",
+            answers: ["1.2 م³", "1.4 م³", "1.6 م³", "1.8 م³"],
+            correct: 1,
+            explanation: "كل متر مكعب من المياه المحلاة ينتج 1.4 متر مكعب من المياه شديدة الملوحة"
+        },
+        {
+            question: "ما هو الفرق بين تكلفة إنتاج المياه المحلاة وسعر بيعها؟",
+            answers: ["مرتان", "3 مرات", "4 مرات", "5 مرات"],
+            correct: 1,
+            explanation: "تكلفة الإنتاج (3000-3500 مليم) تفوق سعر البيع (700-800 مليم) بأكثر من 3 مرات"
+        },
+        {
+            question: "كم مليون متر مكعب من المياه المعالجة يمكن إعادة استخدامها؟",
+            answers: ["200 مليون", "300 مليون", "400 مليون", "500 مليون"],
+            correct: 1,
+            explanation: "300 مليون متر مكعب من المياه المعالجة يمكن معالجتها معالجة ثلاثية وإعادة استخدامها"
+        }
+    ];
+
+    // Quiz State
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let quizCompleted = false;
+
+    // DOM Elements
+    const quizContainer = document.getElementById('quizContainer');
+    const quizResults = document.getElementById('quizResults');
+    const questionCard = document.getElementById('questionCard');
+    const questionNumber = document.getElementById('questionNumber');
+    const questionText = document.getElementById('questionText');
+    const answersGrid = document.getElementById('answersGrid');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressFill = document.getElementById('quizProgress');
+    const progressText = document.getElementById('progressText');
+    const scoreNumber = document.getElementById('scoreNumber');
+    const resultsTitle = document.getElementById('resultsTitle');
+    const resultsDescription = document.getElementById('resultsDescription');
+    const personalizedTip = document.getElementById('personalizedTip');
+    const retakeBtn = document.getElementById('retakeBtn');
+
+    // Initialize Quiz
+    function initQuiz() {
+        currentQuestion = 0;
+        userAnswers = [];
+        quizCompleted = false;
+        showQuestion();
+        updateProgress();
+        updateButtons();
+    }
+
+    // Show Current Question
+    function showQuestion() {
+        const question = quizData[currentQuestion];
+        questionNumber.textContent = currentQuestion + 1;
+        questionText.textContent = question.question;
+        
+        answersGrid.innerHTML = '';
+        question.answers.forEach((answer, index) => {
+            const button = document.createElement('button');
+            button.className = 'answer-btn';
+            button.textContent = answer;
+            button.setAttribute('data-answer', index);
+            button.addEventListener('click', () => selectAnswer(index));
+            answersGrid.appendChild(button);
+        });
+
+        // Restore previous answer if exists
+        if (userAnswers[currentQuestion] !== undefined) {
+            const selectedBtn = answersGrid.querySelector(`[data-answer="${userAnswers[currentQuestion]}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('selected');
+            }
+        }
+    }
+
+    // Select Answer
+    function selectAnswer(answerIndex) {
+        userAnswers[currentQuestion] = answerIndex;
+        
+        // Update UI
+        answersGrid.querySelectorAll('.answer-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        const selectedBtn = answersGrid.querySelector(`[data-answer="${answerIndex}"]`);
+        selectedBtn.classList.add('selected');
+        
+        updateButtons();
+    }
+
+    // Update Progress
+    function updateProgress() {
+        const progress = ((currentQuestion + 1) / quizData.length) * 100;
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `السؤال ${currentQuestion + 1} من ${quizData.length}`;
+    }
+
+    // Update Buttons
+    function updateButtons() {
+        prevBtn.disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            nextBtn.textContent = 'عرض النتائج';
+            nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+        } else {
+            nextBtn.textContent = 'السؤال التالي';
+            nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+        }
+    }
+
+    // Next Question
+    function nextQuestion() {
+        if (currentQuestion === quizData.length - 1) {
+            showResults();
+        } else {
+            currentQuestion++;
+            showQuestion();
+            updateProgress();
+            updateButtons();
+        }
+    }
+
+    // Previous Question
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            showQuestion();
+            updateProgress();
+            updateButtons();
+        }
+    }
+
+    // Show Results
+    function showResults() {
+        const score = calculateScore();
+        quizContainer.classList.add('hidden');
+        quizResults.classList.remove('hidden');
+        
+        scoreNumber.textContent = score;
+        
+        // Animate score
+        animateScore(score);
+        
+        // Show personalized results
+        showPersonalizedResults(score);
+    }
+
+    // Calculate Score
+    function calculateScore() {
+        let correct = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer === quizData[index].correct) {
+                correct++;
+            }
+        });
+        return correct;
+    }
+
+    // Animate Score
+    function animateScore(finalScore) {
+        let currentScore = 0;
+        const increment = finalScore / 20;
+        const timer = setInterval(() => {
+            currentScore += increment;
+            if (currentScore >= finalScore) {
+                currentScore = finalScore;
+                clearInterval(timer);
+            }
+            scoreNumber.textContent = Math.floor(currentScore);
+        }, 50);
+    }
+
+    // Show Personalized Results
+    function showPersonalizedResults(score) {
+        let title, description, tip;
+        
+        if (score === 5) {
+            title = "ممتاز! خبير في أزمة المياه 🏆";
+            description = "لديك معرفة شاملة بتفاصيل أزمة المياه وتحديات التحلية في تونس";
+            tip = "تابع كشف ميديا لمزيد من التحليلات المعمقة حول السياسات المائية والبيئية في تونس";
+        } else if (score >= 3) {
+            title = "جيد جداً! وعي متقدم 👍";
+            description = "لديك فهم جيد للتحديات المائية مع بعض النقاط التي تحتاج توضيح";
+            tip = "اقرأ المقال كاملاً على كشف ميديا لتعميق معرفتك بخفايا أزمة المياه في تونس";
+        } else if (score >= 2) {
+            title = "مقبول، يمكن التحسن 📚";
+            description = "لديك معرفة أساسية لكن تحتاج لمتابعة أكثر لفهم تعقيدات الموضوع";
+            tip = "عد لقراءة المقال الأصلي على كشف ميديا واستكشف تقاريرنا الأخرى حول قطاع المياه";
+        } else {
+            title = "تحتاج لمزيد من المتابعة 💡";
+            description = "أزمة المياه في تونس موضوع معقد يتطلب المتابعة والفهم";
+            tip = "ابدأ بقراءة المقال التفصيلي على كشف ميديا وتابع منصتنا للحصول على تحليلات حصرية";
+        }
+        
+        resultsTitle.textContent = title;
+        resultsDescription.textContent = description;
+        personalizedTip.textContent = tip;
+    }
+
+    // Event Listeners
+    nextBtn.addEventListener('click', nextQuestion);
+    prevBtn.addEventListener('click', prevQuestion);
+    retakeBtn.addEventListener('click', () => {
+        quizResults.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        initQuiz();
+    });
+
+    // Initialize Quiz
+    initQuiz();
+
+    // Initial animation for stats on first load
+    setTimeout(() => {
+        const statItems = document.querySelectorAll('.stat-item');
+        statItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                item.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, index * 120);
+        });
+    }, 100);
+});
+</script>
+
+</body>
+</html>

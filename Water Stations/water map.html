@@ -4,610 +4,1147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خريطة محطات تحلية مياه البحر في تونس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #fff;
-            direction: rtl;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 10px;
-        }
-        
-        h1 {
-            text-align: center;
-            margin: 15px 0;
-            color: #000;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .map-container {
-            position: relative;
-            height: 50vh;
-            min-height: 300px;
-            width: 100%;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #eee;
-        }
-        
-        #map {
-            height: 100%;
-            width: 100%;
-        }
-        
-        .info-panel {
-            background-color: #fff;
-            border-radius: 6px;
-            padding: 15px;
-            margin-top: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #eee;
-        }
-        
-        .info-header {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #000;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        
-        .facility-details {
-            display: none;
-        }
-        
-        .facility-details.active {
-            display: block;
-        }
-        
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .detail-label {
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .detail-value {
-            color: #555;
-        }
-        
-        /* Add a highlight style for important information */
-        .highlight {
-            color: #ff7500;
-            font-weight: bold;
-        }
-        
-        .tab-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
-            justify-content: center;
-        }
-        
-        .tab-button {
-            padding: 8px 12px;
-            background-color: #f5f5f5;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            font-size: 0.9rem;
-            color: #333;
-        }
-        
-        .tab-button.active {
-            background-color: #ff7500; /* Orange color from Kashf website */
-            color: white;
-        }
-        
-        .tab-button:hover {
-            background-color: #e0e0e0;
-            transform: translateY(-2px);
-        }
-        
-        /* Custom marker styling */
-        .custom-marker {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #ff7500; /* Orange color from Kashf website */
-            border-radius: 50%;
-            color: white;
-            font-weight: bold;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            padding: 2px;
-            font-size: 11px;
-        }
-        
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        
-        .status-operational {
-            background-color: #47c363; /* Lighter green that fits with the orange theme */
-        }
-        
-        .status-construction {
-            background-color: #ffae42; /* Softer orange that fits with the theme */
-        }
-        
-        .map-legend {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #eee;
-            z-index: 1000;
-            font-size: 0.8rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        @media (max-width: 768px) {
-            .map-legend {
-                position: static;
-                margin: 0 auto 10px auto;
-                width: 100%;
-                max-width: 300px;
-                border-radius: 4px;
-                display: flex;
-                justify-content: center;
-                background: #f9f9f9;
-                border: 1px solid #eee;
-            }
-            
-            .legend-content {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .legend-title {
-                margin-bottom: 0 !important;
-                margin-left: 5px;
-                color: #333;
-                font-weight: 600;
-            }
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .legend-item {
-                margin-bottom: 0;
-                margin-left: 10px;
-            }
-        }
-        
-        .leaflet-popup-content {
-            direction: rtl;
-            text-align: right;
-        }
-        
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .container {
-                padding: 5px;
-            }
-            
-            h1 {
-                font-size: 1.3rem;
-                margin: 10px 0;
-            }
-            
-            .map-container {
-                height: 40vh;
-                min-height: 250px;
-            }
-            
-            .detail-row {
-                flex-direction: column;
-                margin-bottom: 15px;
-            }
-            
-            .detail-value {
-                margin-top: 5px;
-            }
-            
-            .tab-button {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-                border-radius: 3px;
-            }
-            
-            .info-panel {
-                padding: 12px;
-            }
-        }
-        
-        /* For very small screens */
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 1.1rem;
-            }
-            
-            .tab-button {
-                padding: 5px 8px;
-                font-size: 0.75rem;
-            }
-            
-            .info-header {
-                font-size: 1rem;
-            }
-        }
-        
-        /* Article-like styling elements */
-        .article-container {
-            line-height: 1.6;
-        }
-        
-        .map-caption {
-            text-align: center;
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: -15px;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
-    <div class="container article-container">
-        <h1>محطات تحلية مياه البحر في تونس</h1>
-        <p class="map-caption">خريطة تفاعلية لمحطات تحلية المياه الحالية والمستقبلية</p>
-        
-        <div class="map-container">
-            <div id="map"></div>
-            <div class="map-legend">
-                <div class="legend-content">
-                    <div class="legend-title" style="font-weight: bold;">حالة المحطات:</div>
-                    <div class="legend-item">
-                        <span class="status-indicator status-operational"></span>
-                        <span>في طور الاستغلال</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="status-indicator status-construction"></span>
-                        <span>في طور الإنجاز</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-buttons">
-            <button class="tab-button" data-location="جربة">جربة</button>
-            <button class="tab-button" data-location="سوسة">سوسة</button>
-            <button class="tab-button" data-location="صفاقس">صفاقس</button>
-            <button class="tab-button" data-location="الزارات">الزارات</button>
-        </div>
-        
-        <div class="info-panel">
-            <h2 class="info-header">اختر موقعاً على الخريطة لعرض المعلومات</h2>
-            
-            <div class="facility-details" id="جربة">
-                <div class="detail-row">
-                    <span class="detail-label">الموقع:</span>
-                    <span class="detail-value">جربة</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">كلفة الإنجاز:</span>
-                    <span class="detail-value">169 مليون دينار تونسي</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">انطلاق الأشغال:</span>
-                    <span class="detail-value">2014</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">بداية الإنتاج:</span>
-                    <span class="detail-value">2018</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">مصدر التمويل:</span>
-                    <span class="detail-value">البنك الألماني لإعادة الإعمار (KfW) والوكالة الفرنسيّة للتّنمية (AFD)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">طاقة الإنتاج:</span>
-                    <span class="detail-value"><span class="highlight">50 ألف م³/يوم</span> (قابلة للتّوسعة إلى 75 ألف م³/يوم)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الفئة المستفيدة:</span>
-                    <span class="detail-value">165 ألف ساكن</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الحالة:</span>
-                    <span class="detail-value">في طور الاستغلال</span>
-                </div>
-            </div>
-            
-            <div class="facility-details" id="سوسة">
-                <div class="detail-row">
-                    <span class="detail-label">الموقع:</span>
-                    <span class="detail-value">سوسة</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">كلفة الإنجاز:</span>
-                    <span class="detail-value">133 مليون دينار تونسي</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">انطلاق الأشغال:</span>
-                    <span class="detail-value">2018</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">بداية الإنتاج المتوقعة:</span>
-                    <span class="detail-value">قبل صائفة 2025</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">مصدر التمويل:</span>
-                    <span class="detail-value">ميزانية الدولة</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">طاقة الإنتاج:</span>
-                    <span class="detail-value"><span class="highlight">50 ألف م³/يوم</span> (قابلة للتّوسعة إلى 100 ألف م³/يوم)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الفئة المستفيدة:</span>
-                    <span class="detail-value">7.3 مليون نسمة</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الحالة:</span>
-                    <span class="detail-value">في طور الإنجاز</span>
-                </div>
-            </div>
-            
-            <div class="facility-details" id="صفاقس">
-                <div class="detail-row">
-                    <span class="detail-label">الموقع:</span>
-                    <span class="detail-value">صفاقس</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">كلفة الإنجاز:</span>
-                    <span class="detail-value">قرابة مليار دينار تونسي</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">بداية الإنتاج:</span>
-                    <span class="detail-value">أكتوبر 2024</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">مصدر التمويل:</span>
-                    <span class="detail-value">الوكالة اليابانيّة للتّعاون الدّولي</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">طاقة الإنتاج:</span>
-                    <span class="detail-value"><span class="highlight">100 ألف م³/يوم</span> (قابلة للتّوسعة إلى 250 ألف م³/يوم)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الفئة المستفيدة:</span>
-                    <span class="detail-value">سكان صفاقس الكبرى</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الحالة:</span>
-                    <span class="detail-value">في طور الاستغلال</span>
-                </div>
-            </div>
-            
-            <div class="facility-details" id="الزارات">
-                <div class="detail-row">
-                    <span class="detail-label">الموقع:</span>
-                    <span class="detail-value">الزارات (ولاية قابس)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">كلفة الإنجاز:</span>
-                    <span class="detail-value">371 مليون دينار تونسي</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">انطلاق الأشغال:</span>
-                    <span class="detail-value">2019</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">بداية الإنتاج:</span>
-                    <span class="detail-value">جويلية 2024</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">مصدر التمويل:</span>
-                    <span class="detail-value">الدولة التونسية والبنك الألماني لإعادة الإعمار</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">طاقة الإنتاج:</span>
-                    <span class="detail-value"><span class="highlight">50 ألف م³/يوم</span> (قابلة للتّوسعة إلى 100 ألف م³/يوم)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الفئة المستفيدة:</span>
-                    <span class="detail-value">1.145 مليون ساكن في ولايات قابس، مدنين وتطاوين</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">الحالة:</span>
-                    <span class="detail-value">في طور الاستغلال</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // Initialize the map centered on Tunisia with min/max zoom restrictions
-        const map = L.map('map', {
-            center: [34.0, 9.8],
-            zoom: 7,
-            minZoom: 6,
-            maxZoom: 12,
-            maxBounds: [
-                [30.0, 7.0], // Southwest corner
-                [37.5, 12.0]  // Northeast corner
-            ],
-            maxBoundsViscosity: 1.0 // Makes the bounds completely solid
-        });
+<div class="tunisia-water-map-widget">
+    <!-- Header Section -->
+    <header class="map-widget-header">
+        <div class="header-content">
+            <h2 class="widget-title">
+                <span class="title-icon">🏭</span>
+                محطات تحلية مياه البحر في تونس
+            </h2>
+            <p class="widget-description">
+      انقر على أي محطة في الخريطة أو استخدم الأزرار أعلاه لعرض المعلومات التفصيلية
+            </p>
+        </div>
+    </header>
+
+    <!-- Map Container -->
+    <section class="map-section">
+        <div class="map-container">
+            <!-- Loading Overlay -->
+            <div class="map-loading" id="mapLoading">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل الخريطة...</p>
+            </div>
+            
+            <!-- Map Element -->
+            <div id="waterMap" class="interactive-map"></div>
+            
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="control-btn zoom-tunisia" id="zoomTunisia" title="عرض تونس كاملة">
+                    <span>🇹🇳</span>
+                </button>
+                <button class="control-btn toggle-view" id="toggleView" title="تبديل طريقة العرض">
+                    <span>📋</span>
+                </button>
+            </div>
+            
+            <!-- Status Legend -->
+            <div class="status-legend">
+                <div class="legend-title">حالة المحطات</div>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="status-dot operational"></span>
+                        <span>قيد التشغيل</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="status-dot construction"></span>
+                        <span>قيد الإنشاء</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Station Selection -->
+    <section class="station-selection">
+        <div class="selection-header">
+            <h3>اختر محطة للاطلاع على التفاصيل</h3>
+        </div>
+        <div class="station-tabs" id="stationTabs">
+            <!-- Tabs will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Station Details -->
+    <section class="station-details" id="stationDetails">
+        <div class="details-header">
+            <h3 id="selectedStationName">اختر محطة من الخريطة أو الأزرار أعلاه</h3>
+        </div>
+        <div class="details-content" id="detailsContent">
+            <div class="details-placeholder">
+                <div class="placeholder-icon">💧</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="widget-footer">
+        <p>المصدر: الشركة التونسية لاستغلال وتوزيع المياه • بيانات محدثة 2024-2025</p>
+    </footer>
+</div>
+
+<style>
+:root {
+    --primary-blue: #0077be;
+    --secondary-blue: #4a9eff;
+    --accent-orange: #ff6b35;
+    --success-green: #00c851;
+    --warning-amber: #ffbb33;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #6c757d;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --border-color: #dee2e6;
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-heavy: 0 8px 25px rgba(0,0,0,0.2);
+    --radius-small: 8px;
+    --radius-medium: 12px;
+    --radius-large: 16px;
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tunisia-water-map-widget {
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    border-radius: var(--radius-large);
+    overflow: hidden;
+    box-shadow: var(--shadow-heavy);
+    direction: rtl;
+    line-height: 1.6;
+    position: relative;
+}
+
+/* Header Styles */
+.map-widget-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: white;
+    padding: clamp(20px, 5vw, 32px);
+    position: relative;
+    overflow: hidden;
+}
+
+.map-widget-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, -20px) rotate(180deg); }
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.widget-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.title-icon {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.widget-description {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Map Section */
+.map-section {
+    padding: clamp(16px, 4vw, 24px);
+    background: var(--bg-secondary);
+}
+
+.map-container {
+    position: relative;
+    height: clamp(300px, 60vw, 500px);
+    background: var(--bg-primary);
+    border-radius: var(--radius-medium);
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    border: 2px solid var(--border-color);
+}
+
+.map-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity var(--transition-medium);
+}
+
+.map-loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.interactive-map {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-medium);
+}
+
+/* Map Controls */
+.map-controls {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-light);
+}
+
+.control-btn:hover {
+    background: var(--secondary-blue);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Status Legend */
+.status-legend {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-small);
+    padding: 12px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.legend-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-dot.operational {
+    background: var(--success-green);
+    box-shadow: 0 0 0 2px rgba(0, 200, 81, 0.3);
+}
+
+.status-dot.construction {
+    background: var(--warning-amber);
+    box-shadow: 0 0 0 2px rgba(255, 187, 51, 0.3);
+}
+
+/* Station Selection */
+.station-selection {
+    padding: clamp(16px, 4vw, 24px);
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.selection-header h3 {
+    text-align: center;
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    margin-bottom: clamp(16px, 4vw, 20px);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.station-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.station-tab[data-station="الزارات"] {
+    grid-column: 2 / 3; /* Center the الزارات card */
+}
+
+@media (max-width: 768px) {
+    .station-tabs {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .station-tab[data-station="الزارات"] {
+        grid-column: 1; /* Reset for mobile */
+    }
+}
+
+.station-tab {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-medium);
+    padding: 16px;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.station-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left var(--transition-medium);
+}
+
+.station-tab:hover::before {
+    left: 100%;
+}
+
+.station-tab:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-blue);
+}
+
+.station-tab.active {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.station-tab-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.station-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.station-status {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.station-capacity {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-orange);
+}
+
+.station-tab.active .station-capacity {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Station Details */
+.station-details {
+    padding: clamp(20px, 5vw, 32px);
+    background: var(--bg-primary);
+    min-height: 200px;
+}
+
+.details-header h3 {
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+    color: var(--text-primary);
+    margin-bottom: clamp(16px, 4vw, 24px);
+    text-align: center;
+    font-weight: 600;
+}
+
+.details-placeholder {
+    text-align: center;
+    padding: clamp(32px, 8vw, 64px);
+    color: var(--text-muted);
+}
+
+.placeholder-icon {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 16px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(16px, 4vw, 24px);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.detail-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-medium);
+    padding: clamp(16px, 4vw, 20px);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-medium);
+}
+
+.detail-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex: 0 0 40%;
+    font-size: 0.9rem;
+}
+
+.detail-value {
+    color: var(--text-primary);
+    flex: 1;
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.detail-value.highlight {
+    color: var(--accent-orange);
+    font-weight: 600;
+}
+
+/* Summary Statistics */
+.summary-stats {
+    padding: clamp(20px, 5vw, 32px);
+    background: var(--bg-secondary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: clamp(12px, 3vw, 16px);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-medium);
+    padding: clamp(16px, 4vw, 20px);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-medium);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Footer */
+.widget-footer {
+    background: var(--bg-tertiary);
+    padding: clamp(12px, 3vw, 16px);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.widget-footer p {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .tunisia-water-map-widget {
+        border-radius: var(--radius-medium);
+        margin: 8px;
+    }
+    
+    .status-legend {
+        position: static;
+        margin-top: 12px;
+        background: var(--bg-primary);
+        backdrop-filter: none;
+    }
+    
+    .legend-items {
+        flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+    }
+    
+    .map-controls {
+        top: 8px;
+        left: 8px;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .station-tabs {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .detail-label {
+        flex: none;
+    }
+    
+    .detail-value {
+        text-align: right;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .tunisia-water-map-widget {
+        margin: 4px;
+        border-radius: var(--radius-small);
+    }
+    
+    .map-container {
+        height: 250px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+    }
+}
+
+/* Custom Leaflet Popup Styles */
+.leaflet-popup-content-wrapper {
+    border-radius: var(--radius-small) !important;
+    box-shadow: var(--shadow-medium) !important;
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px !important;
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Tajawal', sans-serif !important;
+    line-height: 1.5 !important;
+}
+
+.leaflet-popup-tip {
+    box-shadow: var(--shadow-light) !important;
+}
+
+/* WordPress Compatibility */
+.tunisia-water-map-widget * {
+    box-sizing: border-box !important;
+}
+
+.tunisia-water-map-widget p,
+.tunisia-water-map-widget h1,
+.tunisia-water-map-widget h2,
+.tunisia-water-map-widget h3 {
+    margin-bottom: 0 !important;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .tunisia-water-map-widget {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .map-controls,
+    .loading-spinner {
+        display: none;
+    }
+}
+</style>
+
+<script>
+(function() {
+    'use strict';
+    
+    // Configuration
+    const CONFIG = {
+        mapCenter: [34.0, 9.8],
+        mapZoom: { desktop: 7, mobile: 6 },
+        mapBounds: [[30.0, 7.0], [37.5, 12.0]],
+        stations: {
+            'جربة': {
+                coordinates: [33.8076, 10.8451],
+                status: 'operational',
+                capacity: '50 ألف م³/يوم',
+                details: {
+                    'الموقع': 'جربة',
+                    'كلفة الإنجاز': '169 مليون دينار تونسي',
+                    'انطلاق الأشغال': '2014',
+                    'بداية الإنتاج': '2018',
+                    'مصدر التمويل': 'البنك الألماني لإعادة الإعمار (KfW) والوكالة الفرنسيّة للتّنمية (AFD)',
+                    'طاقة الإنتاج': '50 ألف م³/يوم (قابلة للتّوسعة إلى 75 ألف م³/يوم)',
+                    'الفئة المستفيدة': '165 ألف ساكن',
+                    'الحالة': 'في طور الاستغلال'
+                }
+            },
+            'سوسة': {
+                coordinates: [35.8245, 10.6346],
+                status: 'construction',
+                capacity: '50 ألف م³/يوم',
+                details: {
+                    'الموقع': 'سوسة',
+                    'كلفة الإنجاز': '133 مليون دينار تونسي',
+                    'انطلاق الأشغال': '2018',
+                    'بداية الإنتاج المتوقعة': 'قبل صائفة 2025',
+                    'مصدر التمويل': 'ميزانية الدولة',
+                    'طاقة الإنتاج': '50 ألف م³/يوم (قابلة للتّوسعة إلى 100 ألف م³/يوم)',
+                    'الفئة المستفيدة': '7.3 مليون نسمة',
+                    'الحالة': 'في طور الإنجاز'
+                }
+            },
+            'صفاقس': {
+                coordinates: [34.7406, 10.7603],
+                status: 'operational',
+                capacity: '100 ألف م³/يوم',
+                details: {
+                    'الموقع': 'صفاقس',
+                    'كلفة الإنجاز': 'قرابة مليار دينار تونسي',
+                    'بداية الإنتاج': 'أكتوبر 2024',
+                    'مصدر التمويل': 'الوكالة اليابانيّة للتّعاون الدّولي',
+                    'طاقة الإنتاج': '100 ألف م³/يوم (قابلة للتّوسعة إلى 250 ألف م³/يوم)',
+                    'الفئة المستفيدة': 'سكان صفاقس الكبرى',
+                    'الحالة': 'في طور الاستغلال'
+                }
+            },
+            'الزارات': {
+                coordinates: [33.6917, 10.3539],
+                status: 'operational',
+                capacity: '50 ألف م³/يوم',
+                details: {
+                    'الموقع': 'الزارات (ولاية قابس)',
+                    'كلفة الإنجاز': '371 مليون دينار تونسي',
+                    'انطلاق الأشغال': '2019',
+                    'بداية الإنتاج': 'جويلية 2024',
+                    'مصدر التمويل': 'الدولة التونسية والبنك الألماني لإعادة الإعمار',
+                    'طاقة الإنتاج': '50 ألف م³/يوم (قابلة للتّوسعة إلى 100 ألف م³/يوم)',
+                    'الفئة المستفيدة': '1.145 مليون ساكن في ولايات قابس، مدنين وتطاوين',
+                    'الحالة': 'في طور الاستغلال'
+                }
+            }
+        }
+    };
+    
+    // Global variables
+    let map = null;
+    let markers = {};
+    let selectedStation = null;
+    
+    // DOM elements
+    let mapElement, mapLoading, stationTabs, detailsContent, selectedStationName;
+    
+    // Initialize the widget
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeWidget();
+    });
+    
+    function initializeWidget() {
+        // Get DOM elements
+        mapElement = document.getElementById('waterMap');
+        mapLoading = document.getElementById('mapLoading');
+        stationTabs = document.getElementById('stationTabs');
+        detailsContent = document.getElementById('detailsContent');
+        selectedStationName = document.getElementById('selectedStationName');
         
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        // Location coordinates (approximate)
-        const locations = {
-            'جربة': [33.8076, 10.8451],
-            'سوسة': [35.8245, 10.6346],
-            'صفاقس': [34.7406, 10.7603],
-            'الزارات': [33.6917, 10.3539]
-        };
-        
-        // Status colors
-        const statusColors = {
-            'في طور الاستغلال': '#47c363', // Green for operational
-            'في طور الإنجاز': '#ffae42'    // Orange for under construction
-        };
-        
-        // Facility status
-        const facilityStatus = {
-            'جربة': 'في طور الاستغلال',
-            'سوسة': 'في طور الإنجاز',
-            'صفاقس': 'في طور الاستغلال',
-            'الزارات': 'في طور الاستغلال'
-        };
-        
-        // Capacity info
-        const capacityInfo = {
-            'جربة': '50 ألف م³/يوم',
-            'سوسة': '50 ألف م³/يوم',
-            'صفاقس': '100 ألف م³/يوم',
-            'الزارات': '50 ألف م³/يوم'
-        };
-        
-        // Custom marker icon creator function
-        function createCustomMarker(location) {
-            return L.divIcon({
-                className: 'custom-marker',
-                html: `<span style="font-size: 11px;">${location}</span>`, // Full location name
-                iconSize: [40, 40],
-                style: `background-color: ${statusColors[facilityStatus[location]]}`
-            });
+        if (!mapElement) {
+            console.error('Tunisia Water Map: Map element not found');
+            return;
         }
         
-        // Add markers for each location
-        const markers = {};
-        for (const location in locations) {
-            const marker = L.marker(locations[location], {
-                icon: createCustomMarker(location)
-            }).addTo(map);
-            
-            marker.bindPopup(`<b>${location}</b><br>طاقة الإنتاج: ${capacityInfo[location]}<br><span class="status-indicator ${facilityStatus[location] === 'في طور الاستغلال' ? 'status-operational' : 'status-construction'}"></span>${facilityStatus[location]}<br>اضغط للتفاصيل الكاملة`);
-            
-            marker.on('click', function() {
-                showFacilityDetails(location);
-            });
-            
-            markers[location] = marker;
-        }
+        // Initialize components
+        createStationTabs();
+        initializeMap();
+        setupEventListeners();
         
-        // Function to show facility details
-        function showFacilityDetails(location) {
-            // Hide all facility details
-            document.querySelectorAll('.facility-details').forEach(el => {
-                el.classList.remove('active');
-            });
+        // Hide loading after a short delay
+        setTimeout(() => {
+            hideLoading();
+        }, 1500);
+    }
+    
+    function createStationTabs() {
+        if (!stationTabs) return;
+        
+        const fragment = document.createDocumentFragment();
+        
+        Object.entries(CONFIG.stations).forEach(([stationName, stationData]) => {
+            const tabElement = document.createElement('div');
+            tabElement.className = 'station-tab';
+            tabElement.setAttribute('data-station', stationName);
+            tabElement.setAttribute('role', 'button');
+            tabElement.setAttribute('tabindex', '0');
+            tabElement.setAttribute('aria-label', `عرض معلومات محطة ${stationName}`);
             
-            // Show selected facility details
-            document.getElementById(location).classList.add('active');
+            const statusText = stationData.status === 'operational' ? 'قيد التشغيل' : 'قيد الإنشاء';
             
-            // Update info header
-            document.querySelector('.info-header').textContent = `معلومات عن منشأة ${location}`;
+            tabElement.innerHTML = `
+                <div class="station-tab-header">
+                    <span class="station-name">${stationName}</span>
+                    <span class="status-dot ${stationData.status}"></span>
+                </div>
+                <div class="station-status">${statusText}</div>
+                <div class="station-capacity">${stationData.capacity}</div>
+            `;
             
-            // Update active tab button
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.location === location) {
-                    btn.classList.add('active');
+            // Add click event
+            tabElement.addEventListener('click', () => selectStation(stationName));
+            
+            // Add keyboard support
+            tabElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectStation(stationName);
                 }
             });
             
-            // Pan map to the selected location
-            map.panTo(locations[location]);
+            fragment.appendChild(tabElement);
+        });
+        
+        stationTabs.appendChild(fragment);
+    }
+    
+    function initializeMap() {
+        if (!mapElement) return;
+        
+        try {
+            // Initialize map
+            const isMobile = window.innerWidth <= 768;
+            const initialZoom = isMobile ? CONFIG.mapZoom.mobile : CONFIG.mapZoom.desktop;
             
-            // Open popup for the marker
-            markers[location].openPopup();
+            map = L.map('waterMap', {
+                center: CONFIG.mapCenter,
+                zoom: initialZoom,
+                minZoom: 5,
+                maxZoom: 12,
+                maxBounds: CONFIG.mapBounds,
+                maxBoundsViscosity: 1.0,
+                zoomControl: false
+            });
+            
+            // Add custom zoom control
+            L.control.zoom({ position: 'bottomleft' }).addTo(map);
+            
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 12
+            }).addTo(map);
+            
+            // Create markers
+            createMarkers();
+            
+            // Add Tunisia border (simplified)
+            addTunisiaBorder();
+            
+        } catch (error) {
+            console.error('Tunisia Water Map: Failed to initialize map', error);
+            showMapError();
+        }
+    }
+    
+    function createMarkers() {
+        Object.entries(CONFIG.stations).forEach(([stationName, stationData]) => {
+            const marker = createCustomMarker(stationName, stationData);
+            markers[stationName] = marker;
+            marker.addTo(map);
+        });
+    }
+    
+    function createCustomMarker(stationName, stationData) {
+        const statusClass = stationData.status === 'operational' ? 'operational' : 'construction';
+        const statusColor = stationData.status === 'operational' ? '#00c851' : '#ffbb33';
+        
+        const icon = L.divIcon({
+            className: 'custom-water-marker',
+            html: `
+                <div style="
+                    background: ${statusColor};
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 11px;
+                    text-align: center;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                    border: 3px solid white;
+                    font-family: 'Tajawal', sans-serif;
+                    line-height: 1.2;
+                    padding: 2px;
+                ">
+                    ${stationName}
+                </div>
+            `,
+            iconSize: [40, 40],
+            iconAnchor: [20, 20]
+        });
+        
+        const marker = L.marker(stationData.coordinates, { icon });
+        
+        // Create popup content
+        const statusText = stationData.status === 'operational' ? 'قيد التشغيل' : 'قيد الإنشاء';
+        const popupContent = `
+            <div style="text-align: center; min-width: 200px;">
+                <h4 style="margin: 0 0 8px 0; color: #0077be; font-size: 1.1rem;">${stationName}</h4>
+                <p style="margin: 4px 0; font-size: 0.9rem;"><strong>الطاقة:</strong> ${stationData.capacity}</p>
+                <p style="margin: 4px 0; font-size: 0.9rem;">
+                    <span class="status-dot ${statusClass}" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: 5px;"></span>
+                    ${statusText}
+                </p>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            maxWidth: 250,
+            className: 'custom-popup'
+        });
+        
+        // Add click event
+        marker.on('click', () => {
+            selectStation(stationName);
+        });
+        
+        return marker;
+    }
+    
+    function addTunisiaBorder() {
+        // Simplified Tunisia border coordinates
+        const tunisiaBorder = [
+            [30.2350, 9.4921], [30.5290, 10.8032], [33.1376, 11.5600],
+            [37.3400, 9.7769], [36.9520, 8.3301], [33.7963, 7.9443],
+            [31.4945, 8.4375], [30.2350, 9.4921]
+        ];
+        
+        L.polyline(tunisiaBorder, {
+            color: '#0077be',
+            weight: 2,
+            opacity: 0.6,
+            dashArray: '5, 5'
+        }).addTo(map);
+    }
+    
+    function selectStation(stationName) {
+        if (!CONFIG.stations[stationName]) return;
+        
+        selectedStation = stationName;
+        
+        // Update tab states
+        updateTabStates(stationName);
+        
+        // Update details display
+        showStationDetails(stationName);
+        
+        // Pan map to station
+        if (map && markers[stationName]) {
+            map.setView(CONFIG.stations[stationName].coordinates, 8);
+            markers[stationName].openPopup();
         }
         
-        // Add click event listeners to tab buttons
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const location = this.dataset.location;
-                showFacilityDetails(location);
+        // Update header
+        if (selectedStationName) {
+            selectedStationName.textContent = `معلومات محطة ${stationName}`;
+        }
+    }
+    
+    function updateTabStates(activeStation) {
+        const tabs = stationTabs.querySelectorAll('.station-tab');
+        tabs.forEach(tab => {
+            const isActive = tab.getAttribute('data-station') === activeStation;
+            tab.classList.toggle('active', isActive);
+            tab.setAttribute('aria-selected', isActive);
+        });
+    }
+    
+    function showStationDetails(stationName) {
+        if (!detailsContent || !CONFIG.stations[stationName]) return;
+        
+        const stationData = CONFIG.stations[stationName];
+        const details = stationData.details;
+        
+        // Create details grid
+        const detailsGrid = document.createElement('div');
+        detailsGrid.className = 'details-grid';
+        
+        // Split details into cards for better mobile layout
+        const detailsArray = Object.entries(details);
+        const cardsCount = Math.ceil(detailsArray.length / 4);
+        
+        for (let i = 0; i < cardsCount; i++) {
+            const card = document.createElement('div');
+            card.className = 'detail-card';
+            
+            const startIndex = i * 4;
+            const endIndex = Math.min(startIndex + 4, detailsArray.length);
+            const cardDetails = detailsArray.slice(startIndex, endIndex);
+            
+            cardDetails.forEach(([label, value]) => {
+                const row = document.createElement('div');
+                row.className = 'detail-row';
+                
+                const labelElement = document.createElement('span');
+                labelElement.className = 'detail-label';
+                labelElement.textContent = label;
+                
+                const valueElement = document.createElement('span');
+                valueElement.className = 'detail-value';
+                
+                // Highlight important values
+                if (label.includes('طاقة') || label.includes('كلفة')) {
+                    valueElement.classList.add('highlight');
+                }
+                
+                valueElement.textContent = value;
+                
+                row.appendChild(labelElement);
+                row.appendChild(valueElement);
+                card.appendChild(row);
             });
-        });
+            
+            detailsGrid.appendChild(card);
+        }
         
-        // On mobile, adjust map view after it's fully loaded
-        map.on('load', function() {
-            if (window.innerWidth <= 768) {
-                map.setZoom(6); // Zoom out a bit more on mobile but still focused on Tunisia
-            }
-            
-            // Draw Tunisia borders (approximate simplification)
-            const tunisiaBorders = [
-                [30.2350, 9.4921],  // Southern border
-                [30.5290, 10.8032], // Southern coast
-                [33.1376, 11.5600], // Eastern coast
-                [37.3400, 9.7769],  // Northern coast
-                [36.9520, 8.3301],  // Northwestern border
-                [33.7963, 7.9443],  // Western border
-                [31.4945, 8.4375],  // Southwestern border
-                [30.2350, 9.4921]   // Close the polygon
-            ];
-            
-            // Draw a subtle border around Tunisia
-            L.polyline(tunisiaBorders, {
-                color: '#ff7500',
-                weight: 2,
-                opacity: 0.7,
-                fill: false
-            }).addTo(map);
-        });
+        // Clear previous content and add new details
+        detailsContent.innerHTML = '';
+        detailsContent.appendChild(detailsGrid);
+    }
+    
+    function setupEventListeners() {
+        // Zoom to Tunisia button
+        const zoomBtn = document.getElementById('zoomTunisia');
+        if (zoomBtn) {
+            zoomBtn.addEventListener('click', () => {
+                if (map) {
+                    const isMobile = window.innerWidth <= 768;
+                    const zoom = isMobile ? CONFIG.mapZoom.mobile : CONFIG.mapZoom.desktop;
+                    map.setView(CONFIG.mapCenter, zoom);
+                }
+            });
+        }
         
-        // Handle window resize events
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 768) {
-                map.setView([34.0, 9.8], 6);
-            } else {
-                map.setView([34.0, 9.8], 7);
-            }
-            
-            // Ensure the map stays within Tunisia's bounds
-            map.setMaxBounds([
-                [30.0, 7.0], // Southwest corner
-                [37.5, 12.0]  // Northeast corner
-            ]);
+        // Toggle view button (future enhancement)
+        const toggleBtn = document.getElementById('toggleView');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                // Future: Toggle between map and list view
+                console.log('Toggle view functionality can be added here');
+            });
+        }
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (map) {
+                    map.invalidateSize();
+                    
+                    // Adjust zoom for mobile
+                    const isMobile = window.innerWidth <= 768;
+                    const currentZoom = map.getZoom();
+                    const targetZoom = isMobile ? CONFIG.mapZoom.mobile : CONFIG.mapZoom.desktop;
+                    
+                    if (Math.abs(currentZoom - targetZoom) > 1) {
+                        map.setZoom(targetZoom);
+                    }
+                }
+            }, 250);
         });
-    </script>
+    }
+    
+    function hideLoading() {
+        if (mapLoading) {
+            mapLoading.classList.add('hidden');
+            setTimeout(() => {
+                mapLoading.style.display = 'none';
+            }, 300);
+        }
+    }
+    
+    function showMapError() {
+        if (mapLoading) {
+            mapLoading.innerHTML = `
+                <div style="text-align: center; color: #dc3545;">
+                    <div style="font-size: 2rem; margin-bottom: 16px;">⚠️</div>
+                    <p>حدث خطأ في تحميل الخريطة</p>
+                    <button onclick="location.reload()" style="background: #0077be; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px;">
+                        إعادة المحاولة
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    // Public API
+    window.TunisiaWaterMap = {
+        selectStation: selectStation,
+        refreshMap: () => {
+            if (map) {
+                map.invalidateSize();
+            }
+        },
+        updateStationData: (newData) => {
+            if (newData && typeof newData === 'object') {
+                Object.assign(CONFIG.stations, newData);
+                // Reinitialize if needed
+                createStationTabs();
+                createMarkers();
+            }
+        }
+    };
+    
+})();
+</script>
+
 </body>
 </html>

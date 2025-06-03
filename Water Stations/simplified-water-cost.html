@@ -1,680 +1,677 @@
-<!-- Water Pricing Visualization for Kashf Media -->
-<div class="km-desal-water-widget">
-    <div class="km-desal-header">
-        <h2 class="km-desal-title">سعر إنتاج مياه البحر المحلاة</h2>
-    </div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكلفة إنتاج المياه المحلاة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-    <div class="km-desal-content">
-        <!-- Price Cards -->
-        <div class="km-desal-cards">
-            <div class="km-desal-card km-desal-djerba" id="km-djerba-card">
-                <div class="km-station-name">محطة جربة</div>
-                <div class="km-price-value">3000</div>
-                <div class="km-price-unit">مليم / م³</div>
+<div class="water-pricing-widget">
+    <header class="widget-header">
+        <h2 class="widget-title">تكلفة إنتاج مياه البحر المحلاة مقابل سعر البيع</h2>
+        <p class="widget-subtitle">مقارنة تكاليف الإنتاج بأسعار البيع للمحطات التونسية</p>
+    </header>
+
+    <main class="widget-content">
+        <!-- Interactive Bar Chart -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">التكاليف بالمليم لكل متر مكعب</h3>
             </div>
             
-            <div class="km-desal-card km-desal-zarat" id="km-zarat-card">
-                <div class="km-station-name">محطة الزارات</div>
-                <div class="km-price-value">3200</div>
-                <div class="km-price-unit">مليم / م³</div>
-            </div>
-            
-            <div class="km-desal-card km-desal-sfax" id="km-sfax-card">
-                <div class="km-station-name">محطة صفاقس</div>
-                <div class="km-price-value">3500</div>
-                <div class="km-price-unit">مليم / م³</div>
-            </div>
-            
-            <div class="km-desal-card km-desal-selling" id="km-selling-card">
-                <div class="km-station-name">سعر البيع</div>
-                <div class="km-price-value">700-800</div>
-                <div class="km-price-unit">مليم / م³</div>
+            <div class="chart-wrapper">
+                <div class="chart-grid" id="chartGrid"></div>
+                <div class="chart-bars" id="chartBars"></div>
+                <div class="chart-labels" id="chartLabels"></div>
             </div>
         </div>
 
-        <!-- Price Comparison Visualization -->
-        <div class="km-desal-visualization">
-            <div class="km-viz-title">مقارنة سعر الإنتاج وسعر البيع</div>
-            <div class="km-bar-container" id="km-bar-container">
-                <!-- Bars will be added by JavaScript -->
+        <!-- Key Insights -->
+        <div class="insights-section">
+            <div class="insight-card main-insight">
+                <div class="insight-icon">💧</div>
+                <div class="insight-content">
+                    <h4>الدعم الحكومي</h4>
+                    <p>الحكومة تدعم المياه بنسبة تصل إلى <strong>78%</strong> من التكلفة الحقيقية</p>
+                </div>
+            </div>
+            
+            <div class="insights-grid">
+                <div class="insight-item">
+                    <span class="insight-label">أعلى تكلفة إنتاج</span>
+                    <span class="insight-value production">3,500 مليم</span>
+                    <span class="insight-station">محطة صفاقس</span>
+                </div>
+                
+                <div class="insight-item">
+                    <span class="insight-label">أقل تكلفة إنتاج</span>
+                    <span class="insight-value production">3,000 مليم</span>
+                    <span class="insight-station">محطة جربة</span>
+                </div>
+                
+                <div class="insight-item">
+                    <span class="insight-label">سعر البيع الموحد</span>
+                    <span class="insight-value selling">700-800 مليم</span>
+                    <span class="insight-station">لجميع المحطات</span>
+                </div>
             </div>
         </div>
+    </main>
 
-        <!-- Subsidy Information -->
-        <div class="km-subsidy-info">
-            <div class="km-subsidy-title">الفرق بين سعر الإنتاج وسعر البيع</div>
-            <div class="km-subsidy-text">
-                كلفة إنتاج المتر المكعب من المياه المحلاّة تتراوح بين <span class="km-highlight">3000 و3500 مليم</span>، 
-                بينما سعر البيع يتراوح بين <span class="km-selling-highlight">700 و800 مليم</span> فقط.<br>
-                هذا يعني أن الماء الصالح للشرب <span class="km-highlight">مدعم بأكثر من 3 مرات</span>.
-            </div>
-        </div>
-    </div>
-
-    <div class="km-desal-footer">
-        المصدر: الشركة التونسية لاستغلال وتوزيع المياه (2024-2025)
-    </div>
+    <footer class="widget-footer">
+        <p>المصدر: الشركة التونسية لاستغلال وتوزيع المياه (2024-2025)</p>
+    </footer>
 </div>
 
 <style>
-.km-desal-water-widget {
-    --km-primary-color: #2196F3;
-    --km-text-dark: #333333;
-    --km-text-medium: #666666;
-    --km-text-light: #999999;
-    --km-border-color: #E0E0E0;
-    --km-bg-light: #F5F7FA;
-    --km-bg-white: #FFFFFF;
-    --km-djerba-color: #4FC3F7;
-    --km-zarat-color: #2196F3;
-    --km-sfax-color: #1976D2;
-    --km-selling-color: #4CAF50;
-    --km-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    --km-rounded-sm: 4px;
-    --km-rounded-md: 8px;
-    
-    font-family: 'Tajawal', sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    background: var(--km-bg-white);
-    box-shadow: var(--km-shadow);
-    border-radius: var(--km-rounded-md);
+:root {
+    --primary-blue: #1e88e5;
+    --secondary-blue: #42a5f5;
+    --accent-blue: #64b5f6;
+    --success-green: #43a047;
+    --warning-orange: #ff9800;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-muted: #777777;
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-gray: #f1f5f9;
+    --border-light: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.water-pricing-widget {
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 100%;
+    margin: 20px auto;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
     direction: rtl;
+    font-feature-settings: "kern" 1;
+    line-height: 1.6;
 }
 
-.km-desal-header {
-    background: var(--km-primary-color);
+/* Header Styles */
+.widget-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
     color: white;
-    padding: 18px 16px;
+    padding: 24px 20px;
     text-align: center;
-}
-
-.km-desal-title {
-    font-size: 1.6rem;
-    margin-bottom: 5px;
-    font-weight: 700;
-    color: white;
-    margin-top: 0;
-}
-
-.km-desal-content {
-    padding: 20px 16px;
-}
-
-.km-desal-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 25px;
-    justify-content: center;
-}
-
-.km-desal-card {
-    flex: 1;
-    min-width: 160px;
-    max-width: 220px;
-    background: var(--km-bg-white);
-    border-radius: var(--km-rounded-md);
-    border-top: 4px solid var(--km-primary-color);
-    box-shadow: var(--km-shadow);
-    padding: 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.km-desal-card:hover, .km-desal-card.active {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.km-desal-djerba {
-    border-top-color: var(--km-djerba-color);
-}
-
-.km-desal-zarat {
-    border-top-color: var(--km-zarat-color);
-}
-
-.km-desal-sfax {
-    border-top-color: var(--km-sfax-color);
-}
-
-.km-desal-selling {
-    border-top-color: var(--km-selling-color);
-}
-
-.km-station-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.km-price-value {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 3px;
-}
-
-.km-desal-djerba .km-price-value {
-    color: var(--km-djerba-color);
-}
-
-.km-desal-zarat .km-price-value {
-    color: var(--km-zarat-color);
-}
-
-.km-desal-sfax .km-price-value {
-    color: var(--km-sfax-color);
-}
-
-.km-desal-selling .km-price-value {
-    color: var(--km-selling-color);
-}
-
-.km-price-unit {
-    color: var(--km-text-medium);
-    font-size: 0.9rem;
-}
-
-.km-desal-visualization {
-    background: var(--km-bg-white);
-    border-radius: var(--km-rounded-md);
-    box-shadow: var(--km-shadow);
-    padding: 16px 12px 45px;
-    margin-bottom: 25px;
-    overflow: hidden;
     position: relative;
 }
 
-.km-viz-title {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--km-text-dark);
-}
-
-.km-bar-container {
-    display: flex;
-    align-items: flex-end;
-    height: 250px;
-    position: relative;
-    justify-content: space-around;
-    width: 100%;
-    margin-top: 25px;
-}
-
-.km-bar-axis {
+.widget-header::before {
+    content: '';
     position: absolute;
-    right: 0;
     top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 2px;
-    background: var(--km-text-medium);
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+}
+
+.widget-title {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
     z-index: 1;
 }
 
-.km-bar-grid {
+.widget-subtitle {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    opacity: 0.9;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+}
+
+/* Content Styles */
+.widget-content {
+    padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 24px);
+}
+
+/* Chart Styles */
+.chart-container {
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: clamp(16px, 4vw, 24px);
+    margin-bottom: clamp(20px, 5vw, 32px);
+    border: 1px solid var(--border-light);
+}
+
+.chart-header {
+    text-align: center;
+    margin-bottom: clamp(16px, 4vw, 24px);
+}
+
+.chart-title {
+    font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.chart-wrapper {
+    position: relative;
+    height: clamp(250px, 50vw, 300px);
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.chart-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    z-index: 1;
+}
+
+.grid-line {
     position: absolute;
     left: 0;
     right: 0;
     height: 1px;
-    background: rgba(0,0,0,0.1);
-    z-index: 1;
+    background: var(--border-light);
+    display: flex;
+    align-items: center;
 }
 
-.km-bar-label {
+.grid-label {
     position: absolute;
-    right: -5px;
+    right: -10px;
     transform: translateX(100%);
-    font-size: 0.8rem;
-    color: var(--km-text-dark);
-    background: white;
-    padding: 2px 5px;
-    border-radius: 3px;
-    z-index: 2;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    margin-right: 5px;
-}
-
-.km-price-bar {
-    flex: 0 0 auto;
-    width: 60px;
-    background: var(--km-primary-color);
-    border-radius: 6px 6px 0 0;
-    transition: height 1s ease, opacity 0.5s ease;
-    position: relative;
-    opacity: 0.9;
-    z-index: 3;
-    box-shadow: 0 0 4px rgba(0,0,0,0.1);
-}
-
-.km-price-bar.km-desal-djerba {
-    background: var(--km-djerba-color);
-}
-
-.km-price-bar.km-desal-zarat {
-    background: var(--km-zarat-color);
-}
-
-.km-price-bar.km-desal-sfax {
-    background: var(--km-sfax-color);
-}
-
-.km-price-bar.km-desal-selling {
-    background: var(--km-selling-color);
-}
-
-.km-price-bar.highlighted {
-    opacity: 1;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    z-index: 4;
-}
-
-.km-bar-label-bottom {
-    position: absolute;
-    bottom: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--km-text-dark);
-    background: white;
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+    color: var(--text-muted);
+    background: var(--bg-white);
     padding: 2px 6px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
     white-space: nowrap;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    width: auto;
 }
 
-.km-bar-value {
+.chart-bars {
     position: absolute;
-    top: -30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: clamp(8px, 3vw, 16px);
+    z-index: 2;
+}
+
+.price-bar {
+    flex: 1;
+    max-width: clamp(40px, 12vw, 80px);
+    min-height: 0;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    position: relative;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.price-bar:nth-child(1) { background: linear-gradient(180deg, var(--accent-blue) 0%, var(--secondary-blue) 100%); }
+.price-bar:nth-child(2) { background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--primary-blue) 100%); }
+.price-bar:nth-child(3) { background: linear-gradient(180deg, var(--primary-blue) 0%, #1565c0 100%); }
+.price-bar:nth-child(4) { background: linear-gradient(180deg, var(--success-green) 0%, #2e7d32 100%); }
+
+.price-bar:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.price-bar::before {
+    content: attr(data-value);
+    position: absolute;
+    top: -35px;
     left: 50%;
     transform: translateX(-50%);
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.95rem;
-    background: white;
-    padding: 3px 6px;
-    border-radius: 4px;
-    color: var(--km-text-dark);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: var(--text-primary);
+    color: white;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+    font-weight: 600;
     white-space: nowrap;
-    width: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
 }
 
-.km-subsidy-info {
-    background: var(--km-bg-white);
-    border-radius: var(--km-rounded-md);
-    box-shadow: var(--km-shadow);
-    padding: 16px;
+.price-bar:hover::before {
+    opacity: 1;
+}
+
+.chart-labels {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: clamp(8px, 3vw, 16px);
+    z-index: 2;
+}
+
+.bar-label {
+    flex: 1;
+    max-width: clamp(40px, 12vw, 80px);
     text-align: center;
-    margin-bottom: 20px;
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    padding: 8px 4px;
 }
 
-.km-subsidy-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
+/* Insights Section */
+.insights-section {
+    margin-top: clamp(20px, 5vw, 32px);
 }
 
-.km-subsidy-text {
-    font-size: 1rem;
-    line-height: 1.6;
+.main-insight {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: white;
+    border-radius: var(--radius-md);
+    padding: clamp(16px, 4vw, 24px);
+    margin-bottom: clamp(16px, 4vw, 24px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
 }
 
-.km-highlight {
-    font-weight: 700;
-    color: var(--km-primary-color);
+.insight-icon {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    flex-shrink: 0;
 }
 
-.km-selling-highlight {
-    font-weight: 700;
-    color: var(--km-selling-color);
+.insight-content h4 {
+    font-size: clamp(1.1rem, 3.5vw, 1.25rem);
+    margin-bottom: 4px;
+    font-weight: 600;
 }
 
-.km-desal-footer {
-    padding: 12px;
+.insight-content p {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    opacity: 0.95;
+    line-height: 1.5;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(12px, 3vw, 16px);
+}
+
+.insight-item {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: clamp(16px, 4vw, 20px);
     text-align: center;
-    color: var(--km-text-medium);
-    font-size: 0.8rem;
-    border-top: 1px solid var(--km-border-color);
-    background: var(--km-bg-light);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
-/* Enhanced Responsiveness */
-@media (max-width: 700px) {
-    .km-desal-water-widget {
-        border-radius: 0;
+.insight-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.insight-label {
+    display: block;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.insight-value {
+    display: block;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.insight-value.production {
+    color: var(--primary-blue);
+}
+
+.insight-value.selling {
+    color: var(--success-green);
+}
+
+.insight-station {
+    display: block;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Footer */
+.widget-footer {
+    background: var(--bg-gray);
+    padding: clamp(12px, 3vw, 16px);
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+}
+
+.widget-footer p {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .water-pricing-widget {
+        margin: 10px;
+        border-radius: var(--radius-md);
     }
     
-    .km-desal-title {
-        font-size: 1.4rem;
+    .insights-grid {
+        grid-template-columns: 1fr;
     }
     
-    .km-desal-content {
+    .main-insight {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .chart-wrapper {
+        height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .water-pricing-widget {
+        margin: 5px;
+        border-radius: var(--radius-sm);
+    }
+    
+    .widget-content {
         padding: 16px 12px;
     }
     
-    .km-desal-cards {
-        gap: 12px;
-        margin-bottom: 20px;
+    .chart-container {
+        padding: 16px 12px;
     }
     
-    .km-desal-card {
-        min-width: 140px;
-        padding: 12px;
-    }
-    
-    .km-station-name {
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-    
-    .km-price-value {
-        font-size: 1.8rem;
-    }
-    
-    .km-viz-title {
-        font-size: 1rem;
-    }
-    
-    .km-bar-container {
+    .chart-wrapper {
         height: 200px;
     }
     
-    .km-price-bar {
-        width: 55px;
+    .chart-bars {
+        gap: 6px;
     }
     
-    .km-subsidy-title {
-        font-size: 1rem;
+    .chart-labels {
+        gap: 6px;
     }
     
-    .km-subsidy-text {
-        font-size: 0.9rem;
-    }
-    
-    .km-desal-visualization {
-        padding: 16px 12px 40px;
+    .bar-label {
+        font-size: 0.7rem;
+        padding: 6px 2px;
     }
 }
 
-@media (max-width: 500px) {
-    .km-desal-header {
-        padding: 14px 12px;
-    }
-    
-    .km-desal-title {
-        font-size: 1.2rem;
-    }
-    
-    .km-desal-cards {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .km-desal-card {
-        width: 100%;
-        max-width: 280px;
-        min-width: 0;
-    }
-    
-    .km-bar-container {
-        height: 180px;
-    }
+/* WordPress Compatibility */
+.water-pricing-widget * {
+    box-sizing: border-box !important;
+}
 
-    .km-price-bar {
-        width: 45px;
-    }
-    
-    .km-bar-value {
-        font-size: 0.8rem;
-        padding: 2px 4px;
-    }
-    
-    .km-bar-label-bottom {
-        font-size: 0.75rem;
-    }
-    
-    .km-bar-label {
-        font-size: 0.75rem;
-        padding: 1px 4px;
-    }
-    
-    .km-desal-visualization {
-        padding: 12px 8px 40px;
+.water-pricing-widget p {
+    margin-bottom: 0 !important;
+}
+
+/* Animation Classes */
+.animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease forwards;
+}
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@media (max-width: 360px) {
-    .km-desal-content {
-        padding: 12px 8px;
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .price-bar,
+    .insight-item {
+        transition: none;
     }
     
-    .km-desal-visualization,
-    .km-subsidy-info {
-        padding: 12px 8px 40px;
+    .animate-in {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-light: #666666;
+        --text-muted: #333333;
+    }
+}
+
+/* Print styles */
+@media print {
+    .water-pricing-widget {
+        box-shadow: none;
+        border: 1px solid #000;
     }
     
-    .km-bar-container {
-        height: 150px;
-    }
-    
-    .km-price-bar {
-        width: 40px;
-    }
-    
-    .km-subsidy-text {
-        font-size: 0.85rem;
-    }
-    
-    .km-bar-value {
-        font-size: 0.75rem;
-        padding: 1px 3px;
-    }
-    
-    .km-bar-label {
-        font-size: 0.7rem;
-        padding: 1px 3px;
-    }
-    
-    .km-bar-label-bottom {
-        font-size: 0.7rem;
+    .widget-header {
+        background: #f0f0f0 !important;
+        color: #000 !important;
     }
 }
 </style>
 
 <script>
 (function() {
-    // Use an immediately invoked function expression to avoid global scope
+    'use strict';
+    
+    // Configuration
+    const CONFIG = {
+        stations: [
+            { id: 'djerba', name: 'محطة جربة', cost: 3000, color: '#64b5f6' },
+            { id: 'zarat', name: 'محطة الزارات', cost: 3200, color: '#42a5f5' },
+            { id: 'sfax', name: 'محطة صفاقس', cost: 3500, color: '#1e88e5' },
+            { id: 'selling', name: 'سعر البيع', cost: 750, color: '#43a047', isRange: true, display: '700-800' }
+        ],
+        maxValue: 3500,
+        gridLines: [0, 1000, 2000, 3000, 3500],
+        animationDelay: 150
+    };
+    
+    // DOM elements
+    let chartGrid, chartBars, chartLabels;
+    
+    // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Check if we're on a mobile device
-        const isMobile = window.matchMedia('(max-width: 700px)').matches;
-        const isVerySmall = window.matchMedia('(max-width: 500px)').matches;
+        initializeWidget();
+    });
+    
+    function initializeWidget() {
+        // Get DOM elements
+        chartGrid = document.getElementById('chartGrid');
+        chartBars = document.getElementById('chartBars');
+        chartLabels = document.getElementById('chartLabels');
         
-        // Price data
-        const kmPriceData = [
-            { id: 'djerba', name: 'محطة جربة', price: 3000, color: 'km-desal-djerba' },
-            { id: 'zarat', name: 'محطة الزارات', price: 3200, color: 'km-desal-zarat' },
-            { id: 'sfax', name: 'محطة صفاقس', price: 3500, color: 'km-desal-sfax' },
-            { id: 'selling', name: 'سعر البيع', price: 750, color: 'km-desal-selling', range: '700-800' }
-        ];
-        
-        // Get the bar container
-        const kmBarContainer = document.getElementById('km-bar-container');
-        
-        // Create grid lines and labels
-        createKmGrid();
-        
-        // Create bars for each station
-        createKmBars();
-        
-        // Add click events to cards
-        setupKmCardInteractions();
-        
-        // Ensure chart is horizontally centered on small screens
-        centerBarsOnMobile();
-        
-        // Create grid lines and labels
-        function createKmGrid() {
-            if (!kmBarContainer) return; // Guard clause
-            
-            const maxPrice = 3500;
-            // Show fewer grid lines on smaller screens
-            const gridLines = isVerySmall ? 
-                [0, 1750, 3500] : 
-                isMobile ? 
-                    [0, 1000, 2000, 3500] : 
-                    [0, 1000, 2000, 3000, 3500];
-            
-            gridLines.forEach(value => {
-                // Calculate position
-                const bottom = (value / maxPrice) * 100 + '%';
-                
-                // Create grid line
-                const grid = document.createElement('div');
-                grid.className = 'km-bar-grid';
-                grid.style.bottom = bottom;
-                kmBarContainer.appendChild(grid);
-                
-                // No labels are created, as per request
-            });
+        if (!chartGrid || !chartBars || !chartLabels) {
+            console.warn('Water pricing widget: Required elements not found');
+            return;
         }
         
-        // Create bars for the visualization
-        function createKmBars() {
-            if (!kmBarContainer) return; // Guard clause
-            
-            const maxPrice = 3500;
-            
-            kmPriceData.forEach((item, index) => {
-                // Create bar element
-                const bar = document.createElement('div');
-                bar.className = `km-price-bar ${item.color}`;
-                bar.id = `km-${item.id}-bar`;
-                
-                // Set initial height to 0 for animation
-                bar.style.height = '0';
-                
-                // Add bottom label
-                const bottomLabel = document.createElement('div');
-                bottomLabel.className = 'km-bar-label-bottom';
-                bottomLabel.textContent = item.name;
-                bar.appendChild(bottomLabel);
-                
-                // Add value label
-                const valueLabel = document.createElement('div');
-                valueLabel.className = 'km-bar-value';
-                valueLabel.textContent = item.range || item.price.toLocaleString();
-                bar.appendChild(valueLabel);
-                
-                // Add to container
-                kmBarContainer.appendChild(bar);
-                
-                // Animate the bar after a short delay - faster on mobile
-                setTimeout(() => {
-                    const height = (item.price / maxPrice) * 100 + '%';
-                    bar.style.height = height;
-                }, isMobile ? (200 + (index * 100)) : (300 + (index * 150)));
-            });
+        // Create chart components
+        createGridLines();
+        createBars();
+        createLabels();
+        
+        // Add animation class to widget
+        const widget = document.querySelector('.water-pricing-widget');
+        if (widget) {
+            widget.classList.add('animate-in');
         }
         
-        // Adjust scroll position to center bars on mobile
-        function centerBarsOnMobile() {
-            // No scrolling needed as bars now fit without scrolling
-        }
+        // Setup responsive handling
+        handleResize();
+        window.addEventListener('resize', debounce(handleResize, 250));
+    }
+    
+    function createGridLines() {
+        const fragment = document.createDocumentFragment();
         
-        // Setup interactive card highlighting
-        function setupKmCardInteractions() {
-            kmPriceData.forEach(item => {
-                const card = document.getElementById(`km-${item.id}-card`);
-                const bar = document.getElementById(`km-${item.id}-bar`);
-                
-                if (card && bar) {
-                    // Enhanced for touch devices
-                    if (isMobile) {
-                        // Touch event for cards
-                        card.addEventListener('touchstart', function(e) {
-                            // Remove highlights from all
-                            document.querySelectorAll('.km-price-bar').forEach(el => {
-                                el.classList.remove('highlighted');
-                            });
-                            document.querySelectorAll('.km-desal-card').forEach(el => {
-                                el.classList.remove('active');
-                            });
-                            
-                            // Add highlight
-                            bar.classList.add('highlighted');
-                            card.classList.add('active');
-                        });
-                        
-                        // Touch event for bars
-                        bar.addEventListener('touchstart', function(e) {
-                            // Prevent default to avoid scroll
-                            e.preventDefault();
-                            
-                            // Remove highlights from all
-                            document.querySelectorAll('.km-price-bar').forEach(el => {
-                                el.classList.remove('highlighted');
-                            });
-                            document.querySelectorAll('.km-desal-card').forEach(el => {
-                                el.classList.remove('active');
-                            });
-                            
-                            // Add highlight
-                            bar.classList.add('highlighted');
-                            card.classList.add('active');
-                            
-                            // Scroll card into view if needed
-                            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        });
-                    } else {
-                        // Desktop mouse events
-                        // Highlight on card hover
-                        card.addEventListener('mouseenter', () => {
-                            bar.classList.add('highlighted');
-                            card.classList.add('active');
-                        });
-                        
-                        card.addEventListener('mouseleave', () => {
-                            bar.classList.remove('highlighted');
-                            card.classList.remove('active');
-                        });
-                        
-                        // Highlight on bar hover
-                        bar.addEventListener('mouseenter', () => {
-                            bar.classList.add('highlighted');
-                            card.classList.add('active');
-                        });
-                        
-                        bar.addEventListener('mouseleave', () => {
-                            bar.classList.remove('highlighted');
-                            card.classList.remove('active');
-                        });
-                    }
-                    
-                    // Click interaction for both mobile and desktop
-                    card.addEventListener('click', () => {
-                        // Remove highlight from all bars and cards
-                        document.querySelectorAll('.km-price-bar').forEach(el => {
-                            el.classList.remove('highlighted');
-                        });
-                        document.querySelectorAll('.km-desal-card').forEach(el => {
-                            el.classList.remove('active');
-                        });
-                        
-                        // Add highlight to clicked card and corresponding bar
-                        bar.classList.add('highlighted');
-                        card.classList.add('active');
-                    });
+        CONFIG.gridLines.forEach(value => {
+            const line = document.createElement('div');
+            line.className = 'grid-line';
+            line.style.bottom = `${(value / CONFIG.maxValue) * 100}%`;
+            
+            const label = document.createElement('span');
+            label.className = 'grid-label';
+            label.textContent = value.toLocaleString('ar-TN');
+            label.setAttribute('aria-label', `${value} مليم`);
+            
+            line.appendChild(label);
+            fragment.appendChild(line);
+        });
+        
+        chartGrid.appendChild(fragment);
+    }
+    
+    function createBars() {
+        const fragment = document.createDocumentFragment();
+        
+        CONFIG.stations.forEach((station, index) => {
+            const bar = document.createElement('div');
+            bar.className = 'price-bar';
+            bar.setAttribute('data-value', station.isRange ? station.display : station.cost.toLocaleString('ar-TN'));
+            bar.setAttribute('aria-label', `${station.name}: ${station.isRange ? station.display : station.cost} مليم`);
+            bar.setAttribute('tabindex', '0');
+            bar.setAttribute('role', 'button');
+            
+            // Set initial height for animation
+            bar.style.height = '0%';
+            bar.style.animationDelay = `${index * CONFIG.animationDelay}ms`;
+            
+            // Add keyboard accessibility
+            bar.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    bar.focus();
                 }
             });
+            
+            fragment.appendChild(bar);
+        });
+        
+        chartBars.appendChild(fragment);
+        
+        // Animate bars after creation
+        requestAnimationFrame(() => {
+            const bars = chartBars.querySelectorAll('.price-bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const station = CONFIG.stations[index];
+                    const height = (station.cost / CONFIG.maxValue) * 100;
+                    bar.style.height = `${height}%`;
+                }, index * CONFIG.animationDelay);
+            });
+        });
+    }
+    
+    function createLabels() {
+        const fragment = document.createDocumentFragment();
+        
+        CONFIG.stations.forEach(station => {
+            const label = document.createElement('div');
+            label.className = 'bar-label';
+            label.textContent = station.name;
+            label.setAttribute('aria-hidden', 'true');
+            
+            fragment.appendChild(label);
+        });
+        
+        chartLabels.appendChild(fragment);
+    }
+    
+    function handleResize() {
+        // Recalculate chart dimensions if needed
+        const isMobile = window.innerWidth <= 768;
+        
+        // Update grid lines visibility based on screen size
+        const gridLabels = chartGrid.querySelectorAll('.grid-label');
+        gridLabels.forEach((label, index) => {
+            if (isMobile && (index === 1 || index === 3)) {
+                label.style.display = 'none';
+            } else {
+                label.style.display = 'block';
+            }
+        });
+    }
+    
+    // Utility function for debouncing
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // Expose public API for WordPress integration
+    window.WaterPricingWidget = {
+        init: initializeWidget,
+        updateData: function(newData) {
+            if (newData && Array.isArray(newData)) {
+                CONFIG.stations = newData;
+                // Reinitialize with new data
+                if (chartBars) {
+                    chartBars.innerHTML = '';
+                    chartLabels.innerHTML = '';
+                    createBars();
+                    createLabels();
+                }
+            }
         }
-    });
+    };
 })();
 </script>
+
+</body>
+</html>

@@ -1,17 +1,27 @@
-<!-- Water Pricing Calculator - WordPress Compatible -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Water Pricing Calculator</title>
+</head>
+<body>
+
+<!-- Enhanced Water Pricing Calculator - WordPress Compatible -->
 <div class="wp-water-pricing-calculator" id="waterPricingCalculator">
     <style>
-        /* Scoped styles to prevent WordPress conflicts */
+        /* Enhanced Scoped styles to prevent WordPress conflicts */
         .wp-water-pricing-calculator {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             max-width: 100%;
             margin: 20px 0;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             overflow: hidden;
             direction: rtl;
             text-align: right;
+            position: relative;
         }
 
         .wp-water-pricing-calculator * {
@@ -20,10 +30,11 @@
             padding: 0;
         }
 
+        /* Enhanced Header with Water Animation */
         .wp-water-pricing-calculator .wpc-header {
-            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
             color: white;
-            padding: 24px 20px;
+            padding: 32px 24px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -32,61 +43,92 @@
         .wp-water-pricing-calculator .wpc-header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: wpc-ripple 3s infinite;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: wpc-water-flow 8s infinite ease-in-out;
         }
 
-        @keyframes wpc-ripple {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(1.2); opacity: 0; }
+        @keyframes wpc-water-flow {
+            0%, 100% { transform: translate(-20%, -20%) rotate(0deg); }
+            33% { transform: translate(-15%, -25%) rotate(120deg); }
+            66% { transform: translate(-25%, -15%) rotate(240deg); }
         }
 
         .wp-water-pricing-calculator .wpc-header h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
+        .wp-water-pricing-calculator .wpc-header .wpc-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+        }
+
+        /* Enhanced Content Area */
         .wp-water-pricing-calculator .wpc-content {
-            padding: 24px 20px;
+            padding: 32px 24px;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
         }
 
-        /* Enhanced Slider Section */
+        /* Enhanced Slider Section with Glass Effect */
         .wp-water-pricing-calculator .wpc-slider-section {
-            background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border: 1px solid #e2e8f0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.8) 100%);
+            backdrop-filter: blur(10px);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(226,232,240,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wp-water-pricing-calculator .wpc-slider-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6);
+            opacity: 0.6;
         }
 
         .wp-water-pricing-calculator .wpc-slider-container {
-            margin-bottom: 20px;
+            margin: 24px 0;
             position: relative;
         }
 
         .wp-water-pricing-calculator .wpc-slider-label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
             text-align: center;
         }
 
+        /* Enhanced Slider with Progressive Fill */
         .wp-water-pricing-calculator .wpc-consumption-slider {
             -webkit-appearance: none;
             width: 100%;
-            height: 8px;
-            border-radius: 20px;
+            height: 12px;
+            border-radius: 25px;
             background: linear-gradient(to left, #e2e8f0 0%, #cbd5e1 100%);
             outline: none;
-            margin: 20px 0;
+            margin: 24px 0;
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -95,50 +137,88 @@
         .wp-water-pricing-calculator .wpc-consumption-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: linear-gradient(145deg, #2196F3, #1976D2);
+            background: linear-gradient(145deg, #3b82f6, #1e40af);
             cursor: pointer;
-            border: 3px solid white;
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-            transition: all 0.2s ease;
+            border: 4px solid white;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .wp-water-pricing-calculator .wpc-consumption-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.6);
+            transform: scale(1.15);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .wp-water-pricing-calculator .wpc-consumption-slider::-webkit-slider-thumb:active {
+            transform: scale(1.05);
         }
 
         .wp-water-pricing-calculator .wpc-consumption-slider::-moz-range-thumb {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: linear-gradient(145deg, #2196F3, #1976D2);
+            background: linear-gradient(145deg, #3b82f6, #1e40af);
             cursor: pointer;
-            border: 3px solid white;
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-            transition: all 0.2s ease;
+            border: 4px solid white;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
         }
 
-        /* Enhanced Result Cards */
+        /* Slider Value Tooltip */
+        .wp-water-pricing-calculator .wpc-slider-tooltip {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transform: translateX(50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            top: -50px;
+            white-space: nowrap;
+        }
+
+        .wp-water-pricing-calculator .wpc-slider-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .wp-water-pricing-calculator .wpc-slider-tooltip.show {
+            opacity: 1;
+        }
+
+        /* Enhanced Result Cards with Animation */
         .wp-water-pricing-calculator .wpc-result-cards {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
         }
 
         .wp-water-pricing-calculator .wpc-result-card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             text-align: center;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #f1f5f9;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            transform: translateY(0);
         }
 
         .wp-water-pricing-calculator .wpc-result-card::before {
@@ -147,101 +227,141 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #2196F3, #1976D2);
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
             transform: scaleX(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+            transform-origin: left;
         }
 
         .wp-water-pricing-calculator .wpc-result-card:hover::before {
             transform: scaleX(1);
+            transform-origin: right;
         }
 
         .wp-water-pricing-calculator .wpc-result-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
         .wp-water-pricing-calculator .wpc-result-label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #64748b;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .wp-water-pricing-calculator .wpc-result-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            line-height: 1;
-        }
-
-        .wp-water-pricing-calculator .wpc-consumption-value {
-            color: #2196F3;
-        }
-
-        .wp-water-pricing-calculator .wpc-price-value {
-            color: #FF6B35;
-        }
-
-        .wp-water-pricing-calculator .wpc-unit {
-            font-size: 0.8rem;
-            color: #64748b;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin-bottom: 8px;
-        }
-
-        .wp-water-pricing-calculator .wpc-tier-badge {
-            display: inline-block;
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            background: #e3f2fd;
-            color: #1976d2;
+            line-height: 1;
             transition: all 0.3s ease;
         }
 
+        .wp-water-pricing-calculator .wpc-consumption-value {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wp-water-pricing-calculator .wpc-price-value {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wp-water-pricing-calculator .wpc-unit {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* Enhanced Tier Badges */
+        .wp-water-pricing-calculator .wpc-tier-badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            background: #e3f2fd;
+            color: #1976d2;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
         .wp-water-pricing-calculator .wpc-tier-badge.tier-1 { 
-            background: #e3f2fd; color: #1976d2; 
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1e40af;
+            border-color: rgba(30, 64, 175, 0.2);
         }
         .wp-water-pricing-calculator .wpc-tier-badge.tier-2 { 
-            background: #bbdefb; color: #1565c0; 
+            background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+            color: #1e40af;
+            border-color: rgba(30, 64, 175, 0.3);
         }
         .wp-water-pricing-calculator .wpc-tier-badge.tier-3 { 
-            background: #90caf9; color: #1565c0; 
+            background: linear-gradient(135deg, #93c5fd, #60a5fa);
+            color: #1e3a8a;
+            border-color: rgba(30, 58, 138, 0.3);
         }
         .wp-water-pricing-calculator .wpc-tier-badge.tier-4 { 
-            background: #64b5f6; color: #0d47a1; 
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+            border-color: rgba(59, 130, 246, 0.3);
         }
         .wp-water-pricing-calculator .wpc-tier-badge.tier-5 { 
-            background: #42a5f5; color: white; 
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border-color: rgba(37, 99, 235, 0.3);
         }
         .wp-water-pricing-calculator .wpc-tier-badge.tier-6 { 
-            background: #ffcc80; color: #e65100; 
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            border-color: rgba(239, 68, 68, 0.3);
         }
 
         /* Enhanced Chart Section */
         .wp-water-pricing-calculator .wpc-chart-section {
             background: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
             border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
         .wp-water-pricing-calculator .wpc-chart-title {
             text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #374151;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: #1e293b;
+            position: relative;
+        }
+
+        .wp-water-pricing-calculator .wpc-chart-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            border-radius: 2px;
         }
 
         .wp-water-pricing-calculator .wpc-bar-chart {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 32px;
         }
 
         .wp-water-pricing-calculator .wpc-bar-row {
@@ -249,176 +369,236 @@
             align-items: center;
             position: relative;
             cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 8px;
-            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid transparent;
         }
 
         .wp-water-pricing-calculator .wpc-bar-row:hover {
-            background: #f8fafc;
-            transform: translateX(-4px);
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            transform: translateX(-6px);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .wp-water-pricing-calculator .wpc-bar-row.active {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-color: #3b82f6;
+            transform: translateX(-8px);
         }
 
         .wp-water-pricing-calculator .wpc-bar-label {
+            width: 90px;
+            font-weight: 700;
+            text-align: right;
+            padding-right: 16px;
+            font-size: 0.95rem;
+            color: #1e293b;
+            flex-shrink: 0;
+        }
+
+        .wp-water-pricing-calculator .wpc-bar-range {
             width: 80px;
-            font-weight: 600;
+            font-size: 0.8rem;
+            color: #64748b;
             text-align: right;
             padding-right: 12px;
-            font-size: 0.9rem;
-            color: #374151;
             flex-shrink: 0;
         }
 
         .wp-water-pricing-calculator .wpc-bar-container {
             flex: 1;
-            height: 32px;
+            height: 40px;
             background: #f1f5f9;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .wp-water-pricing-calculator .wpc-bar {
             height: 100%;
             width: 0;
-            border-radius: 6px;
+            border-radius: 8px;
             position: relative;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             background: linear-gradient(90deg, #e3f2fd, #bbdefb);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .wp-water-pricing-calculator .wpc-bar.tier-1-bar { 
-            background: linear-gradient(90deg, #e3f2fd, #bbdefb); 
+            background: linear-gradient(90deg, #dbeafe, #bfdbfe); 
         }
         .wp-water-pricing-calculator .wpc-bar.tier-2-bar { 
-            background: linear-gradient(90deg, #bbdefb, #90caf9); 
+            background: linear-gradient(90deg, #bfdbfe, #93c5fd); 
         }
         .wp-water-pricing-calculator .wpc-bar.tier-3-bar { 
-            background: linear-gradient(90deg, #90caf9, #64b5f6); 
+            background: linear-gradient(90deg, #93c5fd, #60a5fa); 
         }
         .wp-water-pricing-calculator .wpc-bar.tier-4-bar { 
-            background: linear-gradient(90deg, #64b5f6, #42a5f5); 
+            background: linear-gradient(90deg, #60a5fa, #3b82f6); 
         }
         .wp-water-pricing-calculator .wpc-bar.tier-5-bar { 
-            background: linear-gradient(90deg, #42a5f5, #2196f3); 
+            background: linear-gradient(90deg, #3b82f6, #2563eb); 
         }
         .wp-water-pricing-calculator .wpc-bar.tier-6-bar { 
-            background: linear-gradient(90deg, #ffcc80, #ffb74d); 
+            background: linear-gradient(90deg, #f59e0b, #ef4444); 
         }
 
         .wp-water-pricing-calculator .wpc-bar-value {
             position: absolute;
-            right: 8px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #374151;
-            font-weight: 600;
+            color: #1e293b;
+            font-weight: 700;
             font-size: 0.9rem;
-            background: rgba(255,255,255,0.9);
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: rgba(255,255,255,0.95);
+            padding: 4px 8px;
+            border-radius: 6px;
             backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        /* Enhanced Footer */
         .wp-water-pricing-calculator .wpc-footer {
-            background: #f8fafc;
-            padding: 16px 20px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 20px 24px;
             text-align: center;
             color: #64748b;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             border-top: 1px solid #e2e8f0;
+            position: relative;
         }
 
-        /* Mobile Optimizations */
+        .wp-water-pricing-calculator .wpc-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+        }
+
+        /* Enhanced Mobile Optimizations */
         @media (max-width: 768px) {
+            .wp-water-pricing-calculator .wpc-header {
+                padding: 24px 16px;
+            }
+
             .wp-water-pricing-calculator .wpc-header h2 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             .wp-water-pricing-calculator .wpc-content {
-                padding: 20px 16px;
+                padding: 24px 16px;
             }
 
             .wp-water-pricing-calculator .wpc-slider-section,
             .wp-water-pricing-calculator .wpc-chart-section {
-                padding: 20px 16px;
+                padding: 24px 16px;
             }
 
             .wp-water-pricing-calculator .wpc-result-cards {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 16px;
             }
 
             .wp-water-pricing-calculator .wpc-result-value {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
 
             .wp-water-pricing-calculator .wpc-bar-label {
+                width: 75px;
+                font-size: 0.85rem;
+                padding-right: 10px;
+            }
+
+            .wp-water-pricing-calculator .wpc-bar-range {
                 width: 70px;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 padding-right: 8px;
             }
 
             .wp-water-pricing-calculator .wpc-bar-container {
-                height: 28px;
-            }
-
-            .wp-water-pricing-calculator .wpc-bar-value {
-                font-size: 0.8rem;
-                right: 6px;
+                height: 36px;
             }
 
             .wp-water-pricing-calculator .wpc-consumption-slider::-webkit-slider-thumb {
-                width: 24px;
-                height: 24px;
+                width: 28px;
+                height: 28px;
             }
 
             .wp-water-pricing-calculator .wpc-consumption-slider::-moz-range-thumb {
-                width: 24px;
-                height: 24px;
+                width: 28px;
+                height: 28px;
             }
         }
 
         @media (max-width: 480px) {
             .wp-water-pricing-calculator {
-                margin: 16px -10px;
-                border-radius: 8px;
+                margin: 16px 0;
+                border-radius: 12px;
             }
 
             .wp-water-pricing-calculator .wpc-header {
-                padding: 20px 16px;
+                padding: 20px 12px;
             }
 
             .wp-water-pricing-calculator .wpc-content {
-                padding: 16px 12px;
+                padding: 20px 12px;
             }
 
             .wp-water-pricing-calculator .wpc-slider-section,
             .wp-water-pricing-calculator .wpc-chart-section {
-                padding: 16px 12px;
+                padding: 20px 12px;
             }
 
             .wp-water-pricing-calculator .wpc-result-card {
-                padding: 16px;
+                padding: 20px;
             }
 
             .wp-water-pricing-calculator .wpc-chart-title {
                 font-size: 1.1rem;
             }
+
+            .wp-water-pricing-calculator .wpc-bar-row {
+                padding: 8px;
+            }
+
+            .wp-water-pricing-calculator .wpc-bar-label {
+                width: 60px;
+                font-size: 0.8rem;
+            }
+
+            .wp-water-pricing-calculator .wpc-bar-range {
+                width: 60px;
+                font-size: 0.7rem;
+            }
         }
 
-        /* WordPress Theme Compatibility */
-        .wp-water-pricing-calculator .wpc-result-card p,
-        .wp-water-pricing-calculator .wpc-chart-section p {
-            margin: 0 !important;
-            padding: 0 !important;
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .wp-water-pricing-calculator * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
-        .wp-water-pricing-calculator input[type="range"] {
-            margin: 20px 0 !important;
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            .wp-water-pricing-calculator .wpc-result-card {
+                border: 2px solid #000;
+            }
+            
+            .wp-water-pricing-calculator .wpc-bar {
+                border: 1px solid #000;
+            }
         }
 
-        /* Loading Animation */
+        /* Loading States */
         .wp-water-pricing-calculator .wpc-loading {
             display: flex;
             justify-content: center;
@@ -430,7 +610,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #2196F3;
+            border-top: 4px solid #3b82f6;
             border-radius: 50%;
             animation: wpc-spin 1s linear infinite;
         }
@@ -439,6 +619,18 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Progress bar for slider */
+        .wp-water-pricing-calculator .wpc-slider-progress {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 12px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            border-radius: 25px;
+            transition: width 0.3s ease;
+            pointer-events: none;
+        }
     </style>
 
     <div class="wpc-header">
@@ -446,11 +638,13 @@
     </div>
 
     <div class="wpc-content">
-        <!-- Slider Section -->
+        <!-- Enhanced Slider Section -->
         <div class="wpc-slider-section">
             <div class="wpc-slider-label">اختر كمية الاستهلاك الشهري</div>
             <div class="wpc-slider-container">
-                <input type="range" min="0" max="170" value="30" class="wpc-consumption-slider" id="wpcConsumptionSlider">
+                <div class="wpc-slider-progress" id="wpcSliderProgress"></div>
+                <input type="range" min="0" max="170" value="30" class="wpc-consumption-slider" id="wpcConsumptionSlider" aria-label="استهلاك المياه الشهري">
+                <div class="wpc-slider-tooltip" id="wpcSliderTooltip">30 متر مكعب</div>
             </div>
             
             <div class="wpc-result-cards">
@@ -461,14 +655,15 @@
                     <div class="wpc-tier-badge tier-2" id="wpcTierBadge">الشريحة 2</div>
                 </div>
                 <div class="wpc-result-card">
-                    <div class="wpc-result-label">سعر المتر المكعب</div>
-                    <div class="wpc-result-value wpc-price-value" id="wpcPriceValue">740</div>
-                    <div class="wpc-unit">مليم</div>
+                    <div class="wpc-result-label">التكلفة الإجمالية</div>
+                    <div class="wpc-result-value wpc-price-value" id="wpcTotalCost">22.200</div>
+                    <div class="wpc-unit">دينار</div>
+                    <div class="wpc-tier-badge tier-2" id="wpcPricePerUnit">740 مليم/م³</div>
                 </div>
             </div>
         </div>
 
-        <!-- Chart Section -->
+        <!-- Enhanced Chart Section -->
         <div class="wpc-chart-section">
             <div class="wpc-chart-title">شرائح تسعيرة المياه</div>
             <div class="wpc-bar-chart" id="wpcBarChart">
@@ -478,7 +673,7 @@
     </div>
 
     <div class="wpc-footer">
-        المصدر: الشركة التونسية لاستغلال وتوزيع المياه • 2024-2025
+        المصدر: الشركة التونسية لاستغلال وتوزيع المياه • 2024-2025<br>
     </div>
 
     <script>
@@ -493,37 +688,53 @@
             }
 
             function initWaterPricingCalculator() {
-                // Pricing data tiers
+                // Enhanced pricing data tiers with real costs
                 const tiers = [
-                    { min: 0, max: 20, price: 200, name: 'الشريحة 1', range: '0-20 م³' },
-                    { min: 21, max: 40, price: 740, name: 'الشريحة 2', range: '21-40 م³' },
-                    { min: 41, max: 70, price: 1040, name: 'الشريحة 3', range: '41-70 م³' },
-                    { min: 71, max: 100, price: 1490, name: 'الشريحة 4', range: '71-100 م³' },
-                    { min: 101, max: 150, price: 1770, name: 'الشريحة 5', range: '101-150 م³' },
-                    { min: 151, max: 170, price: 2310, name: 'الشريحة 6', range: '151-170 م³' }
+                    { min: 0, max: 20, price: 200, name: 'الشريحة 1', range: '0-20' },
+                    { min: 21, max: 40, price: 740, name: 'الشريحة 2', range: '21-40' },
+                    { min: 41, max: 70, price: 1040, name: 'الشريحة 3', range: '41-70' },
+                    { min: 71, max: 100, price: 1490, name: 'الشريحة 4', range: '71-100' },
+                    { min: 101, max: 150, price: 1770, name: 'الشريحة 5', range: '101-150' },
+                    { min: 151, max: 170, price: 2310, name: 'الشريحة 6', range: '151-170' }
                 ];
                 
                 // DOM elements
                 const slider = document.getElementById('wpcConsumptionSlider');
                 const consumptionValue = document.getElementById('wpcConsumptionValue');
-                const priceValue = document.getElementById('wpcPriceValue');
+                const totalCost = document.getElementById('wpcTotalCost');
                 const tierBadge = document.getElementById('wpcTierBadge');
+                const pricePerUnit = document.getElementById('wpcPricePerUnit');
                 const barChart = document.getElementById('wpcBarChart');
+                const sliderProgress = document.getElementById('wpcSliderProgress');
+                const tooltip = document.getElementById('wpcSliderTooltip');
                 
-                if (!slider || !consumptionValue || !priceValue || !tierBadge || !barChart) {
+                if (!slider || !consumptionValue || !totalCost || !tierBadge || !barChart) {
                     console.warn('Water Pricing Calculator: Required elements not found');
                     return;
                 }
                 
                 // Initialize
-                createBarChart();
+                createEnhancedBarChart();
                 updateConsumption();
+                updateSliderProgress();
                 
-                // Event listeners
-                slider.addEventListener('input', updateConsumption);
+                // Enhanced Event listeners
+                slider.addEventListener('input', function() {
+                    updateConsumption();
+                    updateSliderProgress();
+                    showTooltip();
+                });
+                
                 slider.addEventListener('change', updateConsumption);
                 
-                // Touch events for mobile
+                // Touch and mouse events for better interaction
+                slider.addEventListener('touchstart', showTooltip);
+                slider.addEventListener('mousedown', showTooltip);
+                slider.addEventListener('touchend', hideTooltip);
+                slider.addEventListener('mouseup', hideTooltip);
+                slider.addEventListener('mouseleave', hideTooltip);
+                
+                // Enhanced mobile touch feedback
                 slider.addEventListener('touchstart', function(e) {
                     e.target.style.transform = 'scale(1.02)';
                 });
@@ -532,7 +743,7 @@
                     e.target.style.transform = 'scale(1)';
                 });
 
-                function createBarChart() {
+                function createEnhancedBarChart() {
                     const maxPrice = Math.max(...tiers.map(t => t.price)) + 200;
                     
                     // Clear existing content
@@ -543,13 +754,21 @@
                         const barRow = document.createElement('div');
                         barRow.className = 'wpc-bar-row';
                         barRow.id = `wpc-bar-row-${index + 1}`;
+                        barRow.setAttribute('tabindex', '0');
+                        barRow.setAttribute('role', 'button');
+                        barRow.setAttribute('aria-label', `${tier.name}: ${tier.range} متر مكعب - ${tier.price} مليم`);
                         
-                        // Create label with tooltip info
+                        // Create label
                         const label = document.createElement('div');
                         label.className = 'wpc-bar-label';
                         label.textContent = tier.name;
-                        label.title = `${tier.range} - ${tier.price} مليم`;
                         barRow.appendChild(label);
+                        
+                        // Create range label
+                        const range = document.createElement('div');
+                        range.className = 'wpc-bar-range';
+                        range.textContent = tier.range + ' م³';
+                        barRow.appendChild(range);
                         
                         // Create bar container
                         const barContainer = document.createElement('div');
@@ -571,33 +790,33 @@
                         barRow.appendChild(barContainer);
                         barChart.appendChild(barRow);
                         
-                        // Animate bar width with delay
+                        // Animate bar width with staggered delay
                         setTimeout(() => {
                             bar.style.width = `${(tier.price / maxPrice) * 100}%`;
-                        }, 200 + (index * 100));
+                        }, 300 + (index * 150));
                         
-                        // Make bar clickable
-                        barRow.addEventListener('click', function() {
+                        // Enhanced click interaction
+                        const clickHandler = function() {
                             const midpoint = Math.floor((tier.min + tier.max) / 2);
                             slider.value = midpoint;
                             updateConsumption();
+                            updateSliderProgress();
                             
-                            // Visual feedback
-                            barRow.style.transform = 'translateX(-8px)';
+                            // Enhanced visual feedback
+                            barRow.style.transform = 'translateX(-12px)';
+                            barRow.style.background = 'linear-gradient(135deg, #dbeafe, #bfdbfe)';
                             setTimeout(() => {
-                                barRow.style.transform = 'translateX(-4px)';
-                            }, 150);
-                        });
-
-                        // Add hover effect for desktop
-                        barRow.addEventListener('mouseenter', function() {
-                            if (window.innerWidth > 768) {
-                                bar.style.filter = 'brightness(1.1)';
+                                barRow.style.transform = 'translateX(-6px)';
+                                barRow.style.background = '';
+                            }, 200);
+                        };
+                        
+                        barRow.addEventListener('click', clickHandler);
+                        barRow.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                clickHandler();
                             }
-                        });
-
-                        barRow.addEventListener('mouseleave', function() {
-                            bar.style.filter = 'brightness(1)';
                         });
                     });
                 }
@@ -605,22 +824,47 @@
                 function updateConsumption() {
                     const consumption = parseInt(slider.value);
                     
-                    // Find tier for the consumption value
+                    // Calculate progressive total cost
+                    const totalCostValue = calculateProgressiveCost(consumption);
                     const tierIndex = getTierIndex(consumption);
                     const tier = tiers[tierIndex];
                     
                     if (!tier) return;
                     
-                    // Update display with animation
-                    animateValue(consumptionValue, parseInt(consumptionValue.textContent) || 0, consumption, 300);
-                    animateValue(priceValue, parseInt(priceValue.textContent) || 0, tier.price, 300);
+                    // Update display with enhanced animation
+                    animateValue(consumptionValue, parseInt(consumptionValue.textContent) || 0, consumption, 400);
+                    animateValue(totalCost, parseFloat(totalCost.textContent) || 0, totalCostValue / 1000, 400, 3);
                     
-                    // Update tier badge
+                    // Update tier badge and price per unit
                     tierBadge.textContent = tier.name;
                     tierBadge.className = `wpc-tier-badge tier-${tierIndex + 1}`;
+                    pricePerUnit.textContent = `${tier.price} مليم/م³`;
+                    pricePerUnit.className = `wpc-tier-badge tier-${tierIndex + 1}`;
                     
                     // Update active states
                     updateActiveStates(tierIndex);
+                    
+                    // Update tooltip
+                    tooltip.textContent = `${consumption} متر مكعب`;
+                }
+
+                function calculateProgressiveCost(consumption) {
+                    let totalCost = 0;
+                    let remainingConsumption = consumption;
+                    
+                    for (const tier of tiers) {
+                        if (remainingConsumption <= 0) break;
+                        
+                        const tierCapacity = tier.max - tier.min + 1;
+                        const consumedInTier = Math.min(remainingConsumption, tierCapacity);
+                        
+                        if (consumption >= tier.min) {
+                            totalCost += consumedInTier * tier.price;
+                            remainingConsumption -= consumedInTier;
+                        }
+                    }
+                    
+                    return totalCost;
                 }
 
                 function getTierIndex(consumption) {
@@ -632,25 +876,55 @@
                     return 0;
                 }
 
+                function updateSliderProgress() {
+                    const value = parseInt(slider.value);
+                    const max = parseInt(slider.max);
+                    const percentage = (value / max) * 100;
+                    
+                    if (sliderProgress) {
+                        sliderProgress.style.width = `${percentage}%`;
+                    }
+                }
+
+                function showTooltip() {
+                    if (tooltip) {
+                        const value = parseInt(slider.value);
+                        const max = parseInt(slider.max);
+                        const percentage = (value / max) * 100;
+                        
+                        tooltip.style.right = `${percentage}%`;
+                        tooltip.classList.add('show');
+                        tooltip.textContent = `${value} متر مكعب`;
+                    }
+                }
+
+                function hideTooltip() {
+                    if (tooltip) {
+                        setTimeout(() => {
+                            tooltip.classList.remove('show');
+                        }, 1000);
+                    }
+                }
+
                 function updateActiveStates(activeTierIndex) {
-                    // Update bar chart highlighting
+                    // Update bar chart highlighting with enhanced effects
                     document.querySelectorAll('.wpc-bar-row').forEach((row, index) => {
                         const bar = document.getElementById(`wpc-bar-${index + 1}`);
                         if (bar) {
                             if (index === activeTierIndex) {
                                 bar.style.opacity = "1";
-                                bar.style.filter = "brightness(1.1)";
-                                row.style.background = "rgba(33, 150, 243, 0.05)";
+                                bar.style.filter = "brightness(1.1) saturate(1.2)";
+                                row.classList.add('active');
                             } else {
-                                bar.style.opacity = "0.7";
-                                bar.style.filter = "brightness(1)";
-                                row.style.background = "transparent";
+                                bar.style.opacity = "0.6";
+                                bar.style.filter = "brightness(0.9) saturate(0.8)";
+                                row.classList.remove('active');
                             }
                         }
                     });
                 }
 
-                function animateValue(element, start, end, duration) {
+                function animateValue(element, start, end, duration, decimals = 0) {
                     if (!element) return;
                     
                     const startTimestamp = performance.now();
@@ -658,11 +932,11 @@
                         const elapsed = timestamp - startTimestamp;
                         const progress = Math.min(elapsed / duration, 1);
                         
-                        // Easing function
-                        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                        const current = Math.round(start + (end - start) * easeOutQuart);
+                        // Enhanced easing function
+                        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                        const current = start + (end - start) * easeOutCubic;
                         
-                        element.textContent = current;
+                        element.textContent = decimals > 0 ? current.toFixed(decimals) : Math.round(current);
                         
                         if (progress < 1) {
                             requestAnimationFrame(step);
@@ -670,7 +944,24 @@
                     };
                     requestAnimationFrame(step);
                 }
+
+                // Keyboard navigation
+                document.addEventListener('keydown', function(e) {
+                    if (e.target === slider) {
+                        showTooltip();
+                        setTimeout(hideTooltip, 2000);
+                    }
+                });
+
+                // Initialize with animation delay
+                setTimeout(() => {
+                    updateConsumption();
+                    updateSliderProgress();
+                }, 100);
             }
         })();
     </script>
 </div>
+
+</body>
+</html>

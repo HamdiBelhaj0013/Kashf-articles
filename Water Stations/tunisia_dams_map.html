@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة السدود في تونس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+</head>
+<body>
+
+<div class="tunisia-dams-map-widget">
+    <!-- Header Section -->
+    <header class="map-widget-header">
+        <div class="header-content">
+            <h2 class="widget-title">
+                <span class="title-icon">🏔️</span>
+                خريطة السدود في تونس
+            </h2>
+            <p class="widget-description">
+                انقر على أي سد في الخريطة لعرض المعلومات التفصيلية
+            </p>
+        </div>
+    </header>
+
+    <!-- Map Container -->
+    <section class="map-section">
+        <div class="map-container">
+            <!-- Loading Overlay -->
+            <div class="map-loading" id="mapLoading">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل الخريطة...</p>
+            </div>
+            
+            <!-- Map Element -->
+            <div id="damsMap" class="interactive-map"></div>
+            
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="control-btn zoom-tunisia" id="zoomTunisia" title="عرض تونس كاملة">
+                    <span>🇹🇳</span>
+                </button>
+                <button class="control-btn zoom-all-dams" id="zoomAllDams" title="عرض جميع السدود">
+                    <span>🏔️</span>
+                </button>
+            </div>
+            
+            <!-- Capacity Legend -->
+            <div class="capacity-legend">
+                <div class="legend-title">سعة السدود (مليون م³)</div>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="capacity-dot small"></span>
+                        <span>أقل من 50</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="capacity-dot medium"></span>
+                        <span>50 - 100</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="capacity-dot large"></span>
+                        <span>أكثر من 100</span>
+                    </div>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.75rem; color: #666; text-align: center;">
+                    البيانات: 3 يونيو 2025
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dams Statistics -->
+    <section class="dams-stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">🏔️</div>
+                <div class="stat-value" id="totalDams">36</div>
+                <div class="stat-label">إجمالي السدود</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💧</div>
+                <div class="stat-value" id="totalCapacity">2.37</div>
+                <div class="stat-label">السعة الإجمالية (مليار م³)</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="fillRate">39.8%</div>
+                <div class="stat-label">معدل الامتلاء</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="widget-footer">
+        <p>المصدر: وزارة الفلاحة والموارد المائية والصيد البحري • آخر تحديث: 3 يونيو 2025</p>
+    </footer>
+</div>
+
+<style>
+:root {
+    --primary-blue: #0077be;
+    --secondary-blue: #4a9eff;
+    --accent-orange: #ff6b35;
+    --success-green: #00c851;
+    --warning-amber: #ffbb33;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #6c757d;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --border-color: #dee2e6;
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-heavy: 0 8px 25px rgba(0,0,0,0.2);
+    --radius-small: 8px;
+    --radius-medium: 12px;
+    --radius-large: 16px;
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tunisia-dams-map-widget {
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    border-radius: var(--radius-large);
+    overflow: hidden;
+    box-shadow: var(--shadow-heavy);
+    direction: rtl;
+    line-height: 1.6;
+    position: relative;
+}
+
+/* Header Styles */
+.map-widget-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: white;
+    padding: clamp(20px, 5vw, 32px);
+    position: relative;
+    overflow: hidden;
+}
+
+.map-widget-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, -20px) rotate(180deg); }
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.widget-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.title-icon {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.widget-description {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Map Section */
+.map-section {
+    padding: clamp(16px, 4vw, 24px);
+    background: var(--bg-secondary);
+}
+
+.map-container {
+    position: relative;
+    height: clamp(400px, 70vw, 600px);
+    background: var(--bg-primary);
+    border-radius: var(--radius-medium);
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    border: 2px solid var(--border-color);
+}
+
+.map-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity var(--transition-medium);
+}
+
+.map-loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.interactive-map {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-medium);
+}
+
+/* Map Controls */
+.map-controls {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-light);
+}
+
+.control-btn:hover {
+    background: var(--secondary-blue);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Capacity Legend */
+.capacity-legend {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-small);
+    padding: 12px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.legend-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.capacity-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.capacity-dot.small {
+    background: var(--accent-orange);
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3);
+}
+
+.capacity-dot.medium {
+    background: var(--warning-amber);
+    box-shadow: 0 0 0 2px rgba(255, 187, 51, 0.3);
+}
+
+.capacity-dot.large {
+    background: var(--success-green);
+    box-shadow: 0 0 0 2px rgba(0, 200, 81, 0.3);
+}
+
+/* Statistics Section */
+.dams-stats {
+    padding: clamp(20px, 5vw, 32px);
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: clamp(12px, 3vw, 16px);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-medium);
+    padding: clamp(16px, 4vw, 20px);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-medium);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Footer */
+.widget-footer {
+    background: var(--bg-tertiary);
+    padding: clamp(12px, 3vw, 16px);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.widget-footer p {
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .tunisia-dams-map-widget {
+        border-radius: var(--radius-medium);
+        margin: 8px;
+    }
+    
+    .capacity-legend {
+        position: static;
+        margin-top: 12px;
+        background: var(--bg-primary);
+        backdrop-filter: none;
+    }
+    
+    .legend-items {
+        flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+    }
+    
+    .map-controls {
+        top: 8px;
+        left: 8px;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .tunisia-dams-map-widget {
+        margin: 4px;
+        border-radius: var(--radius-small);
+    }
+    
+    .map-container {
+        height: 300px;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+    }
+}
+
+/* Custom Leaflet Popup Styles */
+.leaflet-popup-content-wrapper {
+    border-radius: var(--radius-small) !important;
+    box-shadow: var(--shadow-medium) !important;
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px !important;
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Tajawal', sans-serif !important;
+    line-height: 1.5 !important;
+}
+
+.leaflet-popup-tip {
+    box-shadow: var(--shadow-light) !important;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+</style>
+
+<script>
+(function() {
+    'use strict';
+    
+    // Latest dams data from CSV (June 3, 2025)
+    const DAMS_DATA = [
+        { nameFr: 'mellegue', nameAr: 'مـــــلاق', latitude: 36.3144, longitude: 8.70273, capacity: 51.13, currentStock: 21.7656, fillPercentage: 42.6, yearBuilt: 1954, lastUpdated: '2025-06-03' },
+        { nameFr: 'sarrat', nameAr: 'سراط', latitude: 35.8322, longitude: 8.4434, capacity: 21, currentStock: 9.37711, fillPercentage: 44.7, yearBuilt: 2016, lastUpdated: '2025-06-03' },
+        { nameFr: 'benmetir', nameAr: 'بني مطيــر', latitude: 36.7471, longitude: 8.7419, capacity: 60.393, currentStock: 45.2918, fillPercentage: 75.0, yearBuilt: 1954, lastUpdated: '2025-06-03' },
+        { nameFr: 'kasseb', nameAr: 'كســاب', latitude: 36.7614, longitude: 9.0024, capacity: 76.9, currentStock: 27.1832, fillPercentage: 35.3, yearBuilt: 1968, lastUpdated: '2025-06-03' },
+        { nameFr: 'barbara', nameAr: 'بربرة', latitude: 36.7341, longitude: 8.53173, capacity: 60.545, currentStock: 60.5881, fillPercentage: 100.1, yearBuilt: 1998, lastUpdated: '2025-06-03' },
+        { nameFr: 'sidisalem', nameAr: 'سيدي ســــالم', latitude: 36.5907, longitude: 9.3971, capacity: 580.348, currentStock: 185.967, fillPercentage: 32.0, yearBuilt: 1982, lastUpdated: '2025-06-03' },
+        { nameFr: 'bouheurtma', nameAr: 'بو هرتمـــــه', latitude: 36.6719, longitude: 8.78758, capacity: 145.037, currentStock: 72.1886, fillPercentage: 49.8, yearBuilt: 1976, lastUpdated: '2025-06-03' },
+        { nameFr: 'joumine', nameAr: 'جوميــــــن', latitude: 36.9909, longitude: 9.6137, capacity: 118.773, currentStock: 81.4451, fillPercentage: 68.6, yearBuilt: 1984, lastUpdated: '2025-06-03' },
+        { nameFr: 'ghezala', nameAr: 'غزالـــــــة', latitude: 37.0594, longitude: 9.5458, capacity: 10.004, currentStock: 5.99639, fillPercentage: 59.9, yearBuilt: 1998, lastUpdated: '2025-06-03' },
+        { nameFr: 'melah', nameAr: 'المالح', latitude: 37.0761, longitude: 9.4488, capacity: 41, currentStock: 17.6881, fillPercentage: 43.1, yearBuilt: 1954, lastUpdated: '2025-06-03' },
+        { nameFr: 'tine', nameAr: 'الطين', latitude: 36.8, longitude: 9.95, capacity: 26.5, currentStock: 14.8305, fillPercentage: 56.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'sejnane', nameAr: 'سجنــــــان', latitude: 37.0458, longitude: 9.2381, capacity: 59.5, currentStock: 13.3071, fillPercentage: 22.4, yearBuilt: 1994, lastUpdated: '2025-06-03' },
+        { nameFr: 'zarqa', nameAr: 'الزرقـة', latitude: 35.65, longitude: 8.85, capacity: 2.85, currentStock: 0.626025, fillPercentage: 22.0, yearBuilt: 1988, lastUpdated: '2025-06-03' },
+        { nameFr: 'elkebir', nameAr: 'الكبيــر', latitude: 36.4792, longitude: 9.2125, capacity: 128.45, currentStock: 30.7279, fillPercentage: 23.9, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'elmaoula', nameAr: 'المولى', latitude: 36.25, longitude: 9.05, capacity: 15, currentStock: 4.17375, fillPercentage: 27.8, yearBuilt: 1988, lastUpdated: '2025-06-03' },
+        { nameFr: 'sidibarrak', nameAr: 'سيدي البــــراق', latitude: 36.9, longitude: 10.1, capacity: 10, currentStock: 1.47735, fillPercentage: 14.8, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'ziatin', nameAr: 'الزياتيـن', latitude: 36.15, longitude: 10.4, capacity: 12, currentStock: 2.29248, fillPercentage: 19.1, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'qamqoum', nameAr: 'القمقـوم', latitude: 35.9, longitude: 10.25, capacity: 10.2, currentStock: 1.39926, fillPercentage: 13.7, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'haraka', nameAr: 'الحركـة', latitude: 35.75, longitude: 10.45, capacity: 7.5, currentStock: 1.2375, fillPercentage: 16.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'siliana', nameAr: 'سليانـــــــة', latitude: 36.0833, longitude: 9.3667, capacity: 64.5, currentStock: 25.1865, fillPercentage: 39.1, yearBuilt: 1987, lastUpdated: '2025-06-03' },
+        { nameFr: 'rmil', nameAr: 'الرميــــــل', latitude: 36.1, longitude: 8.7, capacity: 15, currentStock: 5.5125, fillPercentage: 36.8, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'nabhana', nameAr: 'نبهانــــــــة', latitude: 35.1, longitude: 9.45, capacity: 87.89, currentStock: 27.9448, fillPercentage: 31.8, yearBuilt: 1968, lastUpdated: '2025-06-03' },
+        { nameFr: 'bouzid', nameAr: 'بوزيد', latitude: 35.04, longitude: 9.11, capacity: 38.8, currentStock: 21.7576, fillPercentage: 56.1, yearBuilt: 1988, lastUpdated: '2025-06-03' },
+        { nameFr: 'skhira', nameAr: 'السخيرة', latitude: 34.3, longitude: 10.15, capacity: 2, currentStock: 0.3596, fillPercentage: 18.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'zeroud', nameAr: 'الزرود', latitude: 34.8, longitude: 9.9, capacity: 60, currentStock: 19.2, fillPercentage: 32.0, yearBuilt: 1987, lastUpdated: '2025-06-03' },
+        { nameFr: 'elhaouareb', nameAr: 'الهوارب', latitude: 35.6, longitude: 9.8, capacity: 67.5, currentStock: 27.4725, fillPercentage: 40.7, yearBuilt: 1989, lastUpdated: '2025-06-03' },
+        { nameFr: 'nebeur', nameAr: 'نبـــــــــــر', latitude: 36.15, longitude: 8.75, capacity: 28.5, currentStock: 12.9795, fillPercentage: 45.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'mtergua', nameAr: 'متــــــــــرقه', latitude: 33.5, longitude: 10.8, capacity: 5.2, currentStock: 1.14244, fillPercentage: 22.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'benzert', nameAr: 'بنزرت', latitude: 37.25, longitude: 9.8667, capacity: 65, currentStock: 13.065, fillPercentage: 20.1, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'chaiba', nameAr: 'الشايبة', latitude: 34.6, longitude: 10.5, capacity: 34, currentStock: 17.068, fillPercentage: 50.2, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'masri', nameAr: 'المسري', latitude: 33.1, longitude: 11.1, capacity: 18, currentStock: 8.28, fillPercentage: 46.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'sejoumi', nameAr: 'السجومـــــــي', latitude: 36.8, longitude: 10.2, capacity: 128, currentStock: 36.608, fillPercentage: 28.6, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'lakhmess', nameAr: 'لخمس', latitude: 35.4, longitude: 9.6, capacity: 15.5, currentStock: 7.20975, fillPercentage: 46.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'lechkel', nameAr: 'الشـــــــكال', latitude: 35.7, longitude: 10.3, capacity: 10.2, currentStock: 1.52766, fillPercentage: 15.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'zitouna', nameAr: 'الزيتونة', latitude: 35.9, longitude: 10.6, capacity: 12, currentStock: 2.76, fillPercentage: 23.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'bir_mcherga', nameAr: 'بئر مشارقة', latitude: 36.0, longitude: 10.8, capacity: 125, currentStock: 33.125, fillPercentage: 26.5, yearBuilt: 1999, lastUpdated: '2025-06-03' }
+    ];
+    
+    // Configuration
+    const CONFIG = {
+        mapCenter: [34.5, 9.5],
+        mapZoom: { desktop: 7, mobile: 6 },
+        mapBounds: [[29.5, 6.5], [38.0, 12.5]]
+    };
+    
+    // Global variables
+    let map = null;
+    let damMarkers = [];
+    
+    // DOM elements
+    let mapElement, mapLoading;
+    
+    // Initialize the widget
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeWidget();
+    });
+    
+    function initializeWidget() {
+        // Get DOM elements
+        mapElement = document.getElementById('damsMap');
+        mapLoading = document.getElementById('mapLoading');
+        
+        if (!mapElement) {
+            console.error('Tunisia Dams Map: Map element not found');
+            return;
+        }
+        
+        // Initialize components
+        initializeMap();
+        setupEventListeners();
+        updateStatistics();
+        
+        // Hide loading after a short delay
+        setTimeout(() => {
+            hideLoading();
+        }, 1500);
+    }
+    
+    function initializeMap() {
+        if (!mapElement) return;
+        
+        try {
+            // Initialize map
+            const isMobile = window.innerWidth <= 768;
+            const initialZoom = isMobile ? CONFIG.mapZoom.mobile : CONFIG.mapZoom.desktop;
+            
+            map = L.map('damsMap', {
+                center: CONFIG.mapCenter,
+                zoom: initialZoom,
+                minZoom: 5,
+                maxZoom: 12,
+                maxBounds: CONFIG.mapBounds,
+                maxBoundsViscosity: 1.0,
+                zoomControl: false
+            });
+            
+            // Add custom zoom control
+            L.control.zoom({ position: 'bottomleft' }).addTo(map);
+            
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 12
+            }).addTo(map);
+            
+            // Create dam markers
+            createDamMarkers();
+            
+            // Add Tunisia border (simplified)
+            addTunisiaBorder();
+            
+        } catch (error) {
+            console.error('Tunisia Dams Map: Failed to initialize map', error);
+            showMapError();
+        }
+    }
+    
+    function createDamMarkers() {
+        DAMS_DATA.forEach(dam => {
+            const marker = createDamMarker(dam);
+            damMarkers.push(marker);
+            marker.addTo(map);
+        });
+    }
+    
+    function createDamMarker(dam) {
+        const capacity = dam.capacity || 0;
+        let sizeClass, color, size;
+        
+        // Determine marker size and color based on capacity
+        if (capacity < 50) {
+            sizeClass = 'small';
+            color = '#ff6b35';  // Orange for small capacity
+            size = 30;
+        } else if (capacity <= 100) {
+            sizeClass = 'medium';
+            color = '#ffbb33';  // Amber for medium capacity
+            size = 35;
+        } else {
+            sizeClass = 'large';
+            color = '#00c851';  // Green for large capacity
+            size = 40;
+        }
+        
+        const icon = L.divIcon({
+            className: `custom-dam-marker ${sizeClass}`,
+            html: `
+                <div style="
+                    background: ${color};
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 9px;
+                    text-align: center;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                    border: 2px solid white;
+                    font-family: 'Tajawal', sans-serif;
+                    line-height: 1.1;
+                    padding: 1px;
+                    transform: rotate(45deg);
+                    position: relative;
+                ">
+                    <span style="transform: rotate(-45deg); font-size: 10px;">🏔️</span>
+                </div>
+            `,
+            iconSize: [size, size],
+            iconAnchor: [size/2, size/2]
+        });
+        
+        const marker = L.marker([dam.latitude, dam.longitude], { icon });
+        
+        // Create popup content
+        const statusText = dam.fillPercentage > 80 ? 'ممتلئ' : dam.fillPercentage > 50 ? 'متوسط' : 'منخفض';
+        const statusColor = dam.fillPercentage > 80 ? '#00c851' : dam.fillPercentage > 50 ? '#ffbb33' : '#ff6b35';
+        
+        const popupContent = `
+            <div style="text-align: center; min-width: 250px;">
+                <h4 style="margin: 0 0 8px 0; color: #0077be; font-size: 1.1rem;">${dam.nameAr}</h4>
+                <p style="margin: 4px 0; font-size: 0.85rem; color: #666;">(${dam.nameFr})</p>
+                <div style="margin: 8px 0; padding: 8px; background: #f8f9fa; border-radius: 6px;">
+                    <p style="margin: 2px 0; font-size: 0.9rem;"><strong>السعة الكلية:</strong> ${dam.capacity.toFixed(2)} مليون م³</p>
+                    <p style="margin: 2px 0; font-size: 0.9rem;"><strong>المخزون الحالي:</strong> ${dam.currentStock.toFixed(2)} مليون م³</p>
+                    <p style="margin: 2px 0; font-size: 0.9rem;">
+                        <strong>نسبة الامتلاء:</strong> 
+                        <span style="color: ${statusColor}; font-weight: bold;">${dam.fillPercentage.toFixed(1)}%</span>
+                        (${statusText})
+                    </p>
+                </div>
+                <p style="margin: 4px 0; font-size: 0.85rem; color: #888;">سنة الإنجاز: ${dam.yearBuilt || 'غير محدد'}</p>
+                <p style="margin: 4px 0; font-size: 0.8rem; color: #999;">آخر تحديث: ${dam.lastUpdated}</p>
+            </div>
+        `;
+        
+        marker.bindPopup(popupContent, {
+            maxWidth: 250,
+            className: 'custom-popup'
+        });
+        
+        return marker;
+    }
+    
+    function addTunisiaBorder() {
+        // Expanded Tunisia border coordinates for better coverage
+        const tunisiaBorder = [
+            [30.2350, 9.4921], [30.3500, 10.2000], [30.5290, 10.8032], 
+            [32.0000, 11.4000], [33.1376, 11.5600], [34.5000, 11.0000],
+            [37.3400, 9.7769], [37.5000, 9.2000], [36.9520, 8.3301], 
+            [35.5000, 7.5000], [33.7963, 7.9443], [32.0000, 8.2000],
+            [31.4945, 8.4375], [30.8000, 8.8000], [30.2350, 9.4921]
+        ];
+        
+        L.polyline(tunisiaBorder, {
+            color: '#0077be',
+            weight: 2,
+            opacity: 0.6,
+            dashArray: '5, 5'
+        }).addTo(map);
+    }
+    
+    function setupEventListeners() {
+        // Zoom to Tunisia button
+        const zoomBtn = document.getElementById('zoomTunisia');
+        if (zoomBtn) {
+            zoomBtn.addEventListener('click', () => {
+                if (map) {
+                    const isMobile = window.innerWidth <= 768;
+                    const zoom = isMobile ? CONFIG.mapZoom.mobile : CONFIG.mapZoom.desktop;
+                    map.setView(CONFIG.mapCenter, zoom);
+                }
+            });
+        }
+        
+        // Zoom to all dams button
+        const zoomAllDamsBtn = document.getElementById('zoomAllDams');
+        if (zoomAllDamsBtn) {
+            zoomAllDamsBtn.addEventListener('click', () => {
+                if (map && damMarkers.length > 0) {
+                    const group = new L.featureGroup(damMarkers);
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+            });
+        }
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (map) {
+                    map.invalidateSize();
+                }
+            }, 250);
+        });
+    }
+    
+    function updateStatistics() {
+        const totalCapacity = DAMS_DATA.reduce((sum, dam) => sum + (dam.capacity || 0), 0);
+        const totalCurrentStock = DAMS_DATA.reduce((sum, dam) => sum + (dam.currentStock || 0), 0);
+        const avgFillPercentage = DAMS_DATA.reduce((sum, dam) => sum + (dam.fillPercentage || 0), 0) / DAMS_DATA.length;
+        
+        // Update DOM elements
+        const totalDamsEl = document.getElementById('totalDams');
+        const totalCapacityEl = document.getElementById('totalCapacity');
+        const currentStockEl = document.getElementById('currentStock');
+        const fillRateEl = document.getElementById('fillRate');
+        
+        if (totalDamsEl) totalDamsEl.textContent = DAMS_DATA.length;
+        if (totalCapacityEl) totalCapacityEl.textContent = (totalCapacity / 1000).toFixed(2);
+        if (currentStockEl) currentStockEl.textContent = (totalCurrentStock / 1000).toFixed(2);
+        if (fillRateEl) fillRateEl.textContent = avgFillPercentage.toFixed(1) + '%';
+    }
+    
+    function hideLoading() {
+        if (mapLoading) {
+            mapLoading.classList.add('hidden');
+            setTimeout(() => {
+                mapLoading.style.display = 'none';
+            }, 300);
+        }
+    }
+    
+    function showMapError() {
+        if (mapLoading) {
+            mapLoading.innerHTML = `
+                <div style="text-align: center; color: #dc3545;">
+                    <div style="font-size: 2rem; margin-bottom: 16px;">⚠️</div>
+                    <p>حدث خطأ في تحميل الخريطة</p>
+                    <button onclick="location.reload()" style="background: #0077be; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px;">
+                        إعادة المحاولة
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    // Public API
+    window.TunisiaDamsMap = {
+        refreshMap: () => {
+            if (map) {
+                map.invalidateSize();
+            }
+        },
+        zoomToAllDams: () => {
+            if (map && damMarkers.length > 0) {
+                const group = new L.featureGroup(damMarkers);
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+    };
+    
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1525 @@
+<!-- WordPress-Compatible Tunisian Prison Cases - Optimized -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="prison-cases-wp" id="prisonCasesContainer">
+    <!-- Header -->
+    <div class="header-wp">
+        <div class="header-content-wp">
+            <div class="header-text-wp">
+                <h1 class="main-title-wp">حالة الموت المستراب داخل السجون التونسية </h1>
+                <p class="header-subtitle-wp">شهادات على انتهاكات حقوق الإنسان</p>
+            </div>
+            <div class="action-buttons-wp">
+                <button class="action-btn-wp" onclick="toggleFullscreenPrison()" title="ملء الشاشة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 14H5V19H10V17H7V14ZM5 10H7V7H10V5H5V10ZM17 17H14V19H19V14H17V17ZM14 5V7H17V10H19V5H14Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-wp">
+        <button class="tab-wp active" onclick="showTabPrison(0, this)">عبيد</button>
+        <button class="tab-wp" onclick="showTabPrison(1, this)">عبد السلام</button>
+        <button class="tab-wp" onclick="showTabPrison(2, this)">حمدي</button>
+        <button class="tab-wp" onclick="showTabPrison(3, this)">محمد حجي</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content-container-wp">
+        <!-- Case 1: عبيد -->
+        <div class="tab-content-wp active">
+            <div class="prisoner-card-wp">
+                <div class="prisoner-header-wp">
+                    <div class="grave-icon-wp">
+                        <svg viewBox="0 0 100 160" width="70" height="105">
+                            <defs>
+                                <linearGradient id="stoneGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8a8a8a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#6a6a6a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="baseGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#616161;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+                                </linearGradient>
+                                <radialGradient id="groundGradient1" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" style="stop-color:#5d4037;stop-opacity:1" />
+                                    <stop offset="60%" style="stop-color:#4a3728;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                                </radialGradient>
+                                <linearGradient id="barGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="50" cy="148" rx="48" ry="10" fill="url(#groundGradient1)" opacity="0.8"/>
+                            <ellipse cx="50" cy="145" rx="45" ry="8" fill="#5d4037"/>
+                            <ellipse cx="50" cy="143" rx="40" ry="6" fill="#6d4c41"/>
+                            <rect x="10" y="125" width="80" height="18" rx="3" fill="url(#baseGradient1)" stroke="#424242" stroke-width="1"/>
+                            <path d="M15 45 C15 22, 30 12, 50 12 C70 12, 85 22, 85 45 L85 125 L15 125 Z" fill="url(#stoneGradient1)" stroke="#424242" stroke-width="1.5"/>
+                            <g opacity="1">
+                                <rect x="24" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="31" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="38" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="45" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="52" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="59" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="66" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                                <rect x="73" y="35" width="3" height="25" fill="url(#barGradient1)" rx="1.5"/>
+                            </g>
+                            <rect x="22" y="39" width="58" height="3.5" fill="url(#barGradient1)" rx="1.5"/>
+                            <rect x="22" y="52" width="58" height="3.5" fill="url(#barGradient1)" rx="1.5"/>
+                            <circle cx="30" cy="80" r="4.5" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="0.5"/>
+                            <rect x="40" y="100" width="20" height="8" fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+                            <text x="50" y="106" text-anchor="middle" font-size="7" fill="#333" font-family="monospace" font-weight="bold">19</text>
+                        </svg>
+                    </div>
+                    <div class="prisoner-name-wp">عبيد</div>
+                </div>
+                
+                <div class="info-grid-wp">
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">العمر</span>
+                        <span class="info-value-wp">19 سنة</span>
+                    </div>
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">التهمة</span>
+                        <span class="info-value-wp">حيازة القنب الهندي</span>
+                    </div>
+                </div>
+
+                <div class="health-section-wp">
+                    <div class="health-title-wp">
+                        <span class="health-warning-icon-wp">⚠️</span>
+                        السجل الطبي والوفاة
+                        <span class="health-warning-icon-wp">⚠️</span>
+                    </div>
+                    <div class="health-comparison-wp">
+                        <div class="health-before-wp">
+                            <div class="health-status-wp">قبل دخول السجن</div>
+                            <div class="health-description-wp">✅ شاب بصحة جيدة<br>✅ لا يعاني من أمراض مزمنة<br>✅ حالة جسدية ونفسية سليمة</div>
+                        </div>
+                        <div class="health-after-wp">
+                            <div class="health-status-wp">بعد دخول السجن</div>
+                            <div class="health-description-wp">💀 تدهور مفاجئ وسريع<br>💀 عدم توفير العلاج الطبي<br>💀 الوفاة في ظروف مشبوهة</div>
+                        </div>
+                    </div>
+                    
+                    <div class="health-timeline-wp">
+                        <div class="timeline-title-wp">📅 الخط الزمني للأحداث</div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp entry"></div>
+                            <div class="timeline-text-wp">دخول السجن بصحة جيدة</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp deterioration"></div>
+                            <div class="timeline-text-wp">بداية تدهور الحالة الصحية</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp death"></div>
+                            <div class="timeline-text-wp">الوفاة بسبب إهمال طبي واضح</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="memorial-note-wp">
+                    شاب في مقتبل العمر فقد حياته بسبب إهمال النظام الصحي في السجن
+                </div>
+            </div>
+        </div>
+
+        <!-- Case 2: عبد السلام -->
+        <div class="tab-content-wp">
+            <div class="prisoner-card-wp">
+                <div class="prisoner-header-wp">
+                    <div class="grave-icon-wp">
+                        <svg viewBox="0 0 100 160" width="70" height="105">
+                            <defs>
+                                <linearGradient id="stoneGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8a8a8a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#6a6a6a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="baseGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#616161;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+                                </linearGradient>
+                                <radialGradient id="groundGradient2" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" style="stop-color:#5d4037;stop-opacity:1" />
+                                    <stop offset="60%" style="stop-color:#4a3728;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                                </radialGradient>
+                                <linearGradient id="barGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="50" cy="148" rx="48" ry="10" fill="url(#groundGradient2)" opacity="0.8"/>
+                            <ellipse cx="50" cy="145" rx="45" ry="8" fill="#5d4037"/>
+                            <ellipse cx="50" cy="143" rx="40" ry="6" fill="#6d4c41"/>
+                            <rect x="10" y="125" width="80" height="18" rx="3" fill="url(#baseGradient2)" stroke="#424242" stroke-width="1"/>
+                            <path d="M15 45 C15 22, 30 12, 50 12 C70 12, 85 22, 85 45 L85 125 L15 125 Z" fill="url(#stoneGradient2)" stroke="#424242" stroke-width="1.5"/>
+                            <g opacity="1">
+                                <rect x="24" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="31" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="38" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="45" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="52" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="59" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="66" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                                <rect x="73" y="35" width="3" height="25" fill="url(#barGradient2)" rx="1.5"/>
+                            </g>
+                            <rect x="22" y="39" width="58" height="3.5" fill="url(#barGradient2)" rx="1.5"/>
+                            <rect x="22" y="52" width="58" height="3.5" fill="url(#barGradient2)" rx="1.5"/>
+                            <circle cx="30" cy="80" r="4.5" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="0.5"/>
+                            <rect x="40" y="100" width="20" height="8" fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+                            <text x="50" y="106" text-anchor="middle" font-size="7" fill="#333" font-family="monospace" font-weight="bold">30</text>
+                        </svg>
+                    </div>
+                    <div class="prisoner-name-wp">عبد السلام</div>
+                </div>
+                
+                <div class="info-grid-wp">
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">العمر</span>
+                        <span class="info-value-wp">30 سنة</span>
+                    </div>
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">التهمة</span>
+                        <span class="info-value-wp">إهانة موظف عمومي، السكر، انتهاك حظر التجول</span>
+                    </div>
+                </div>
+
+                <div class="health-section-wp">
+                    <div class="health-title-wp">
+                        <span class="health-warning-icon-wp">🩺</span>
+                        السجل الطبي والوفاة
+                        <span class="health-warning-icon-wp">💉</span>
+                    </div>
+                    <div class="health-comparison-wp">
+                        <div class="health-before-wp">
+                            <div class="health-status-wp">قبل دخول السجن</div>
+                            <div class="health-description-wp">⚠️ مريض بالسكري<br>💊 يحتاج الأنسولين يومياً<br>🩺 حالة مستقرة مع العلاج</div>
+                        </div>
+                        <div class="health-after-wp">
+                            <div class="health-status-wp">بعد دخول السجن</div>
+                            <div class="health-description-wp">🚫 منع من الأنسولين<br>💀 غيبوبة سكري<br>💀 وفاة كان يمكن تجنبها</div>
+                        </div>
+                    </div>
+                    
+                    <div class="health-timeline-wp">
+                        <div class="timeline-title-wp">📅 الخط الزمني للإهمال الطبي</div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp entry"></div>
+                            <div class="timeline-text-wp">دخول السجن - حالة سكري معروفة</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp deterioration"></div>
+                            <div class="timeline-text-wp">رفض إدارة السجن توفير الأنسولين</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp death"></div>
+                            <div class="timeline-text-wp">الوفاة بسبب غيبوبة السكري</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="memorial-note-wp">
+                    وفاة كان بالإمكان تجنبها لو تم توفير العلاج اللازم
+                </div>
+            </div>
+        </div>
+
+        <!-- Case 3: حمدي -->
+        <div class="tab-content-wp">
+            <div class="prisoner-card-wp">
+                <div class="prisoner-header-wp">
+                    <div class="grave-icon-wp">
+                        <svg viewBox="0 0 100 160" width="70" height="105">
+                            <defs>
+                                <linearGradient id="stoneGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8a8a8a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#6a6a6a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="baseGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#616161;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+                                </linearGradient>
+                                <radialGradient id="groundGradient3" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" style="stop-color:#5d4037;stop-opacity:1" />
+                                    <stop offset="60%" style="stop-color:#4a3728;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                                </radialGradient>
+                                <linearGradient id="barGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="50" cy="148" rx="48" ry="10" fill="url(#groundGradient3)" opacity="0.8"/>
+                            <ellipse cx="50" cy="145" rx="45" ry="8" fill="#5d4037"/>
+                            <ellipse cx="50" cy="143" rx="40" ry="6" fill="#6d4c41"/>
+                            <rect x="10" y="125" width="80" height="18" rx="3" fill="url(#baseGradient3)" stroke="#424242" stroke-width="1"/>
+                            <path d="M15 45 C15 22, 30 12, 50 12 C70 12, 85 22, 85 45 L85 125 L15 125 Z" fill="url(#stoneGradient3)" stroke="#424242" stroke-width="1.5"/>
+                            <g opacity="1">
+                                <rect x="24" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="31" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="38" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="45" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="52" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="59" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="66" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                                <rect x="73" y="35" width="3" height="25" fill="url(#barGradient3)" rx="1.5"/>
+                            </g>
+                            <rect x="22" y="39" width="58" height="3.5" fill="url(#barGradient3)" rx="1.5"/>
+                            <rect x="22" y="52" width="58" height="3.5" fill="url(#barGradient3)" rx="1.5"/>
+                            <circle cx="30" cy="80" r="4.5" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="0.5"/>
+                            <rect x="40" y="100" width="20" height="8" fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+                            <text x="50" y="106" text-anchor="middle" font-size="7" fill="#333" font-family="monospace" font-weight="bold">27</text>
+                        </svg>
+                    </div>
+                    <div class="prisoner-name-wp">حمدي</div>
+                </div>
+                
+                <div class="info-grid-wp">
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">العمر</span>
+                        <span class="info-value-wp">27 سنة</span>
+                    </div>
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">التهمة</span>
+                        <span class="info-value-wp">السرقة</span>
+                    </div>
+                </div>
+
+                <div class="health-section-wp">
+                    <div class="health-title-wp">
+                        <span class="health-warning-icon-wp">🧠</span>
+                        السجل الطبي والوفاة
+                        <span class="health-warning-icon-wp">⚡</span>
+                    </div>
+                    <div class="health-comparison-wp">
+                        <div class="health-before-wp">
+                            <div class="health-status-wp">قبل دخول السجن</div>
+                            <div class="health-description-wp">✅ شاب بصحة جسدية جيدة<br>✅ لا يعاني من مشاكل عصبية<br>✅ قادر على الحركة بشكل طبيعي</div>
+                        </div>
+                        <div class="health-after-wp">
+                            <div class="health-status-wp">بعد دخول السجن</div>
+                            <div class="health-description-wp">🩸 أصيب بشلل جزئي مريب<br>🧠 دخل في غيبوبة<br>💀 الوفاة في ظروف مشبوهة</div>
+                        </div>
+                    </div>
+                    
+                    <div class="health-timeline-wp">
+                        <div class="timeline-title-wp">📅 تطور الحالة المريبة</div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp entry"></div>
+                            <div class="timeline-text-wp">دخول السجن بصحة جيدة</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp deterioration"></div>
+                            <div class="timeline-text-wp">إصابة مفاجئة بشلل جزئي غير مبرر</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp death"></div>
+                            <div class="timeline-text-wp">دخول في غيبوبة ثم الوفاة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="memorial-note-wp">
+                    تدهور صحي مريب يثير التساؤلات حول ظروف الاحتجاز
+                </div>
+            </div>
+        </div>
+
+        <!-- Case 4: محمد حجي -->
+        <div class="tab-content-wp">
+            <div class="prisoner-card-wp">
+                <div class="prisoner-header-wp">
+                    <div class="grave-icon-wp">
+                        <svg viewBox="0 0 100 160" width="70" height="105">
+                            <defs>
+                                <linearGradient id="stoneGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8a8a8a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#6a6a6a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="baseGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#757575;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#616161;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+                                </linearGradient>
+                                <radialGradient id="groundGradient4" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" style="stop-color:#5d4037;stop-opacity:1" />
+                                    <stop offset="60%" style="stop-color:#4a3728;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                                </radialGradient>
+                                <linearGradient id="barGradient4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+                                    <stop offset="30%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                                    <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="50" cy="148" rx="48" ry="10" fill="url(#groundGradient4)" opacity="0.8"/>
+                            <ellipse cx="50" cy="145" rx="45" ry="8" fill="#5d4037"/>
+                            <ellipse cx="50" cy="143" rx="40" ry="6" fill="#6d4c41"/>
+                            <rect x="10" y="125" width="80" height="18" rx="3" fill="url(#baseGradient4)" stroke="#424242" stroke-width="1"/>
+                            <path d="M15 45 C15 22, 30 12, 50 12 C70 12, 85 22, 85 45 L85 125 L15 125 Z" fill="url(#stoneGradient4)" stroke="#424242" stroke-width="1.5"/>
+                            <g opacity="1">
+                                <rect x="24" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="31" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="38" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="45" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="52" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="59" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="66" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                                <rect x="73" y="35" width="3" height="25" fill="url(#barGradient4)" rx="1.5"/>
+                            </g>
+                            <rect x="22" y="39" width="58" height="3.5" fill="url(#barGradient4)" rx="1.5"/>
+                            <rect x="22" y="52" width="58" height="3.5" fill="url(#barGradient4)" rx="1.5"/>
+                            <circle cx="30" cy="80" r="4.5" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="0.5"/>
+                            <rect x="40" y="100" width="20" height="8" fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+                            <text x="50" y="106" text-anchor="middle" font-size="6" fill="#333" font-family="monospace" font-weight="bold">حجي</text>
+                        </svg>
+                    </div>
+                    <div class="prisoner-name-wp">محمد حجي</div>
+                </div>
+                
+                <div class="info-grid-wp">
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">العمر</span>
+                        <span class="info-value-wp">غير محدد</span>
+                    </div>
+                    <div class="info-item-wp">
+                        <span class="info-label-wp">التهمة</span>
+                        <span class="info-value-wp">تجارة دواء مخدر</span>
+                    </div>
+                </div>
+
+                <div class="health-section-wp">
+                    <div class="health-title-wp">
+                        <span class="health-warning-icon-wp">🫁</span>
+                        السجل الطبي والوفاة
+                        <span class="health-warning-icon-wp">🚨</span>
+                    </div>
+                    <div class="health-comparison-wp">
+                        <div class="health-before-wp">
+                            <div class="health-status-wp">قبل دخول السجن</div>
+                            <div class="health-description-wp">⚠️ مريض مزمن<br>🫁 قصور في الجهاز التنفسي<br>💊 يحتاج رعاية طبية مستمرة</div>
+                        </div>
+                        <div class="health-after-wp">
+                            <div class="health-status-wp">بعد دخول السجن</div>
+                            <div class="health-description-wp">🚨 أزمة صحية حادة أولى<br>⚡ أزمة صحية ثانية<br>💀 الوفاة بسبب إهمال طبي</div>
+                        </div>
+                    </div>
+                    
+                    <div class="health-timeline-wp">
+                        <div class="timeline-title-wp">📅 سلسلة الأزمات الصحية</div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp entry"></div>
+                            <div class="timeline-text-wp">دخول السجن مع حالة تنفسية مزمنة</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp deterioration"></div>
+                            <div class="timeline-text-wp">الأزمة الصحية الأولى - عدم توفر علاج كافِ</div>
+                        </div>
+                        <div class="timeline-item-wp">
+                            <div class="timeline-icon-wp death"></div>
+                            <div class="timeline-text-wp">الأزمة الصحية الثانية والوفاة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="memorial-note-wp">
+                    مريض مزمن لم يحصل على الرعاية الطبية اللازمة
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-wp">
+        <p>حالة الموت المستراب داخل السجون التونسية  • المصدر: تقارير حقوق الإنسان 2024</p>
+    </footer>
+</div>
+
+<style>
+/* WordPress-Scoped Prison Cases Styles - Mobile Optimized */
+.prison-cases-wp {
+    --primary-red: #8B0000;
+    --secondary-red: #660000;
+    --accent-red: #ff4444;
+    --danger-red: #ef4444;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-gray: #f1f5f9;
+    --bg-dark: #1a1a1a;
+    --bg-card: #2a2a2a;
+    --border-light: #e5e7eb;
+    --border-dark: #404040;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+    border-radius: var(--radius-lg);
+    overflow: auto;
+    box-shadow: var(--shadow-lg);
+    direction: rtl;
+    line-height: 1.6;
+    box-sizing: border-box;
+    color: #e0e0e0;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Fullscreen mode fixes */
+.prison-cases-wp:fullscreen {
+    border-radius: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+}
+
+.prison-cases-wp:-webkit-full-screen {
+    border-radius: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.prison-cases-wp:-moz-full-screen {
+    border-radius: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.prison-cases-wp:-ms-fullscreen {
+    border-radius: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.prison-cases-wp *,
+.prison-cases-wp *::before,
+.prison-cases-wp *::after {
+    box-sizing: border-box;
+}
+
+/* Custom scrollbar */
+.prison-cases-wp::-webkit-scrollbar {
+    width: 8px;
+}
+
+.prison-cases-wp::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+.prison-cases-wp::-webkit-scrollbar-thumb {
+    background: var(--primary-red);
+    border-radius: 4px;
+}
+
+.prison-cases-wp::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-red);
+}
+
+/* Header */
+.header-wp {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+    padding: 16px 12px;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.header-wp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.1) 11px
+    );
+}
+
+.header-content-wp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    gap: 16px;
+}
+
+.header-text-wp {
+    flex: 1;
+    text-align: center;
+    padding: 0 12px;
+}
+
+.main-title-wp {
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+}
+
+.header-subtitle-wp {
+    font-size: clamp(0.8rem, 3vw, 1.1rem);
+    color: #f0f0f0;
+    opacity: 0.9;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.action-buttons-wp {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0 12px;
+}
+
+.action-btn-wp {
+    background: linear-gradient(135deg, #404040 0%, #333333 100%);
+    border: 1px solid #555;
+    color: #e0e0e0;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.action-btn-wp:hover, .action-btn-wp:focus {
+    background: linear-gradient(135deg, #555555 0%, #444444 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: #ffffff;
+    outline: none;
+}
+
+.action-btn-wp:active {
+    transform: translateY(0);
+}
+
+.action-btn-wp svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Tabs */
+.tabs-wp {
+    display: flex;
+    background: #333333;
+    border-bottom: 3px solid var(--primary-red);
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-red) #333;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tabs-wp::-webkit-scrollbar {
+    height: 4px;
+}
+
+.tabs-wp::-webkit-scrollbar-track {
+    background: #333;
+}
+
+.tabs-wp::-webkit-scrollbar-thumb {
+    background: var(--primary-red);
+    border-radius: 2px;
+}
+
+.tab-wp {
+    flex: 1;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #404040 0%, #333333 100%);
+    color: #cccccc;
+    cursor: pointer;
+    border: none;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 1px solid #555;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tab-wp:first-child {
+    border-left: none;
+}
+
+.tab-wp:hover, .tab-wp:focus {
+    background: linear-gradient(135deg, #555555 0%, #444444 100%);
+    color: #ffffff;
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.tab-wp:active {
+    transform: translateY(0);
+}
+
+.tab-wp.active {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+    color: #ffffff;
+    box-shadow: inset 0 -3px 0 var(--accent-red);
+    transform: none;
+}
+
+/* Tab Content */
+.tab-content-container-wp {
+    min-height: calc(100vh - 200px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-red) var(--bg-dark);
+}
+
+.tab-content-wp {
+    display: none;
+    padding: 20px 16px 40px;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+    position: relative;
+    min-height: calc(100vh - 250px);
+}
+
+.tab-content-wp.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Prisoner Card */
+.prisoner-card-wp {
+    background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid #555;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.prisoner-card-wp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-red), var(--accent-red), var(--primary-red));
+}
+
+.prisoner-header-wp {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.grave-icon-wp {
+    flex-shrink: 0;
+    opacity: 0.9;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.grave-icon-wp svg {
+    width: clamp(60px, 15vw, 70px);
+    height: clamp(90px, 22vw, 105px);
+}
+
+.prisoner-name-wp {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 700;
+    color: #ff6b6b;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    flex: 1;
+    line-height: 1.2;
+}
+
+/* Info Grid */
+.info-grid-wp {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.info-item-wp {
+    background: linear-gradient(135deg, #404040 0%, #353535 100%);
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #555;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item-wp:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.info-label-wp {
+    font-weight: 600;
+    color: #ff9999;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.info-value-wp {
+    color: #e0e0e0;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    line-height: 1.5;
+}
+
+/* Health Section - Core Feature */
+.health-section-wp {
+    margin-top: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #0f0f0f 100%);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--primary-red);
+    box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+}
+
+.health-title-wp {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-weight: 700;
+    color: #ffaa00;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    line-height: 1.3;
+}
+
+.health-warning-icon-wp {
+    color: var(--accent-red);
+    font-size: clamp(1.2rem, 4vw, 1.4rem);
+}
+
+.health-comparison-wp {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.health-before-wp, .health-after-wp {
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.health-before-wp {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+    border: 2px solid #4caf50;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+}
+
+.health-after-wp {
+    background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 50%, #f44336 100%);
+    border: 2px solid #ff1744;
+    box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3); }
+    50% { box-shadow: 0 8px 25px rgba(255, 23, 68, 0.5); }
+    100% { box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3); }
+}
+
+.health-status-wp {
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.health-description-wp {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* Timeline */
+.health-timeline-wp {
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f08 100%);
+    border: 1px solid var(--primary-red);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.timeline-title-wp {
+    font-size: clamp(1rem, 3.5vw, 1.1rem);
+    font-weight: 600;
+    color: #ffaa00;
+    margin-bottom: 16px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.timeline-item-wp {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+.timeline-icon-wp {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.timeline-icon-wp.entry {
+    background: #ffeb3b;
+    box-shadow: 0 0 5px #ffeb3b;
+}
+
+.timeline-icon-wp.deterioration {
+    background: #ff9800;
+    box-shadow: 0 0 5px #ff9800;
+}
+
+.timeline-icon-wp.death {
+    background: #f44336;
+    box-shadow: 0 0 8px #f44336;
+}
+
+.timeline-text-wp {
+    color: #e0e0e0;
+    font-size: clamp(0.9rem, 3vw, 0.95rem);
+    line-height: 1.5;
+    flex: 1;
+}
+
+/* Memorial Note */
+.memorial-note-wp {
+    margin-top: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, #2d1810 0%, #1a0f08 100%);
+    border-right: 4px solid var(--primary-red);
+    border-radius: var(--radius-sm);
+    font-style: italic;
+    color: #cccccc;
+    text-align: center;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer-wp {
+    background: #1a1a1a;
+    padding: 16px 12px;
+    text-align: center;
+    border-top: 1px solid #404040;
+    margin-top: auto;
+}
+
+.footer-wp p {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    color: #9ca3af;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .prison-cases-wp {
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    .header-wp {
+        padding: 12px 8px;
+        min-height: 80px;
+    }
+    
+    .header-content-wp {
+        flex-direction: row;
+        gap: 12px;
+    }
+    
+    .header-text-wp {
+        padding: 0 8px;
+    }
+    
+    .action-buttons-wp {
+        padding: 0;
+    }
+    
+    .action-btn-wp {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    
+    .action-btn-wp svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .tab-wp {
+        padding: 12px 16px;
+        min-width: 80px;
+        font-size: 0.9rem;
+    }
+    
+    .tab-content-wp {
+        padding: 16px 12px 32px;
+    }
+    
+    .prisoner-card-wp {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .prisoner-header-wp {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+    
+    .health-section-wp {
+        padding: 16px;
+        margin-top: 20px;
+    }
+    
+    .health-comparison-wp {
+        gap: 16px;
+    }
+    
+    .health-before-wp, .health-after-wp {
+        padding: 16px;
+    }
+    
+    .health-timeline-wp {
+        padding: 16px;
+    }
+    
+    .timeline-item-wp {
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    
+    .memorial-note-wp {
+        padding: 16px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-wp {
+        padding: 10px 6px;
+        min-height: 70px;
+    }
+    
+    .main-title-wp {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+    
+    .header-subtitle-wp {
+        font-size: 0.75rem;
+    }
+    
+    .action-btn-wp {
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+    }
+    
+    .action-btn-wp svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .tab-wp {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        min-width: 70px;
+    }
+    
+    .tab-content-wp {
+        padding: 12px 8px 24px;
+    }
+    
+    .prisoner-card-wp {
+        padding: 12px;
+    }
+    
+    .grave-icon-wp svg {
+        width: 50px;
+        height: 75px;
+    }
+    
+    .health-section-wp {
+        padding: 12px;
+    }
+    
+    .health-title-wp {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    
+    .health-before-wp, .health-after-wp {
+        padding: 12px;
+    }
+    
+    .health-timeline-wp {
+        padding: 12px;
+    }
+    
+    .timeline-item-wp {
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .memorial-note-wp {
+        padding: 12px;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+    .tab-content-container-wp {
+        min-height: calc(100vh - 140px);
+    }
+    
+    .tab-content-wp {
+        min-height: calc(100vh - 170px);
+    }
+    
+    .header-wp {
+        min-height: 60px;
+        padding: 8px;
+    }
+    
+    .main-title-wp {
+        font-size: 1rem;
+    }
+    
+    .header-subtitle-wp {
+        font-size: 0.7rem;
+    }
+}
+
+/* Touch improvements */
+@media (pointer: coarse) {
+    .tab-wp {
+        min-height: 48px;
+        padding: 14px 18px;
+    }
+    
+    .action-btn-wp {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .info-item-wp {
+        padding: 18px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .prison-cases-wp * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .prison-cases-wp {
+        --primary-red: #ff0000;
+        --accent-red: #ff6666;
+        border: 2px solid #ffffff;
+    }
+    
+    .health-after-wp {
+        border: 3px solid #ff0000;
+    }
+    
+    .health-before-wp {
+        border: 3px solid #00ff00;
+    }
+}
+
+/* Focus styles for accessibility */
+.tab-wp:focus-visible,
+.action-btn-wp:focus-visible {
+    outline: 2px solid #ffaa00;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .prison-cases-wp {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+    
+    .action-buttons-wp {
+        display: none;
+    }
+    
+    .tabs-wp {
+        display: none;
+    }
+    
+    .tab-content-wp {
+        display: block !important;
+        page-break-inside: avoid;
+        margin-bottom: 2cm;
+    }
+}
+</style>
+
+<script>
+// WordPress-Safe JavaScript for Prison Cases - Enhanced Mobile & Fullscreen
+(function() {
+    'use strict';
+    
+    let isFullscreen = false;
+    
+    // Global functions attached to window for onclick handlers
+    window.showTabPrison = function(index, element) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.prison-cases-wp .tab-content-wp');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.prison-cases-wp .tab-wp');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Show selected tab content
+        if (tabContents[index]) {
+            tabContents[index].classList.add('active');
+            // Scroll to top of content on mobile
+            if (window.innerWidth <= 768) {
+                const container = document.querySelector('.tab-content-container-wp');
+                if (container) {
+                    container.scrollTop = 0;
+                }
+            }
+        }
+        
+        // Add active class to clicked tab
+        if (element) {
+            element.classList.add('active');
+            
+            // Scroll active tab into view on mobile
+            if (window.innerWidth <= 768) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest', 
+                    inline: 'center' 
+                });
+            }
+        }
+    };
+
+    window.toggleFullscreenPrison = function() {
+        const container = document.querySelector('.prison-cases-wp');
+        
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+            !document.mozFullScreenElement && !document.msFullscreenElement) {
+            
+            if (container) {
+                const enterFullscreen = container.requestFullscreen || 
+                                      container.webkitRequestFullscreen || 
+                                      container.mozRequestFullScreen || 
+                                      container.msRequestFullscreen;
+                
+                if (enterFullscreen) {
+                    enterFullscreen.call(container).then(() => {
+                        isFullscreen = true;
+                        container.style.height = '100vh';
+                        container.style.overflowY = 'auto';
+                        container.style.overflowX = 'hidden';
+                    }).catch(err => {
+                        console.log('Error attempting to enable fullscreen:', err);
+                    });
+                }
+            }
+        } else {
+            const exitFullscreen = document.exitFullscreen || 
+                                  document.webkitExitFullscreen || 
+                                  document.mozCancelFullScreen || 
+                                  document.msExitFullscreen;
+            
+            if (exitFullscreen) {
+                exitFullscreen.call(document).then(() => {
+                    isFullscreen = false;
+                    container.style.height = '';
+                    container.style.overflow = '';
+                });
+            }
+        }
+    };
+
+    // Touch gesture support for tab navigation
+    function addTouchSupport() {
+        const tabsContainer = document.querySelector('.prison-cases-wp .tabs-wp');
+        if (!tabsContainer) return;
+
+        let startX = 0;
+        let scrollLeft = 0;
+
+        tabsContainer.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].pageX - tabsContainer.offsetLeft;
+            scrollLeft = tabsContainer.scrollLeft;
+        }, { passive: true });
+
+        tabsContainer.addEventListener('touchmove', function(e) {
+            if (!startX) return;
+            const x = e.touches[0].pageX - tabsContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            tabsContainer.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
+
+        tabsContainer.addEventListener('touchend', function() {
+            startX = 0;
+        }, { passive: true });
+    }
+
+    // Keyboard navigation enhancement
+    function addKeyboardNavigation() {
+        const tabs = document.querySelectorAll('.prison-cases-wp .tab-wp');
+        
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('keydown', function(e) {
+                let targetIndex = index;
+                
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        targetIndex = index > 0 ? index - 1 : tabs.length - 1;
+                        break;
+                    case 'ArrowRight':
+                        targetIndex = index < tabs.length - 1 ? index + 1 : 0;
+                        break;
+                    case 'Home':
+                        targetIndex = 0;
+                        break;
+                    case 'End':
+                        targetIndex = tabs.length - 1;
+                        break;
+                    default:
+                        return;
+                }
+                
+                e.preventDefault();
+                tabs[targetIndex].focus();
+                tabs[targetIndex].click();
+            });
+        });
+    }
+
+    // Optimize mobile performance
+    function optimizeMobilePerformance() {
+        // Add passive event listeners for better scroll performance
+        const scrollElements = document.querySelectorAll('.tab-content-container-wp, .tabs-wp');
+        scrollElements.forEach(element => {
+            element.style.webkitOverflowScrolling = 'touch';
+        });
+
+        // Debounced resize handler
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                // Recalculate layout if needed
+                const container = document.querySelector('.prison-cases-wp');
+                if (container && isFullscreen) {
+                    container.style.height = '100vh';
+                }
+            }, 250);
+        }, { passive: true });
+    }
+
+    // Handle fullscreen change events
+    function handleFullscreenChange() {
+        const container = document.querySelector('.prison-cases-wp');
+        const isCurrentlyFullscreen = !!(document.fullscreenElement || 
+                                        document.webkitFullscreenElement || 
+                                        document.mozFullScreenElement || 
+                                        document.msFullscreenElement);
+        
+        if (isCurrentlyFullscreen !== isFullscreen) {
+            isFullscreen = isCurrentlyFullscreen;
+            
+            if (isFullscreen) {
+                container.style.height = '100vh';
+                container.style.overflowY = 'auto';
+                container.style.overflowX = 'hidden';
+                container.style.borderRadius = '0';
+            } else {
+                container.style.height = '';
+                container.style.overflow = '';
+                container.style.borderRadius = '';
+            }
+        }
+    }
+
+    // Initialize when DOM is ready
+    function initPrisonCases() {
+        // Add fullscreen change listeners
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isFullscreen) {
+                window.toggleFullscreenPrison();
+            }
+        });
+
+        // Initialize mobile optimizations
+        addTouchSupport();
+        addKeyboardNavigation();
+        optimizeMobilePerformance();
+
+        // Add smooth scrolling for mobile tabs
+        const tabsContainer = document.querySelector('.prison-cases-wp .tabs-wp');
+        if (tabsContainer) {
+            tabsContainer.style.scrollBehavior = 'smooth';
+        }
+
+        // Progressive enhancement for animations
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            // Animate elements on load
+            setTimeout(() => {
+                const animatedElements = document.querySelectorAll('.prison-cases-wp .info-item-wp, .prison-cases-wp .health-section-wp');
+                animatedElements.forEach((element, index) => {
+                    if (element) {
+                        element.style.opacity = '0';
+                        element.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                            element.style.opacity = '1';
+                            element.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, 100);
+        }
+
+        // Handle viewport meta tag for mobile
+        if (window.innerWidth <= 768) {
+            let viewport = document.querySelector('meta[name=viewport]');
+            if (!viewport) {
+                viewport = document.createElement('meta');
+                viewport.name = 'viewport';
+                document.getElementsByTagName('head')[0].appendChild(viewport);
+            }
+            viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+        }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPrisonCases);
+    } else {
+        initPrisonCases();
+    }
+
+    // Cleanup function for potential memory leaks
+    window.addEventListener('beforeunload', function() {
+        document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    });
+})();
+</script>

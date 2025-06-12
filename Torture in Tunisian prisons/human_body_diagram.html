@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>حوادث التعذيب داخل السجون التونسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #8B0000;
+            --secondary-red: #660000;
+            --accent-red: #ff4444;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+            --warning-orange: #f59e0b;
+            --info-blue: #3182ce;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-light: #f7fafc;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-card: #3a3a3a;
+            --bg-dark: #2d2d2d;
+            --bg-overlay: rgba(26, 26, 26, 0.95);
+            --border-light: #e5e7eb;
+            --border-dark: #404040;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.35);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --gradient-primary: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            --gradient-card: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gradient-secondary);
+            color: var(--text-light);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--gradient-card);
+            box-shadow: var(--shadow-xl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Enhanced Header */
+        .header {
+            background: var(--gradient-primary);
+            padding: clamp(24px, 6vw, 48px) clamp(16px, 4vw, 32px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced Navigation */
+        .navigation-container {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--primary-red);
+        }
+
+        .case-tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            background: var(--bg-secondary);
+        }
+
+        .case-tab {
+            background: transparent;
+            border: none;
+            color: #cbd5e0;
+            padding: clamp(16px, 4vw, 20px);
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .case-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .case-tab.active {
+            background: var(--gradient-primary);
+            color: #ffffff;
+            border-bottom-color: var(--accent-red);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .case-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+
+        .navigation-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(16px, 4vw, 20px);
+            gap: clamp(16px, 4vw, 24px);
+            background: rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--secondary-red) 0%, var(--primary-red) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-button:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.6;
+        }
+
+        .case-counter {
+            background: var(--gradient-card);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            color: var(--accent-red);
+            border: 2px solid var(--border-dark);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* Enhanced Content Area */
+        .main-content {
+            padding: clamp(24px, 6vw, 48px) clamp(16px, 4vw, 32px);
+            background: var(--gradient-card);
+        }
+
+        .diagram-container {
+            text-align: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .diagram-title {
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: clamp(24px, 6vw, 40px);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        /* Enhanced Human Body Diagram */
+        .body-diagram-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: clamp(20px, 5vw, 40px) 0;
+            padding: clamp(16px, 4vw, 32px);
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            border-radius: var(--radius-lg);
+        }
+
+        .human-body-container {
+            position: relative;
+            width: clamp(200px, 50vw, 350px);
+            height: clamp(300px, 65vw, 450px);
+            transition: all 0.3s ease;
+        }
+
+        .human-body-container:hover {
+            transform: scale(1.02);
+        }
+
+        .body-svg {
+            position: absolute;
+            fill: #64748b;
+            filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.4));
+            transition: fill 0.3s ease;
+        }
+
+        .body-svg:hover {
+            fill: #74869f;
+        }
+
+        /* Responsive SVG Positioning */
+        .head-svg { left: 50%; margin-left: -28.5px; top: 20px; width: 57px; height: 95px; z-index: 10; }
+        .shoulder-svg { left: 50%; margin-left: -54.5px; top: 89px; width: 109px; height: 47px; z-index: 8; }
+        .arm-svg { left: 50%; margin-left: -78px; top: 132px; width: 156px; height: 119px; z-index: 6; }
+        .chest-svg { left: 50%; margin-left: -43px; top: 108px; width: 87px; height: 45px; z-index: 9; }
+        .stomach-svg { left: 50%; margin-left: -37.5px; top: 150px; width: 75px; height: 108px; z-index: 7; }
+        .legs-svg { left: 50%; margin-left: -46.5px; top: 225px; width: 94px; height: 287px; z-index: 5; }
+        .hands-svg { left: 50%; margin-left: -102.5px; top: 244px; width: 205px; height: 39px; z-index: 4; }
+
+        /* Injury Points */
+        .injury-point {
+            cursor: pointer;
+            z-index: 2000;
+            filter: drop-shadow(0 0 4px rgba(255, 68, 68, 0.8));
+            pointer-events: all;
+        }
+
+        .injury-point:hover {
+            fill: var(--accent-red) !important;
+            stroke: #ffffff !important;
+            stroke-width: 2 !important;
+            filter: drop-shadow(0 0 8px rgba(255, 68, 68, 1));
+        }
+
+        .injury-point:focus {
+            outline: 3px solid var(--accent-red);
+            outline-offset: 3px;
+        }
+
+        /* Enhanced Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            z-index: 9999;
+            padding: clamp(16px, 4vw, 24px);
+            overflow-y: auto;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            margin: auto;
+            max-width: 700px;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+            border: 2px solid var(--accent-red);
+            overflow: hidden;
+            margin-top: clamp(20px, 5vh, 60px);
+            margin-bottom: clamp(20px, 5vh, 60px);
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .modal-header {
+            padding: clamp(20px, 5vw, 32px);
+            background: var(--gradient-primary);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: clamp(20px, 5vw, 32px);
+        }
+
+        .info-section {
+            margin-bottom: 24px;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .info-section:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-background { background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(29, 78, 216, 0.08) 100%); }
+        .section-background::before { background: var(--info-blue); }
+
+        .section-injury { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%); }
+        .section-injury::before { background: var(--danger-red); }
+
+        .section-outcome { background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.08) 100%); }
+        .section-outcome::before { background: var(--success-green); }
+
+        .section-title {
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-content {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+
+        .injury-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .injury-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: var(--radius-sm);
+            border-right: 3px solid var(--accent-red);
+            transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .injury-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(245, 101, 101, 0.1) 100%);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .injury-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .injury-item:hover::before {
+            transform: translateX(0);
+        }
+
+        .severity-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .severity-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .severity-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .app-container {
+                border-radius: 0;
+                margin: 0;
+                min-height: 100vh;
+            }
+
+            .case-tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .case-tab {
+                padding: 16px 12px;
+                border-bottom: 1px solid var(--border-dark);
+                border-radius: 0;
+            }
+
+            .case-tab:last-child {
+                border-bottom: none;
+            }
+
+            .navigation-controls {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .nav-button {
+                width: 100%;
+                max-width: 200px;
+                padding: 14px 20px;
+            }
+
+            .human-body-container {
+                width: clamp(180px, 60vw, 280px);
+                height: clamp(270px, 75vw, 380px);
+            }
+
+            .modal-container {
+                padding: 8px;
+            }
+
+            .modal-content {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            /* Mobile SVG Positioning */
+            .head-svg { margin-left: clamp(-24px, -6vw, -28px); top: clamp(16px, 4vw, 20px); width: clamp(48px, 12vw, 57px); height: clamp(80px, 20vw, 95px); }
+            .shoulder-svg { margin-left: clamp(-46px, -12vw, -55px); top: clamp(75px, 18vw, 89px); width: clamp(92px, 23vw, 109px); height: clamp(40px, 10vw, 47px); }
+            .arm-svg { margin-left: clamp(-66px, -17vw, -78px); top: clamp(112px, 28vw, 132px); width: clamp(132px, 33vw, 156px); height: clamp(101px, 25vw, 119px); }
+            .chest-svg { margin-left: clamp(-36px, -9vw, -43px); top: clamp(91px, 23vw, 108px); width: clamp(73px, 18vw, 87px); height: clamp(38px, 10vw, 45px); }
+            .stomach-svg { margin-left: clamp(-32px, -8vw, -38px); top: clamp(127px, 32vw, 150px); width: clamp(63px, 16vw, 75px); height: clamp(91px, 23vw, 108px); }
+            .legs-svg { margin-left: clamp(-39px, -10vw, -47px); top: clamp(191px, 48vw, 225px); width: clamp(79px, 20vw, 94px); height: clamp(243px, 61vw, 287px); }
+            .hands-svg { margin-left: clamp(-86px, -22vw, -103px); top: clamp(207px, 52vw, 244px); width: clamp(173px, 43vw, 205px); height: clamp(33px, 8vw, 39px); }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 12px;
+            }
+
+            .main-content {
+                padding: 20px 12px;
+            }
+
+            .human-body-container {
+                width: clamp(160px, 65vw, 240px);
+                height: clamp(240px, 80vw, 320px);
+            }
+
+            .modal-container {
+                padding: 4px;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 16px;
+            }
+        }
+
+        /* Touch enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            .injury-point {
+                transform: scale(1.3);
+            }
+
+            .case-tab:active {
+                transform: scale(0.98);
+            }
+
+            .nav-button:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Enhanced Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>حوادث التعذيب داخل السجون التونسية</h1>
+                <p>شهادات موثقة على انتهاكات حقوق الإنسان</p>
+            </div>
+        </header>
+
+        <!-- Enhanced Navigation -->
+        <nav class="navigation-container">
+            <div class="case-tabs" role="tablist">
+                <button class="case-tab active" role="tab" aria-selected="true" data-case="0">
+                    ريان
+                </button>
+                <button class="case-tab" role="tab" aria-selected="false" data-case="1">
+                    م.ع (24 سنة)
+                </button>
+                <button class="case-tab" role="tab" aria-selected="false" data-case="2">
+                    سجينتان عابرتان
+                </button>
+                <button class="case-tab" role="tab" aria-selected="false" data-case="3">
+                    ليلى (50 سنة)
+                </button>
+            </div>
+
+            <div class="navigation-controls">
+                <button class="nav-button" id="prevButton" disabled>
+                    <span>→</span>
+                    <span>السابقة</span>
+                </button>
+                <div class="case-counter" id="caseCounter">1 / 4</div>
+                <button class="nav-button" id="nextButton">
+                    <span>التالية</span>
+                    <span>←</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="diagram-container">
+                <h2 class="diagram-title">
+                    مخطط الإصابات الجسدية 
+                    <br>
+                    <small style="font-size: 0.8em; opacity: 0.8;">انقر على النقاط لعرض تفاصيل الإصابات</small>
+                </h2>
+
+                <div class="body-diagram-wrapper">
+                    <div class="human-body-container" id="humanBodyContainer">
+                        <!-- Human Body SVGs -->
+                        <svg class="body-svg head-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.594 95.031">
+                            <path d="M15.92 68.5l8.8 12.546 3.97 13.984-9.254-7.38-4.622-15.848zm27.1 0l-8.8 12.546-3.976 13.988 9.254-7.38 4.622-15.848zm6.11-27.775l.108-11.775-21.16-14.742L8.123 26.133 8.09 40.19l-3.24.215 1.462 9.732 5.208 1.81 2.36 11.63 9.72 11.018 10.856-.324 9.56-10.37 1.918-11.952 5.207-1.81 1.342-9.517zm-43.085-1.84l-.257-13.82L28.226 11.9l23.618 15.755-.216 10.37 4.976-17.085L42.556 2.376 25.49 0 10.803 3.673.002 24.415z"/>
+                        </svg>
+
+                        <svg class="body-svg shoulder-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.532 46.594">
+                            <path d="M38.244-.004l1.98 9.232-11.653 2.857-7.474-2.637zm33.032 0l-1.98 9.232 11.653 2.857 7.474-2.637zm21.238 10.54l4.044-2.187 12.656 14 .07 5.33S92.76 10.66 92.515 10.535zm-1.285.58c-.008.28 17.762 18.922 17.762 18.922l.537 16.557-6.157-10.55L91.5 30.988 83.148 15.6zm-74.224-.58L12.962 8.35l-12.656 14-.062 5.325s16.52-17.015 16.764-17.14zm1.285.58C18.3 11.396.528 30.038.528 30.038L-.01 46.595l6.157-10.55 11.87-5.056L26.374 15.6z"/>
+                        </svg>
+
+                        <svg class="body-svg arm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156.344 119.25">
+                            <path d="M21.12 56.5a1.678 1.678 0 0 1-.427.33l.935 8.224 12.977-13.89 1.2-8.958A168.2 168.2 0 0 0 21.12 56.5zm1.387 12.522l-18.07 48.91 5.757 1.333 19.125-39.44 3.518-22.047zm-5.278-18.96l2.638 18.74-17.2 46.023L.01 113.05l6.644-35.518zm118.015 6.44a1.678 1.678 0 0 0 .426.33l-.934 8.222-12.977-13.89-1.2-8.958A168.2 168.2 0 0 1 135.24 56.5zm-1.39 12.52l18.073 48.91-5.758 1.333-19.132-39.44-3.52-22.05zm5.28-18.96l-2.64 18.74 17.2 46.023 2.658-1.775-6.643-35.518zm-103.1-12.323a1.78 1.78 0 0 1 .407-.24l3.666-27.345L33.07.015l-7.258 10.58-6.16 37.04.566 4.973a151.447 151.447 0 0 1 15.808-14.87zm84.3 0a1.824 1.824 0 0 0-.407-.24l-3.666-27.345L123.3.015l7.258 10.58 6.16 37.04-.566 4.973a151.447 151.447 0 0 0-15.822-14.87zM22.288 8.832l-3.3 35.276-2.2-26.238zm111.79 0l3.3 35.276 2.2-26.238z"/>
+                        </svg>
+
+                        <svg class="body-svg chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.594 45.063">
+                            <path d="M19.32 0l-9.225 16.488-10.1 5.056 6.15 4.836 4.832 14.07 11.2 4.616 17.85-8.828-4.452-34.7zm47.934 0l9.225 16.488 10.1 5.056-6.15 4.836-4.833 14.07-11.2 4.616-17.844-8.828 4.45-34.7z"/>
+                        </svg>
+
+                        <svg class="body-svg stomach-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.25 107.594">
+                            <path d="M19.25 7.49l16.6-7.5-.5 12.16-14.943 7.662zm-10.322 8.9l6.9 3.848-.8-9.116zm5.617-8.732L1.32 2.15 6.3 15.6zm-8.17 9.267l9.015 5.514 1.54 11.028-8.795-5.735zm15.53 5.89l.332 8.662 12.286-2.665.664-11.826zm14.61 84.783L33.28 76.062l-.08-20.53-11.654-5.736-1.32 37.5zM22.735 35.64L22.57 46.3l11.787 3.166.166-16.657zm-14.16-5.255L16.49 35.9l1.1 11.25-8.8-7.06zm8.79 22.74l-9.673-7.28-.84 9.78L-.006 68.29l10.564 14.594 5.5.883 1.98-20.735zM56 7.488l-16.6-7.5.5 12.16 14.942 7.66zm10.32 8.9l-6.9 3.847.8-9.116zm-5.617-8.733L73.93 2.148l-4.98 13.447zm8.17 9.267l-9.015 5.514-1.54 11.03 8.8-5.736zm-15.53 5.89l-.332 8.662-12.285-2.665-.664-11.827zm-14.61 84.783l3.234-31.536.082-20.532 11.65-5.735 1.32 37.5zm13.78-71.957l.166 10.66-11.786 3.168-.166-16.657zm14.16-5.256l-7.915 5.514-1.1 11.25 8.794-7.06zm-8.79 22.743l9.673-7.28.84 9.78 6.862 12.66-10.564 14.597-5.5.883-1.975-20.74z"/>
+                        </svg>
+
+                        <svg class="body-svg legs-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.626 286.625">
+                            <path d="M17.143 138.643l-.664 5.99 4.647 5.77 1.55 9.1 3.1 1.33 2.655-13.755 1.77-4.88-1.55-3.107zm20.582.444l-3.32 9.318-7.082 13.755 1.77 12.647 5.09-14.2 4.205-7.982zm-26.557-12.645l5.09 27.29-3.32-1.777-2.656 8.875zm22.795 42.374l-1.55 4.88-3.32 20.634-.442 27.51 4.65 26.847-.223-34.39 4.87-13.754.663-15.087zM23.34 181.24l1.106 41.267 8.853 33.28-9.628-4.55-16.045-57.8 5.533-36.384zm15.934 80.536l-.664 18.415-1.55 6.435h-4.647l-1.327-4.437-1.55-.222.332 4.437-5.864-1.778-1.55-.887-6.64-1.442-.22-5.214 6.418-10.87 4.426-5.548 10.844-4.437zM13.63 3.076v22.476l15.71 31.073 9.923 30.85L38.23 66.1zm25.49 30.248l.118-.148-.793-2.024L21.9 12.992l-1.242-.44L31.642 40.93zM32.865 44.09l6.812 17.6 2.274-21.596-1.344-3.43zM6.395 61.91l.827 25.34 12.816 35.257-3.928 10.136L3.5 88.133zM30.96 74.69l.345.826 6.47 15.48-4.177 38.342-6.594-3.526 5.715-35.7zm45.5 63.953l.663 5.99-4.647 5.77-1.55 9.1-3.1 1.33-2.655-13.755-1.77-4.88 1.55-3.107zm-20.582.444l3.32 9.318 7.08 13.755-1.77 12.647-5.09-14.2-4.2-7.987zm3.762 29.73l1.55 4.88 3.32 20.633.442 27.51-4.648 26.847.22-34.39-4.867-13.754-.67-15.087zm10.623 12.424l-1.107 41.267-8.852 33.28 9.627-4.55 16.046-57.8-5.533-36.384zM54.33 261.777l.663 18.415 1.546 6.435h4.648l1.328-4.437 1.55-.222-.333 4.437 5.863-1.778 1.55-.887 6.638-1.442.222-5.214-6.418-10.868-4.426-5.547-10.844-4.437zm25.643-258.7v22.476L64.26 56.625l-9.923 30.85L55.37 66.1zM54.48 33.326l-.118-.15.793-2.023L71.7 12.993l1.24-.44L61.96 40.93zm6.255 10.764l-6.812 17.6-2.274-21.595 1.344-3.43zm26.47 17.82l-.827 25.342-12.816 35.256 3.927 10.136 12.61-44.51zM62.64 74.693l-.346.825-6.47 15.48 4.178 38.342 6.594-3.527-5.715-35.7zm19.792 51.75l-5.09 27.29 3.32-1.776 2.655 8.875zM9.495-.007l.827 21.373-7.028 42.308-3.306-34.155zm2.068 27.323L26.24 59.707l3.307 26-6.2 36.58L9.91 85.046l-.827-38.342zM84.103-.01l-.826 21.375 7.03 42.308 3.306-34.155zm-2.066 27.325L67.36 59.707l-3.308 26 6.2 36.58 13.436-37.24.827-38.34z"/>
+                        </svg>
+
+                        <svg class="body-svg hands-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205 38.938">
+                            <path d="M21.255-.002l2.88 6.9 8.412 1.335.664 12.458-4.427 17.8-2.878-.22 2.8-11.847-2.99-.084-4.676 12.6-3.544-.446 4.4-12.736-3.072-.584-5.978 13.543-4.428-.445 6.088-14.1-2.1-1.25-7.528 12.012-3.764-.445L12.4 12.9l-1.107-1.78L.665 15.57 0 13.124l8.635-7.786zm162.49 0l-2.88 6.9-8.412 1.335-.664 12.458 4.427 17.8 2.878-.22-2.8-11.847 2.99-.084 4.676 12.6 3.544-.446-4.4-12.736 3.072-.584 5.978 13.543 4.428-.445-6.088-14.1 2.1-1.25 7.528 12.012 3.764-.445L192.6 12.9l1.107-1.78 10.628 4.45.665-2.447-8.635-7.786z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enhanced Modal -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-container" id="modalContainer">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="modalClose" aria-label="إغلاق النافذة">&times;</button>
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-subtitle" id="modalSubtitle"></div>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Case data verified and corrected based on source text
+        const casesData = [
+            {
+                name: "ريان",
+                age: "شاب في مقتبل العمر",
+                subtitle: "من باحث عن عمل إلى نزيل بمستشفى الرازي",
+                background: "كان ريان بصدد البحث عن عمل في إحدى المصانع وأثناء المقابلة انتابه ارتباك واعترف تلقائياً بحيازته \"قطعة زطلة\"، ومن البحث عن عمل تحولت وجهته إلى سجن بنزرت.",
+                allInjuries: [
+                    "آثار ضرب زرقاء كأنها آثار ضرب بعصا على ظهره",
+                    "آثار ضرب في أماكن مختلفة من جسد منوبها", 
+                    "آثار حرق في كف يده اليسرى",
+                    "تدهور في الحالة النفسية وأرق شديد"
+                ],
+                psychologicalState: "لاحظت عائلته أن حالته النفسية أصبحت غير طبيعية وبات غير قادر على التعرف عليهم، إذ يتحدث بكلام غير واضح، ويظهر عليه أرق شديد. منذ دخوله إلى مكتب الزيارة لم يتكلم بل قام مباشرة بخلع قميصه وكشف ظهره.",
+                outcome: "تم إعلام المحامية بأنه سيتم نقل السجين إلى مستشفى الرازي لعرضه على الطبيب، ليتم فيما بعد نقله إلى مستشفى الزاي وتقوم وزارة العدل بنفي تعرضه إلى التعذيب وتم إطلاق سراحه فيما بعد.",
+                injuries: [
+                    { svg: "shoulder", x: 25, y: 15, description: "آثار ضرب زرقاء كأنها آثار ضرب بعصا على ظهره", severity: "high" },
+                    { svg: "hands", x: 20, y: 15, description: "آثار حرق في كف يده اليسرى", severity: "high" }
+                ]
+            },
+            {
+                name: "م.ع",
+                age: "24 سنة", 
+                subtitle: "دخل السجن سليم معافى وغادره بكلية لا تعمل بشكل جيد وأذن لا تسمع",
+                background: "بلغ م.ع 24 سنة عن عملية هجرة غير نظامية فوجد نفسه داخل السجن ويتعرض إلى الضرب وشتى أنواع التعذيب منذ لحظة إيقافه طوال الطريق من القيروان إلى سوسة لتواصل فرقة أخرى الاعتداء عليه لحد مركز أمن بسوسة ويلقى بغرفة لأسبوع دون إسعاف.",
+                tortureLocation: "ينقل إلى سجن طينة بصفاقس ويلقى به في الزنزانة الانفرادية لأربع أيام أين تواصل التعذيب ثم يعودون به إلى سجن سوسة.",
+                allInjuries: [
+                    "فقد السمع في أذن",
+                    "كسر في ضلوعه", 
+                    "كليته لم تعد تعمل بشكل جيد",
+                    "فقد النظر جزئياً في عينه اليسرى"
+                ],
+                details: "\"4 أيام ضرب في السيلون يسجن طينة في صفاقس ويعطيوه لام يقولولوا كان تحب الضرب يوفى قص عروقك\" - المحامية وئام يعقوب",
+                outcome: "يعيد طبيب السجن فحصه ليتبين أنه فقد السمع في أذن وكسرت ضلوعه وكليته لم تعد تعمل بشكل جيد كما فقد النظر جزئياً في عينه اليسرى.",
+                injuries: [
+                    { svg: "head", x: 35, y: 35, description: "فقد النظر جزئياً في عينه اليسرى", severity: "high" },
+                    { svg: "head", x: 15, y: 25, description: "فقد السمع في أذن", severity: "high" },
+                    { svg: "chest", x: 65, y: 20, description: "كسر في ضلوعه", severity: "high" },
+                    { svg: "stomach", x: 20, y: 30, description: "كليته لم تعد تعمل بشكل جيد", severity: "high" }
+                ]
+            },
+            {
+                name: "سجينتان عابرتان جنسياً",
+                age: "غير محدد",
+                subtitle: "عنف جنسي وانتهاك الكرامة أثناء التحقيق",
+                background: "سجلت الرابطة بتاريخ 10 مارس 2023 إثر زيارة للسجن المدني بالمرناقية، حيث أعلم الوفد الزائر بالاعتداء بالعنف الذي تعرضتا له سجينتان عابرتان جندرياً خلال التحقيق بفرقة البحث بالقرجاني حيث تم منعهما من الاتصال بمحام.",
+                allInjuries: [
+                    "منع من الاتصال بمحام",
+                    "تعرضت إحداهما إلى التحرش ومحاولة الاغتصاب من قبل عون سجون",
+                    "قام بتعريتها ومداعبة جسدها عنوة",
+                    "مكرها إياه على ملامسته بحضور الأخرى"
+                ],
+                details: "تعرضت إحداهما إلى التحرش ومحاولة الاغتصاب من قبل عون سجون قام بتعريتها ومداعبة جسدها عنوة مكرها إياه على ملامسته بحضور الأخرى.",
+                legalContext: "المادة 230 من المجلة الجزائية التونسية تجرم الممارسات الجنسية المثلية (المساحقة واللواط) وتفرض عقوبة السجن لمدة ثلاث سنوات على مرتكبيها",
+                outcome: "يعاني مجتمع الميم عين من التمييز وسوء المعاملة ويتعرضون لممارسات تمييزية من قبل أعوان السجون أو حتى من قبل السجناء الآخرين مثل العنف اللفظي إضافة إلى الحرمان من الرعاية الصحية",
+                injuries: [
+                    { svg: "chest", x: 25, y: 25, description: "تعرية قسرية ومداعبة جسدها عنوة", severity: "high" },
+                    { svg: "stomach", x: 35, y: 40, description: "تحرش ومحاولة اغتصاب", severity: "high" }
+                ]
+            },
+            {
+                name: "ليلى",
+                age: "50 سنة",
+                subtitle: "حتى النساء لم يسلمن من الاعتداء",
+                background: "في 12 أفريل توجه أعوان الشرطة إلى فضاء اللعب الذي تديره ليلى ليطلبوا منها إغلاقه. بعد ذلك ذهبت ليلى إلى مركز الشرطة مساء اليوم نفسه لتسوية وضعيتها لكن رئيس المركز أمرها بمغادرة المركز بينما أصرت هي على استعادة معداتها التي صادرها الأعوان.",
+                allInjuries: [
+                    "صفعها رئيس المركز",
+                    "حاول خنقها باستعمال غطاء رأسها",
+                    "قام بتقييد يديها إلى الكرسي",
+                    "ركلها ولكمها",
+                    "هاجم بناتها واعتدى عليهن أمام أنظار حوالي خمسة عشر عون شرطة"
+                ],
+                familyImpact: "ولما سمعت بناتها اللاتي كن ينتظرنها خارج المركز صراخها أردن التدخل لنجدتها فهاجمهم رئيس المركز واعتدى عليهن أمام أنظار حوالي خمسة عشر عون شرطة",
+                outcome: "احتُجزت ليلى ثم أفرج عنها وكيل الجمهورية عقب زيارتها للمستشفى",
+                injuries: [
+                    { svg: "head", x: 35, y: 40, description: "صفعها رئيس المركز", severity: "medium" },
+                    { svg: "head", x: 25, y: 20, description: "حاول خنقها باستعمال غطاء رأسها", severity: "high" },
+                    { svg: "hands", x: 30, y: 15, description: "قام بتقييد يديها إلى الكرسي", severity: "medium" },
+                    { svg: "hands", x: 170, y: 18, description: "تقييد اليدين", severity: "medium" },
+                    { svg: "stomach", x: 40, y: 50, description: "ركلها ولكمها", severity: "high" }
+                ]
+            }
+        ];
+
+        // Application state
+        let currentCaseIndex = 0;
+        let isModalOpen = false;
+
+        // DOM elements
+        const elements = {
+            caseTabs: document.querySelectorAll('.case-tab'),
+            prevButton: document.getElementById('prevButton'),
+            nextButton: document.getElementById('nextButton'),
+            caseCounter: document.getElementById('caseCounter'),
+            humanBodyContainer: document.getElementById('humanBodyContainer'),
+            modalOverlay: document.getElementById('modalOverlay'),
+            modalContainer: document.getElementById('modalContainer'),
+            modalClose: document.getElementById('modalClose'),
+            modalTitle: document.getElementById('modalTitle'),
+            modalSubtitle: document.getElementById('modalSubtitle'),
+            modalBody: document.getElementById('modalBody')
+        };
+
+        // Utility functions
+        function getSeverityIcon(severity) {
+            const icons = { high: "🔴", medium: "🟡" };
+            return icons[severity] || "🟡";
+        }
+
+        function getSeverityText(severity) {
+            const texts = { high: "شديدة", medium: "متوسطة" };
+            return texts[severity] || "متوسطة";
+        }
+
+        function clearInjuryPoints() {
+            const existingPoints = elements.humanBodyContainer.querySelectorAll('.injury-point');
+            existingPoints.forEach(point => point.remove());
+        }
+
+        function createInjuryPoint(svgClass, x, y, description, caseData, severity = 'medium') {
+            const svg = elements.humanBodyContainer.querySelector(`.${svgClass}-svg`);
+            if (!svg) return;
+
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", severity === 'high' ? "8" : "6");
+            
+            const colors = {
+                high: { fill: "#ef4444", stroke: "#dc2626" },
+                medium: { fill: "#f59e0b", stroke: "#d97706" }
+            };
+            
+            circle.setAttribute("fill", colors[severity].fill);
+            circle.setAttribute("stroke", colors[severity].stroke);
+            circle.setAttribute("stroke-width", "2");
+            circle.setAttribute("class", "injury-point");
+            circle.setAttribute("tabindex", "0");
+            circle.setAttribute("role", "button");
+            circle.setAttribute("aria-label", `إصابة: ${description}`);
+            
+            circle.style.zIndex = "2000";
+            circle.style.position = "relative";
+            
+            const showDetails = (e) => {
+                e.stopPropagation();
+                showModal(caseData, description, severity);
+            };
+            
+            circle.addEventListener('click', showDetails);
+            circle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    showDetails(e);
+                }
+            });
+            
+            svg.appendChild(circle);
+        }
+
+        function displayCase(caseIndex) {
+            elements.caseTabs.forEach((tab, index) => {
+                tab.classList.toggle('active', index === caseIndex);
+                tab.setAttribute('aria-selected', index === caseIndex);
+            });
+            
+            clearInjuryPoints();
+            
+            const caseData = casesData[caseIndex];
+            caseData.injuries.forEach(injury => {
+                createInjuryPoint(injury.svg, injury.x, injury.y, injury.description, caseData, injury.severity);
+            });
+            
+            currentCaseIndex = caseIndex;
+            elements.caseCounter.textContent = `${caseIndex + 1} / ${casesData.length}`;
+            elements.prevButton.disabled = caseIndex === 0;
+            elements.nextButton.disabled = caseIndex === casesData.length - 1;
+
+            elements.humanBodyContainer.classList.add('loading');
+            setTimeout(() => {
+                elements.humanBodyContainer.classList.remove('loading');
+            }, 300);
+        }
+
+        function showModal(caseData, specificInjury, severity) {
+            if (isModalOpen) return;
+            
+            isModalOpen = true;
+            
+            elements.modalTitle.textContent = caseData.name;
+            elements.modalSubtitle.textContent = caseData.subtitle;
+            
+            let modalContent = `
+                <div class="info-section section-background">
+                    <div class="section-title">📋 خلفية الحالة</div>
+                    <div class="section-content">${caseData.background}</div>
+                </div>
+            `;
+            
+            if (caseData.psychologicalState) {
+                modalContent += `
+                    <div class="info-section section-background">
+                        <div class="section-title">🧠 الحالة النفسية</div>
+                        <div class="section-content">${caseData.psychologicalState}</div>
+                    </div>
+                `;
+            }
+            
+            if (caseData.tortureLocation) {
+                modalContent += `
+                    <div class="info-section section-background">
+                        <div class="section-title">📍 مواقع التعذيب</div>
+                        <div class="section-content">${caseData.tortureLocation}</div>
+                    </div>
+                `;
+            }
+            
+            if (caseData.details) {
+                modalContent += `
+                    <div class="info-section section-background">
+                        <div class="section-title">ℹ️ تفاصيل إضافية</div>
+                        <div class="section-content">${caseData.details}</div>
+                    </div>
+                `;
+            }
+
+            if (caseData.familyImpact) {
+                modalContent += `
+                    <div class="info-section section-background">
+                        <div class="section-title">👨‍👩‍👧‍👦 الأثر على الأسرة</div>
+                        <div class="section-content">${caseData.familyImpact}</div>
+                    </div>
+                `;
+            }
+
+            if (caseData.legalContext) {
+                modalContent += `
+                    <div class="info-section section-background">
+                        <div class="section-title">⚖️ السياق القانوني</div>
+                        <div class="section-content">${caseData.legalContext}</div>
+                    </div>
+                `;
+            }
+            
+            modalContent += `
+                <div class="info-section section-injury">
+                    <div class="severity-badge severity-${severity}">
+                        ${getSeverityIcon(severity)} ${getSeverityText(severity)}
+                    </div>
+                    <div class="section-title">🎯 الإصابة المحددة</div>
+                    <div class="section-content">${specificInjury}</div>
+                </div>
+                
+                <div class="info-section section-injury">
+                    <div class="section-title">🩸 جميع الإصابات المسجلة</div>
+                    <ul class="injury-list">
+                        ${caseData.allInjuries.map(injury => `<li class="injury-item">${injury}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            if (caseData.outcome) {
+                modalContent += `
+                    <div class="info-section section-outcome">
+                        <div class="section-title">⚖️ النتيجة والوضع الحالي</div>
+                        <div class="section-content">${caseData.outcome}</div>
+                    </div>
+                `;
+            }
+            
+            elements.modalBody.innerHTML = modalContent;
+            
+            elements.modalOverlay.style.display = 'block';
+            elements.modalContainer.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            elements.modalClose.focus();
+        }
+
+        function hideModal() {
+            if (!isModalOpen) return;
+            
+            isModalOpen = false;
+            
+            elements.modalOverlay.style.display = 'none';
+            elements.modalContainer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateCase(direction) {
+            const newIndex = currentCaseIndex + direction;
+            if (newIndex >= 0 && newIndex < casesData.length) {
+                displayCase(newIndex);
+            }
+        }
+
+        function initializeEventListeners() {
+            elements.caseTabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => displayCase(index));
+            });
+            
+            elements.prevButton.addEventListener('click', () => navigateCase(-1));
+            elements.nextButton.addEventListener('click', () => navigateCase(1));
+            
+            elements.modalClose.addEventListener('click', hideModal);
+            elements.modalOverlay.addEventListener('click', hideModal);
+            
+            document.addEventListener('keydown', (e) => {
+                if (isModalOpen) {
+                    if (e.key === 'Escape') {
+                        hideModal();
+                    }
+                } else {
+                    if (e.key === 'ArrowRight') {
+                        navigateCase(1);
+                    } else if (e.key === 'ArrowLeft') {
+                        navigateCase(-1);
+                    }
+                }
+            });
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                if (!isModalOpen) {
+                    touchStartX = e.changedTouches[0].screenX;
+                }
+            });
+
+            document.addEventListener('touchend', (e) => {
+                if (!isModalOpen) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const swipeThreshold = 50;
+                    if (touchEndX < touchStartX - swipeThreshold) {
+                        navigateCase(1);
+                    }
+                    if (touchEndX > touchStartX + swipeThreshold) {
+                        navigateCase(-1);
+                    }
+                }
+            });
+        }
+
+        function initializeApp() {
+            initializeEventListeners();
+            displayCase(0);
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+</body>
+</html>

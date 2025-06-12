@@ -1,0 +1,144 @@
+<svg viewBox="0 0 100 160">
+    <defs>
+        <!-- Gradients for realistic shading -->
+        <linearGradient id="stoneGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8a8a8a;stop-opacity:1" />
+            <stop offset="30%" style="stop-color:#757575;stop-opacity:1" />
+            <stop offset="70%" style="stop-color:#6a6a6a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+        </linearGradient>
+        
+        <linearGradient id="baseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#757575;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#616161;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+        </linearGradient>
+        
+        <radialGradient id="groundGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#5d4037;stop-opacity:1" />
+            <stop offset="60%" style="stop-color:#4a3728;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+        </radialGradient>
+        
+        <linearGradient id="barGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+            <stop offset="30%" style="stop-color:#2a2a2a;stop-opacity:1" />
+            <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Enhanced ground with texture -->
+    <ellipse cx="50" cy="148" rx="48" ry="10" fill="url(#groundGradient)" opacity="0.8"/>
+    <ellipse cx="50" cy="145" rx="45" ry="8" fill="#5d4037"/>
+    <ellipse cx="50" cy="143" rx="40" ry="6" fill="#6d4c41"/>
+    
+    <!-- Dirt texture -->
+    <ellipse cx="45" cy="144" rx="3" ry="1" fill="#4a3728" opacity="0.6"/>
+    <ellipse cx="55" cy="146" rx="2" ry="0.8" fill="#4a3728" opacity="0.5"/>
+    <ellipse cx="38" cy="145" rx="1.5" ry="0.6" fill="#3e2723" opacity="0.7"/>
+    <ellipse cx="62" cy="144" rx="2.5" ry="1" fill="#3e2723" opacity="0.4"/>
+    
+    <!-- More realistic grass -->
+    <path d="M8 140 Q10 136 12 140 Q14 135 16 140 Q18 136 20 140" stroke="#2e7d32" stroke-width="1" fill="none" opacity="0.8"/>
+    <path d="M12 142 Q14 138 16 142 Q18 137 20 142 Q22 138 24 142" stroke="#388e3c" stroke-width="0.8" fill="none" opacity="0.9"/>
+    <path d="M75 141 Q77 137 79 141 Q81 136 83 141 Q85 137 87 141" stroke="#2e7d32" stroke-width="1" fill="none" opacity="0.8"/>
+    <path d="M82 143 Q84 139 86 143 Q88 138 90 143 Q92 139 94 143" stroke="#1b5e20" stroke-width="0.8" fill="none" opacity="0.7"/>
+    
+    <!-- Weeds and small vegetation -->
+    <path d="M26 140 Q27 137 28 140 Q29 136 30 140" stroke="#1b5e20" stroke-width="0.6" fill="none" opacity="0.6"/>
+    <path d="M70 142 Q71 139 72 142 Q73 138 74 142" stroke="#2e7d32" stroke-width="0.5" fill="none" opacity="0.5"/>
+    
+    <!-- Enhanced foundation with 3D effect -->
+    <rect x="10" y="125" width="80" height="18" rx="3" fill="url(#baseGradient)" stroke="#424242" stroke-width="1"/>
+    <rect x="12" y="127" width="76" height="14" rx="2" fill="#616161" opacity="0.3"/>
+    
+    <!-- Main tombstone with realistic shading -->
+    <path d="M15 45 C15 22, 30 12, 50 12 C70 12, 85 22, 85 45 L85 125 L15 125 Z" fill="url(#stoneGradient)" stroke="#424242" stroke-width="1.5"/>
+    
+    <!-- Detailed stone texture and weathering -->
+    <path d="M18 25 L23 23 L28 27 L33 25 M72 30 L77 28 L82 32" stroke="#616161" stroke-width="0.4" fill="none" opacity="0.8"/>
+    <path d="M20 85 L25 83 L30 87 L35 85 M65 90 L70 88 L75 92" stroke="#656565" stroke-width="0.3" fill="none" opacity="0.7"/>
+    <path d="M22 115 L27 113 L32 117 M68 118 L73 116 L78 120" stroke="#6a6a6a" stroke-width="0.4" fill="none" opacity="0.6"/>
+    
+    <!-- Stone discoloration and stains -->
+    <ellipse cx="35" cy="65" rx="8" ry="12" fill="#5a5a5a" opacity="0.2"/>
+    <ellipse cx="70" cy="85" rx="6" ry="10" fill="#555555" opacity="0.15"/>
+    <ellipse cx="25" cy="110" rx="5" ry="8" fill="#4a4a4a" opacity="0.25"/>
+    
+    <!-- Realistic prison bars with rust and wear -->
+    <g opacity="1">
+        <!-- Vertical bars with gradient shading -->
+        <rect x="24" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="31" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="38" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="45" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="52" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="59" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="66" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        <rect x="73" y="35" width="3" height="25" fill="url(#barGradient)" rx="1.5"/>
+        
+        <!-- Rust spots on bars -->
+        <ellipse cx="26" cy="45" rx="0.5" ry="1" fill="#8d4004" opacity="0.6"/>
+        <ellipse cx="32" cy="52" rx="0.4" ry="0.8" fill="#a0460b" opacity="0.5"/>
+        <ellipse cx="67" cy="48" rx="0.6" ry="1.2" fill="#8d4004" opacity="0.7"/>
+        <ellipse cx="74" cy="55" rx="0.3" ry="0.6" fill="#a0460b" opacity="0.4"/>
+    </g>
+    
+    <!-- Enhanced horizontal bars with welding marks -->
+    <rect x="22" y="39" width="58" height="3.5" fill="url(#barGradient)" rx="1.5"/>
+    <rect x="22" y="52" width="58" height="3.5" fill="url(#barGradient)" rx="1.5"/>
+    
+    <!-- Welding spots and connection points -->
+    <circle cx="24" cy="41" r="1.5" fill="#1a1a1a"/>
+    <circle cx="78" cy="41" r="1.5" fill="#1a1a1a"/>
+    <circle cx="24" cy="54" r="1.5" fill="#1a1a1a"/>
+    <circle cx="78" cy="54" r="1.5" fill="#1a1a1a"/>
+    
+    <!-- Rivet details -->
+    <circle cx="24" cy="41" r="0.8" fill="#2a2a2a"/>
+    <circle cx="78" cy="41" r="0.8" fill="#2a2a2a"/>
+    <circle cx="24" cy="54" r="0.8" fill="#2a2a2a"/>
+    <circle cx="78" cy="54" r="0.8" fill="#2a2a2a"/>
+    
+    <!-- Enhanced ball and chain -->
+    <circle cx="30" cy="80" r="4.5" fill="#3a3a3a" stroke="#1a1a1a" stroke-width="0.5"/>
+    <circle cx="30" cy="80" r="3" fill="#4a4a4a"/>
+    <rect x="34" y="79" width="14" height="2" fill="#3a3a3a"/>
+    <rect x="48" y="75" width="2" height="10" fill="#3a3a3a"/>
+    
+    <!-- Chain links -->
+    <ellipse cx="42" cy="80" rx="2" ry="1" fill="none" stroke="#3a3a3a" stroke-width="1"/>
+    
+    <!-- Prison number plate -->
+    <rect x="40" y="100" width="20" height="8" fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+    <text x="50" y="106" text-anchor="middle" font-size="7" fill="#333" font-family="monospace" font-weight="bold">1947</text>
+    
+    <!-- Multiple cracks for weathering -->
+    <path d="M70 70 L75 85 L72 95" stroke="#5a5a5a" stroke-width="0.8" fill="none"/>
+    <path d="M25 80 L28 90" stroke="#5a5a5a" stroke-width="0.5" fill="none"/>
+    
+    <!-- Small flowers -->
+    <g transform="translate(15, 135)">
+        <circle cx="0" cy="0" r="1.5" fill="#e1bee7"/>
+        <circle cx="-1" cy="-1" r="0.8" fill="#fff"/>
+        <circle cx="1" cy="-1" r="0.8" fill="#fff"/>
+        <circle cx="0" cy="1" r="0.8" fill="#fff"/>
+        <rect x="-0.3" y="0.5" width="0.6" height="3" fill="#4caf50"/>
+    </g>
+    
+    <g transform="translate(82, 138)">
+        <circle cx="0" cy="0" r="1.2" fill="#ffcdd2"/>
+        <circle cx="-0.8" cy="-0.8" r="0.6" fill="#fff"/>
+        <circle cx="0.8" cy="-0.8" r="0.6" fill="#fff"/>
+        <circle cx="0" cy="0.8" r="0.6" fill="#fff"/>
+        <rect x="-0.2" y="0.5" width="0.4" height="2.5" fill="#4caf50"/>
+    </g>
+    
+    <!-- Stone moss/aging -->
+    <path d="M18 115 C22 113, 28 115, 32 113" stroke="#388e3c" stroke-width="1" fill="none" opacity="0.7"/>
+    <path d="M68 118 C72 116, 78 118, 82 116" stroke="#2e7d32" stroke-width="0.8" fill="none" opacity="0.6"/>
+    
+    <!-- Shadow under tombstone -->
+    <ellipse cx="52" cy="127" rx="35" ry="3" fill="#000" opacity="0.2"/>
+</svg>

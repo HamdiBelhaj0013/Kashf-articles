@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خريطة مصانع المجمع الكيميائي التونسي بقابس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body { 
+      background: #f5f8fa; 
+      margin: 0; 
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    .map-article-block {
+      font-family: 'Tajawal', 'Noto Sans Arabic', 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 44px rgba(35,113,132,0.13), 0 1.5px 6px rgba(76,132,161,0.09);
+      overflow: hidden;
+      margin: 36px auto 24px auto;
+      max-width: 1400px;
+      min-width: 0;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    
+    .map-header {
+      padding: 44px 36px 36px 36px;
+      text-align: center;
+      border-bottom: 2.5px solid #237184;
+      background: linear-gradient(90deg, #eaf5fa 80%, #f7fafc 100%);
+      letter-spacing: .02em;
+    }
+    
+    .map-header h1 {
+      font-family: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+      font-size: 2.65rem;
+      font-weight: 800;
+      color: #206689;
+      margin-bottom: 16px;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      text-align: center;
+      word-spacing: .08em;
+      text-shadow: 0 1px 2px rgba(32, 102, 137, 0.1);
+    }
+    
+    .map-header .subtitle {
+      font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+      font-size: 1.25rem;
+      color: #225272;
+      font-weight: 400;
+      margin-top: 8px;
+      margin-bottom: 0;
+      text-align: center;
+      letter-spacing: .01em;
+      line-height: 1.7;
+      display: block;
+    }
+
+    .map-container {
+      position: relative;
+      background: linear-gradient(135deg, #f0f9fc 0%, #e8f4f8 100%);
+      padding: 20px;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 650px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(35,113,132,0.15);
+      border: 3px solid #bedcf1;
+      z-index: 1;
+    }
+
+    /* ENHANCED marker styles with 3D effect and better visibility */
+    .factory-marker-custom {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #237184 0%, #489fc2 50%, #5cb3d4 100%);
+      border: 5px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: white;
+      font-size: 22px;
+      box-shadow: 
+        0 10px 30px rgba(35,113,132,0.5),
+        0 0 0 8px rgba(35,113,132,0.1),
+        inset 0 2px 4px rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .factory-marker-custom:hover {
+      transform: scale(1.3) translateY(-5px);
+      box-shadow: 
+        0 20px 40px rgba(35,113,132,0.7),
+        0 0 0 12px rgba(35,113,132,0.2),
+        inset 0 2px 4px rgba(255,255,255,0.4);
+      background: linear-gradient(145deg, #1a5a6b 0%, #237184 50%, #489fc2 100%);
+    }
+
+    .factory-marker-custom::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
+      border: 4px solid rgba(35,113,132,0.6);
+      border-radius: 50%;
+      animation: enhancedPulse 3s infinite;
+    }
+
+    .factory-marker-custom::after {
+      content: '';
+      position: absolute;
+      top: -25px;
+      left: -25px;
+      right: -25px;
+      bottom: -25px;
+      border: 2px solid rgba(35,113,132,0.3);
+      border-radius: 50%;
+      animation: enhancedPulse 3s infinite 0.5s;
+    }
+
+    @keyframes enhancedPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 1; 
+      }
+      50% { 
+        transform: scale(1.8); 
+        opacity: 0.1; 
+      }
+    }
+
+    /* Factory label enhancement */
+    .factory-label {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(35,113,132,0.95);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Tajawal', sans-serif;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(35,113,132,0.4);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .factory-marker-custom:hover + .factory-label {
+      opacity: 1;
+    }
+
+    /* Enhanced popup styles */
+    .leaflet-popup-content-wrapper {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(35,113,132,0.35);
+      border: 4px solid #bedcf1;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+      width: 350px !important;
+      font-family: 'Tajawal', 'Noto Sans Arabic', 'Inter', sans-serif;
+    }
+
+    .factory-popup {
+      padding: 28px 24px;
+      text-align: right;
+      direction: rtl;
+    }
+
+    .factory-year {
+      display: inline-block;
+      padding: 12px 20px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      font-size: 1.05em;
+      font-weight: 700;
+      background: linear-gradient(135deg, #eaf5fa, #f0f8fc);
+      color: #237184;
+      font-family: 'Inter', 'Tajawal', sans-serif;
+      box-shadow: 0 4px 8px rgba(35,113,132,0.2);
+    }
+
+    .factory-name {
+      font-size: 1.5em;
+      font-family: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+      font-weight: 800;
+      color: #1a324f;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      letter-spacing: .02em;
+    }
+
+    .production-section {
+      margin-top: 20px;
+    }
+
+    .production-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #237184;
+      margin-bottom: 16px;
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      border-bottom: 4px solid #eaf5fa;
+      padding-bottom: 10px;
+    }
+
+    .production-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 2px solid #f0f7fa;
+      font-size: 1.05em;
+      gap: 16px;
+    }
+
+    .production-item:last-child {
+      border-bottom: none;
+    }
+
+    .material-name {
+      color: #2d3949;
+      font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+      flex: 1;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .capacity {
+      color: #237184;
+      font-weight: 700;
+      font-family: 'Inter', 'Tajawal', sans-serif;
+      white-space: nowrap;
+      font-size: 1em;
+    }
+
+    /* Enhanced map controls */
+    .map-controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .control-button {
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #bedcf1;
+      border-radius: 14px;
+      padding: 10px 15px;
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      font-size: 1em;
+      font-weight: 700;
+      color: #237184;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(25px);
+      box-shadow: 0 8px 25px rgba(35,113,132,0.2);
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .control-button:hover {
+      background: #fff;
+      border-color: #237184;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(35,113,132,0.35);
+    }
+
+    .control-button.active {
+      background: #237184;
+      color: #fff;
+      border-color: #237184;
+      box-shadow: 0 12px 35px rgba(35,113,132,0.5);
+    }
+
+    .control-button i {
+      margin-left: 12px;
+      font-size: 1.1em;
+    }
+
+    .map-footer {
+      padding: 25px 23px 16px 23px;
+      border-top: 1.2px solid #bedcf1;
+      color: #237184;
+      font-size: 1.15rem;
+      text-align: center;
+      background: #f3fbfa;
+      font-style: italic;
+      letter-spacing: -.3px;
+      font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    /* Loading indicator */
+    .loading-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.98);
+      padding: 32px 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(35,113,132,0.3);
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      color: #237184;
+      z-index: 2000;
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 5px solid #bedcf1;
+      border-top: 5px solid #237184;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Industry area styling */
+    .industry-info {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.97);
+      border: 3px solid #bedcf1;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(35,113,132,0.18);
+      backdrop-filter: blur(25px);
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      text-align: right;
+      direction: rtl;
+      z-index: 1000;
+      max-width: 240px;
+    }
+
+    .industry-title {
+      font-size: 1.1em;
+      font-weight: 800;
+      color: #237184;
+      margin-bottom: 12px;
+    }
+
+    .industry-desc {
+      font-size: 0.9em;
+      color: #2d3949;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Responsive design - ENHANCED FOR MOBILE */
+    @media (max-width: 1024px) {
+      .map-container {
+        padding: 15px;
+      }
+      #map {
+        height: 540px;
+      }
+      .factory-marker-custom {
+        width: 54px;
+        height: 54px;
+        font-size: 20px;
+      }
+      .leaflet-popup-content {
+        width: 320px !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .map-article-block {
+        margin: 12px 6px;
+        border-radius: 16px;
+      }
+      .map-header {
+        padding: 24px 20px 18px 20px;
+      }
+      .map-header h1 {
+        font-size: 1.8rem;
+      }
+      .map-header .subtitle {
+        font-size: 1rem;
+      }
+      .map-container {
+        padding: 8px;
+        min-height: 440px;
+      }
+      #map {
+        height: 420px;
+        border-radius: 8px;
+        border-width: 2px;
+      }
+      
+      /* Mobile controls - Compact design */
+      .map-controls {
+        top: 10px;
+        left: 10px;
+        flex-direction: row;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .control-button {
+        padding: 10px 14px;
+        font-size: 0.8em;
+        min-width: 100px;
+        border-radius: 10px;
+      }
+      .control-button i {
+        margin-left: 6px;
+      }
+      
+      /* Mobile markers - Smaller but still enhanced */
+      .factory-marker-custom {
+        width: 46px;
+        height: 46px;
+        font-size: 17px;
+        border-width: 4px;
+      }
+      .factory-marker-custom::before {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+      }
+      .factory-marker-custom::after {
+        top: -20px;
+        left: -20px;
+        right: -20px;
+        bottom: -20px;
+      }
+      
+      /* Mobile popups - Compact */
+      .leaflet-popup-content {
+        width: 290px !important;
+      }
+      .factory-popup {
+        padding: 20px 18px;
+      }
+      .factory-name {
+        font-size: 1.2em;
+        margin-bottom: 16px;
+      }
+      .production-item {
+        font-size: 0.95em;
+        padding: 8px 0;
+      }
+      
+      /* Remove industry info on mobile */
+      .industry-info {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .map-article-block {
+        margin: 8px 4px;
+      }
+      .map-header {
+        padding: 20px 16px 14px 16px;
+      }
+      .map-header h1 {
+        font-size: 1.6rem;
+      }
+      .map-header .subtitle {
+        font-size: 0.9rem;
+      }
+      .map-container {
+        padding: 6px;
+        min-height: 380px;
+      }
+      #map {
+        height: 360px;
+      }
+      
+      /* Ultra compact mobile controls */
+      .map-controls {
+        top: 8px;
+        left: 8px;
+      }
+      .control-button {
+        padding: 8px 12px;
+        font-size: 0.75em;
+        min-width: 85px;
+      }
+      
+      /* Ultra small mobile markers but still enhanced */
+      .factory-marker-custom {
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+        border-width: 3px;
+      }
+      
+      /* Ultra compact mobile popups */
+      .leaflet-popup-content {
+        width: 250px !important;
+      }
+      .factory-popup {
+        padding: 16px 14px;
+      }
+      .factory-year {
+        padding: 8px 14px;
+        font-size: 0.85em;
+      }
+      .factory-name {
+        font-size: 1.08em;
+      }
+      .production-title {
+        font-size: 1em;
+      }
+      .production-item {
+        font-size: 0.9em;
+      }
+    }
+
+    /* Custom leaflet popup styling */
+    .leaflet-popup-tip {
+      background: #fff;
+      border: 4px solid #bedcf1;
+    }
+
+    .leaflet-popup-close-button {
+      color: #237184 !important;
+      font-size: 24px !important;
+      font-weight: bold !important;
+      right: 16px !important;
+      top: 14px !important;
+    }
+
+    /* Remove leaflet attribution on mobile */
+    @media (max-width: 768px) {
+      .leaflet-control-attribution {
+        display: none;
+      }
+    }
+
+    /* Zoom control styling */
+    .leaflet-control-zoom {
+      border: 3px solid #bedcf1 !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(35,113,132,0.2) !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: rgba(255,255,255,0.95) !important;
+      color: #237184 !important;
+      font-weight: bold !important;
+      font-size: 20px !important;
+      border: none !important;
+      backdrop-filter: blur(15px);
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: #237184 !important;
+      color: white !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="map-article-block">
+    <div class="map-header">
+      <h1>خريطة مصانع المجمع الكيميائي التونسي بقابس</h1>
+      <span class="subtitle">المنطقة الصناعية بغنوش تحتوي على 4 مصانع تابعت للمجمع الكيميائي التونسي </span>
+    </div>
+    
+    <div class="map-container">
+      <div class="loading-indicator" id="loadingIndicator">
+        <div class="loading-spinner"></div>
+        <div>جاري تحميل خريطة قابس...</div>
+      </div>
+      
+      <div class="map-controls">
+        <div class="control-button active" onclick="toggleLayer('satellite')">
+          <i class="fas fa-satellite"></i>قمر صناعي
+        </div>
+        <div class="control-button" onclick="toggleLayer('streets')">
+          <i class="fas fa-road"></i>شوارع
+        </div>
+        <div class="control-button" onclick="focusOnComplex()">
+          <i class="fas fa-crosshairs"></i>المجمع
+        </div>
+      </div>
+      
+      <div id="map"></div>
+    </div>
+    
+    <div class="map-footer">
+ المجمع الكيميائي التونسي — كشف ميديا.
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  
+  <script>
+    let map;
+    let currentLayer = 'satellite';
+    let factoryMarkers = [];
+    let gabesBounds;
+    const factories = [
+      {
+        id: 'icm',
+        name: 'مصنع الحامض الفسفوري بقابس ICM 1,2,3',
+        year: '1972-1974-1982',
+        lat: 33.9200,
+        lng: 10.0933,
+        production: [
+          { material: 'الحامض الفسفوري', capacity: '470 ألف طن/سنة' },
+          { material: 'الفسفاط العلفي', capacity: '120 ألف طن/سنة' }
+        ]
+      },
+      {
+        id: 'dap-a',
+        name: 'مصنع الداب (أ) بقابس',
+        year: '1979',
+        lat: 33.9158,
+        lng: 10.0947,
+        production: [
+          { material: 'الحامض الفسفوري', capacity: '330 ألف طن/سنة' },
+          { material: 'ثاني فسفاط الأمونيا', capacity: '650 ألف طن/سنة' }
+        ]
+      },
+      {
+        id: 'dap-b',
+        name: 'مصنع الداب (ب) بقابس',
+        year: '1985',
+        lat: 33.9153,
+        lng: 10.0947,
+        production: [
+          { material: 'ثاني فسفاط الأمونيا', capacity: '650 ألف طن/سنة' }
+        ]
+      },
+      {
+        id: 'ammoniter',
+        name: 'مصنع الأمونيتر بقابس',
+        year: '1983',
+        lat: 33.9167,
+        lng: 10.0975,
+        production: [
+          { material: 'الأمونيتر الزراعي', capacity: '330 ألف طن/سنة' },
+          { material: 'الأمونيتر النقيذ', capacity: '30 ألف طن/سنة' }
+        ]
+      }
+    ];
+    function initMap() {
+
+      const gctCenter = [33.9175, 10.0950];
+      gabesBounds = L.latLngBounds([
+        [33.85, 10.05],
+        [33.95, 10.15]
+      ]);
+      map = L.map('map', {
+        center: gctCenter,
+        zoom: window.innerWidth <= 768 ? 14 : 15,
+        zoomControl: true,
+        scrollWheelZoom: true,
+        dragging: true,
+        tap: true,
+        touchZoom: true,
+        maxBounds: gabesBounds,
+        maxBoundsViscosity: 1.0,
+        minZoom: window.innerWidth <= 768 ? 12 : 13,
+        maxZoom: 18
+      });
+      const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: window.innerWidth <= 768 ? '' : 'Esri, Maxar, GeoEye, Earthstar Geographics',
+        maxZoom: 18,
+        minZoom: window.innerWidth <= 768 ? 12 : 13
+      });
+
+      const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: window.innerWidth <= 768 ? '' : 'OpenStreetMap contributors',
+        maxZoom: 18,
+        minZoom: window.innerWidth <= 768 ? 12 : 13
+      });
+      satelliteLayer.addTo(map);
+      window.mapLayers = {
+        satellite: satelliteLayer,
+        streets: streetsLayer
+      };
+      addFactoriesToMap();
+      addIndustrialArea();
+      map.on('drag', function() {
+        map.panInsideBounds(gabesBounds, { animate: false });
+      });
+
+      map.on('zoomend', function() {
+        if (!gabesBounds.contains(map.getCenter())) {
+          map.panTo(gctCenter);
+        }
+      });
+      setTimeout(() => {
+        document.getElementById('loadingIndicator').style.display = 'none';
+      }, 1200);
+      if (window.innerWidth <= 768) {
+        map.attributionControl.remove();
+      }
+    }
+    function addFactoriesToMap() {
+      factories.forEach((factory, index) => {
+        const markerSize = window.innerWidth <= 480 ? 40 : window.innerWidth <= 768 ? 46 : 60;
+        const fontSize = window.innerWidth <= 480 ? 15 : window.innerWidth <= 768 ? 17 : 22;
+        
+        const markerHtml = `
+          <div class="factory-marker-custom" style="width:${markerSize}px; height:${markerSize}px; font-size:${fontSize}px;">${index + 1}</div>
+          <div class="factory-label">${factory.name.split(' ')[0]} ${factory.name.split(' ')[1]}</div>
+        `;
+        
+        const customIcon = L.divIcon({
+          html: markerHtml,
+          className: 'custom-div-icon',
+          iconSize: [markerSize, markerSize + 30],
+          iconAnchor: [markerSize/2, markerSize/2],
+          popupAnchor: [0, -markerSize/2]
+        });
+        const marker = L.marker([factory.lat, factory.lng], { icon: customIcon });
+        const popupContent = createPopupContent(factory);
+        marker.bindPopup(popupContent, {
+          maxWidth: window.innerWidth <= 480 ? 250 : window.innerWidth <= 768 ? 290 : 350,
+          className: 'custom-popup',
+          closeButton: true,
+          autoPan: true
+        });
+        marker.addTo(map);
+        factoryMarkers.push(marker);
+        marker.on('click', function() {
+          this.openPopup();
+        });
+        marker.on('mouseover', function() {
+          const labelElement = this._icon.querySelector('.factory-label');
+          if (labelElement) {
+            labelElement.style.opacity = '1';
+          }
+        });
+
+        marker.on('mouseout', function() {
+          const labelElement = this._icon.querySelector('.factory-label');
+          if (labelElement) {
+            labelElement.style.opacity = '0';
+          }
+        });
+      });
+    }
+    function createPopupContent(factory) {
+      let productionHtml = '';
+      factory.production.forEach(item => {
+        productionHtml += `
+          <div class="production-item">
+            <span class="material-name">${item.material}</span>
+            <span class="capacity">${item.capacity}</span>
+          </div>
+        `;
+      });
+
+      return `
+        <div class="factory-popup">
+          <div class="factory-year">${factory.year}</div>
+          <div class="factory-name">${factory.name}</div>
+          <div class="production-section">
+            <div class="production-title">طاقة الإنتاج:</div>
+            ${productionHtml}
+          </div>
+        </div>
+      `;
+    }
+    function addIndustrialArea() {
+      const industrialAreaCoords = [
+        [33.9230, 10.0900],
+        [33.9230, 10.1000],
+        [33.9130, 10.1000],
+        [33.9130, 10.0900],
+        [33.9230, 10.0900]
+      ];
+      const industrialArea = L.polygon(industrialAreaCoords, {
+        color: '#237184',
+        fillColor: '#237184',
+        fillOpacity: 0.25,
+        weight: 4,
+        opacity: 0.9,
+        dashArray: '12, 6'
+      }).addTo(map);    
+    }
+    function toggleLayer(layerType) {
+      document.querySelectorAll('.control-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      if (layerType !== currentLayer) {
+        map.removeLayer(window.mapLayers[currentLayer]);
+        map.addLayer(window.mapLayers[layerType]);
+        currentLayer = layerType;
+      }
+    }
+    function focusOnComplex() {
+      map.setView([33.9175, 10.0950], window.innerWidth <= 768 ? 15 : 16);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(initMap, 200);
+      function handleResize() {
+        if (map) {
+          setTimeout(() => {
+            map.invalidateSize();
+            if (window.innerWidth <= 768) {
+              map.setView([33.9175, 10.0950], 14);
+            }
+          }, 250);
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('orientationchange', handleResize);
+      if (window.innerWidth <= 768) {
+        document.addEventListener('touchstart', function(e) {
+          if (e.touches.length > 1) {
+            e.preventDefault();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

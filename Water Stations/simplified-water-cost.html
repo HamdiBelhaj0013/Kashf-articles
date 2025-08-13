@@ -1,12 +1,428 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تكلفة إنتاج المياه المحلاة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
+<!-- WordPress Compatible Version - Water Pricing Widget -->
+<div id="water-pricing-container">
+<style>
+    #water-pricing-container {
+        --primary-blue: #1e88e5;
+        --secondary-blue: #42a5f5;
+        --accent-blue: #64b5f6;
+        --success-green: #43a047;
+        --warning-orange: #ff9800;
+        --text-primary: #1a1a1a;
+        --text-secondary: #555555;
+        --text-muted: #777777;
+        --bg-white: #ffffff;
+        --bg-light: #f8fafc;
+        --bg-gray: #f1f5f9;
+        --border-light: #e2e8f0;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+        --radius-sm: 6px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+    }
+
+    #water-pricing-container * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    #water-pricing-container .water-pricing-widget {
+        font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 100%;
+        margin: 20px auto;
+        background: var(--bg-white);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        direction: rtl;
+        font-feature-settings: "kern" 1;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    #water-pricing-container .widget-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+        color: white;
+        padding: 24px 20px;
+        text-align: center;
+        position: relative;
+    }
+
+    #water-pricing-container .widget-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    }
+
+    #water-pricing-container .widget-title {
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
+        font-weight: 700;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+    }
+
+    #water-pricing-container .widget-subtitle {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        opacity: 0.9;
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Content Styles */
+    #water-pricing-container .widget-content {
+        padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 24px);
+    }
+
+    /* Chart Styles */
+    #water-pricing-container .chart-container {
+        background: var(--bg-light);
+        border-radius: var(--radius-md);
+        padding: clamp(16px, 4vw, 24px);
+        margin-bottom: clamp(20px, 5vw, 32px);
+        border: 1px solid var(--border-light);
+    }
+
+    #water-pricing-container .chart-header {
+        text-align: center;
+        margin-bottom: clamp(16px, 4vw, 24px);
+    }
+
+    #water-pricing-container .chart-title {
+        font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    #water-pricing-container .chart-wrapper {
+        position: relative;
+        height: clamp(250px, 50vw, 300px);
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    #water-pricing-container .chart-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 60px;
+        z-index: 1;
+    }
+
+    #water-pricing-container .grid-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--border-light);
+        display: flex;
+        align-items: center;
+    }
+
+    #water-pricing-container .grid-label {
+        position: absolute;
+        right: -10px;
+        transform: translateX(100%);
+        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+        color: var(--text-muted);
+        background: var(--bg-white);
+        padding: 2px 6px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-light);
+        white-space: nowrap;
+    }
+
+    #water-pricing-container .chart-bars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 60px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        gap: clamp(8px, 3vw, 16px);
+        z-index: 2;
+    }
+
+    #water-pricing-container .price-bar {
+        flex: 1;
+        max-width: clamp(40px, 12vw, 80px);
+        min-height: 0;
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        position: relative;
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+    }
+
+    #water-pricing-container .price-bar:nth-child(1) { background: linear-gradient(180deg, var(--accent-blue) 0%, var(--secondary-blue) 100%); }
+    #water-pricing-container .price-bar:nth-child(2) { background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--primary-blue) 100%); }
+    #water-pricing-container .price-bar:nth-child(3) { background: linear-gradient(180deg, var(--primary-blue) 0%, #1565c0 100%); }
+    #water-pricing-container .price-bar:nth-child(4) { background: linear-gradient(180deg, var(--success-green) 0%, #2e7d32 100%); }
+
+    #water-pricing-container .price-bar:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    #water-pricing-container .price-bar::before {
+        content: attr(data-value);
+        position: absolute;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text-primary);
+        color: white;
+        padding: 6px 10px;
+        border-radius: var(--radius-sm);
+        font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    #water-pricing-container .price-bar:hover::before {
+        opacity: 1;
+    }
+
+    #water-pricing-container .chart-labels {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: clamp(8px, 3vw, 16px);
+        z-index: 2;
+    }
+
+    #water-pricing-container .bar-label {
+        flex: 1;
+        max-width: clamp(40px, 12vw, 80px);
+        text-align: center;
+        font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+        font-weight: 500;
+        color: var(--text-secondary);
+        line-height: 1.3;
+        padding: 8px 4px;
+    }
+
+    /* Insights Section */
+    #water-pricing-container .insights-section {
+        margin-top: clamp(20px, 5vw, 32px);
+    }
+
+    #water-pricing-container .main-insight {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+        color: white;
+        border-radius: var(--radius-md);
+        padding: clamp(16px, 4vw, 24px);
+        margin-bottom: clamp(16px, 4vw, 24px);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: var(--shadow-md);
+    }
+
+    #water-pricing-container .insight-icon {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        flex-shrink: 0;
+    }
+
+    #water-pricing-container .insight-content h4 {
+        font-size: clamp(1.1rem, 3.5vw, 1.25rem);
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    #water-pricing-container .insight-content p {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        opacity: 0.95;
+        line-height: 1.5;
+    }
+
+    #water-pricing-container .insights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: clamp(12px, 3vw, 16px);
+    }
+
+    #water-pricing-container .insight-item {
+        background: var(--bg-white);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        padding: clamp(16px, 4vw, 20px);
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: var(--shadow-sm);
+    }
+
+    #water-pricing-container .insight-item:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    #water-pricing-container .insight-label {
+        display: block;
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    #water-pricing-container .insight-value {
+        display: block;
+        font-size: clamp(1.25rem, 4vw, 1.5rem);
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    #water-pricing-container .insight-value.production {
+        color: var(--primary-blue);
+    }
+
+    #water-pricing-container .insight-value.selling {
+        color: var(--success-green);
+    }
+
+    #water-pricing-container .insight-station {
+        display: block;
+        font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Footer */
+    #water-pricing-container .widget-footer {
+        background: var(--bg-gray);
+        padding: clamp(12px, 3vw, 16px);
+        text-align: center;
+        border-top: 1px solid var(--border-light);
+    }
+
+    #water-pricing-container .widget-footer p {
+        font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+        color: var(--text-muted);
+        margin: 0 !important;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+        #water-pricing-container .water-pricing-widget {
+            margin: 10px;
+            border-radius: var(--radius-md);
+        }
+        
+        #water-pricing-container .insights-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        #water-pricing-container .main-insight {
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+        }
+        
+        #water-pricing-container .chart-wrapper {
+            height: 220px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #water-pricing-container .water-pricing-widget {
+            margin: 5px;
+            border-radius: var(--radius-sm);
+        }
+        
+        #water-pricing-container .widget-content {
+            padding: 16px 12px;
+        }
+        
+        #water-pricing-container .chart-container {
+            padding: 16px 12px;
+        }
+        
+        #water-pricing-container .chart-wrapper {
+            height: 200px;
+        }
+        
+        #water-pricing-container .chart-bars {
+            gap: 6px;
+        }
+        
+        #water-pricing-container .chart-labels {
+            gap: 6px;
+        }
+        
+        #water-pricing-container .bar-label {
+            font-size: 0.7rem;
+            padding: 6px 2px;
+        }
+    }
+
+    /* Animation Classes */
+    #water-pricing-container .animate-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: waterPricingSlideInUp 0.6s ease forwards;
+    }
+
+    @keyframes waterPricingSlideInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+        #water-pricing-container .price-bar,
+        #water-pricing-container .insight-item {
+            transition: none;
+        }
+        
+        #water-pricing-container .animate-in {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        #water-pricing-container {
+            --border-light: #666666;
+            --text-muted: #333333;
+        }
+    }
+
+    /* Print styles */
+    @media print {
+        #water-pricing-container .water-pricing-widget {
+            box-shadow: none;
+            border: 1px solid #000;
+        }
+        
+        #water-pricing-container .widget-header {
+            background: #f0f0f0 !important;
+            color: #000 !important;
+        }
+    }
+</style>
 
 <div class="water-pricing-widget">
     <header class="widget-header">
@@ -65,439 +481,6 @@
     </footer>
 </div>
 
-<style>
-:root {
-    --primary-blue: #1e88e5;
-    --secondary-blue: #42a5f5;
-    --accent-blue: #64b5f6;
-    --success-green: #43a047;
-    --warning-orange: #ff9800;
-    --text-primary: #1a1a1a;
-    --text-secondary: #555555;
-    --text-muted: #777777;
-    --bg-white: #ffffff;
-    --bg-light: #f8fafc;
-    --bg-gray: #f1f5f9;
-    --border-light: #e2e8f0;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.water-pricing-widget {
-    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    max-width: 100%;
-    margin: 20px auto;
-    background: var(--bg-white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    direction: rtl;
-    font-feature-settings: "kern" 1;
-    line-height: 1.6;
-}
-
-/* Header Styles */
-.widget-header {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-    color: white;
-    padding: 24px 20px;
-    text-align: center;
-    position: relative;
-}
-
-.widget-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-}
-
-.widget-title {
-    font-size: clamp(1.25rem, 4vw, 1.75rem);
-    font-weight: 700;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 1;
-}
-
-.widget-subtitle {
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    opacity: 0.9;
-    font-weight: 400;
-    position: relative;
-    z-index: 1;
-}
-
-/* Content Styles */
-.widget-content {
-    padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 24px);
-}
-
-/* Chart Styles */
-.chart-container {
-    background: var(--bg-light);
-    border-radius: var(--radius-md);
-    padding: clamp(16px, 4vw, 24px);
-    margin-bottom: clamp(20px, 5vw, 32px);
-    border: 1px solid var(--border-light);
-}
-
-.chart-header {
-    text-align: center;
-    margin-bottom: clamp(16px, 4vw, 24px);
-}
-
-.chart-title {
-    font-size: clamp(1.1rem, 3.5vw, 1.3rem);
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.chart-wrapper {
-    position: relative;
-    height: clamp(250px, 50vw, 300px);
-    margin: 0 auto;
-    max-width: 600px;
-}
-
-.chart-grid {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    z-index: 1;
-}
-
-.grid-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--border-light);
-    display: flex;
-    align-items: center;
-}
-
-.grid-label {
-    position: absolute;
-    right: -10px;
-    transform: translateX(100%);
-    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
-    color: var(--text-muted);
-    background: var(--bg-white);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
-    white-space: nowrap;
-}
-
-.chart-bars {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    gap: clamp(8px, 3vw, 16px);
-    z-index: 2;
-}
-
-.price-bar {
-    flex: 1;
-    max-width: clamp(40px, 12vw, 80px);
-    min-height: 0;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    position: relative;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-}
-
-.price-bar:nth-child(1) { background: linear-gradient(180deg, var(--accent-blue) 0%, var(--secondary-blue) 100%); }
-.price-bar:nth-child(2) { background: linear-gradient(180deg, var(--secondary-blue) 0%, var(--primary-blue) 100%); }
-.price-bar:nth-child(3) { background: linear-gradient(180deg, var(--primary-blue) 0%, #1565c0 100%); }
-.price-bar:nth-child(4) { background: linear-gradient(180deg, var(--success-green) 0%, #2e7d32 100%); }
-
-.price-bar:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.price-bar::before {
-    content: attr(data-value);
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--text-primary);
-    color: white;
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
-    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
-    font-weight: 600;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.price-bar:hover::before {
-    opacity: 1;
-}
-
-.chart-labels {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: clamp(8px, 3vw, 16px);
-    z-index: 2;
-}
-
-.bar-label {
-    flex: 1;
-    max-width: clamp(40px, 12vw, 80px);
-    text-align: center;
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-    font-weight: 500;
-    color: var(--text-secondary);
-    line-height: 1.3;
-    padding: 8px 4px;
-}
-
-/* Insights Section */
-.insights-section {
-    margin-top: clamp(20px, 5vw, 32px);
-}
-
-.main-insight {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-    color: white;
-    border-radius: var(--radius-md);
-    padding: clamp(16px, 4vw, 24px);
-    margin-bottom: clamp(16px, 4vw, 24px);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    box-shadow: var(--shadow-md);
-}
-
-.insight-icon {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    flex-shrink: 0;
-}
-
-.insight-content h4 {
-    font-size: clamp(1.1rem, 3.5vw, 1.25rem);
-    margin-bottom: 4px;
-    font-weight: 600;
-}
-
-.insight-content p {
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    opacity: 0.95;
-    line-height: 1.5;
-}
-
-.insights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: clamp(12px, 3vw, 16px);
-}
-
-.insight-item {
-    background: var(--bg-white);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    padding: clamp(16px, 4vw, 20px);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.insight-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.insight-label {
-    display: block;
-    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.insight-value {
-    display: block;
-    font-size: clamp(1.25rem, 4vw, 1.5rem);
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.insight-value.production {
-    color: var(--primary-blue);
-}
-
-.insight-value.selling {
-    color: var(--success-green);
-}
-
-.insight-station {
-    display: block;
-    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-/* Footer */
-.widget-footer {
-    background: var(--bg-gray);
-    padding: clamp(12px, 3vw, 16px);
-    text-align: center;
-    border-top: 1px solid var(--border-light);
-}
-
-.widget-footer p {
-    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-    color: var(--text-muted);
-    margin: 0;
-}
-
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-    .water-pricing-widget {
-        margin: 10px;
-        border-radius: var(--radius-md);
-    }
-    
-    .insights-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .main-insight {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-    }
-    
-    .chart-wrapper {
-        height: 220px;
-    }
-}
-
-@media (max-width: 480px) {
-    .water-pricing-widget {
-        margin: 5px;
-        border-radius: var(--radius-sm);
-    }
-    
-    .widget-content {
-        padding: 16px 12px;
-    }
-    
-    .chart-container {
-        padding: 16px 12px;
-    }
-    
-    .chart-wrapper {
-        height: 200px;
-    }
-    
-    .chart-bars {
-        gap: 6px;
-    }
-    
-    .chart-labels {
-        gap: 6px;
-    }
-    
-    .bar-label {
-        font-size: 0.7rem;
-        padding: 6px 2px;
-    }
-}
-
-/* WordPress Compatibility */
-.water-pricing-widget * {
-    box-sizing: border-box !important;
-}
-
-.water-pricing-widget p {
-    margin-bottom: 0 !important;
-}
-
-/* Animation Classes */
-.animate-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideInUp 0.6s ease forwards;
-}
-
-@keyframes slideInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .price-bar,
-    .insight-item {
-        transition: none;
-    }
-    
-    .animate-in {
-        animation: none;
-        opacity: 1;
-        transform: none;
-    }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    :root {
-        --border-light: #666666;
-        --text-muted: #333333;
-    }
-}
-
-/* Print styles */
-@media print {
-    .water-pricing-widget {
-        box-shadow: none;
-        border: 1px solid #000;
-    }
-    
-    .widget-header {
-        background: #f0f0f0 !important;
-        color: #000 !important;
-    }
-}
-</style>
-
 <script>
 (function() {
     'use strict';
@@ -519,10 +502,6 @@
     let chartGrid, chartBars, chartLabels;
     
     // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeWidget();
-    });
-    
     function initializeWidget() {
         // Get DOM elements
         chartGrid = document.getElementById('chartGrid');
@@ -540,7 +519,7 @@
         createLabels();
         
         // Add animation class to widget
-        const widget = document.querySelector('.water-pricing-widget');
+        const widget = document.querySelector('#water-pricing-container .water-pricing-widget');
         if (widget) {
             widget.classList.add('animate-in');
         }
@@ -631,14 +610,16 @@
         const isMobile = window.innerWidth <= 768;
         
         // Update grid lines visibility based on screen size
-        const gridLabels = chartGrid.querySelectorAll('.grid-label');
-        gridLabels.forEach((label, index) => {
-            if (isMobile && (index === 1 || index === 3)) {
-                label.style.display = 'none';
-            } else {
-                label.style.display = 'block';
-            }
-        });
+        if (chartGrid) {
+            const gridLabels = chartGrid.querySelectorAll('.grid-label');
+            gridLabels.forEach((label, index) => {
+                if (isMobile && (index === 1 || index === 3)) {
+                    label.style.display = 'none';
+                } else {
+                    label.style.display = 'block';
+                }
+            });
+        }
     }
     
     // Utility function for debouncing
@@ -654,24 +635,31 @@
         };
     }
     
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeWidget);
+    } else {
+        initializeWidget();
+    }
+    
     // Expose public API for WordPress integration
-    window.WaterPricingWidget = {
-        init: initializeWidget,
-        updateData: function(newData) {
-            if (newData && Array.isArray(newData)) {
-                CONFIG.stations = newData;
-                // Reinitialize with new data
-                if (chartBars) {
-                    chartBars.innerHTML = '';
-                    chartLabels.innerHTML = '';
-                    createBars();
-                    createLabels();
+    if (typeof window !== 'undefined') {
+        window.WaterPricingWidget = {
+            init: initializeWidget,
+            updateData: function(newData) {
+                if (newData && Array.isArray(newData)) {
+                    CONFIG.stations = newData;
+                    // Reinitialize with new data
+                    if (chartBars && chartLabels) {
+                        chartBars.innerHTML = '';
+                        chartLabels.innerHTML = '';
+                        createBars();
+                        createLabels();
+                    }
                 }
             }
-        }
-    };
+        };
+    }
 })();
 </script>
-
-</body>
-</html>
+</div>

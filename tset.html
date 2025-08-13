@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+
+        
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KF3ZRQVC');</script>
+        <!-- End Google Tag Manager -->
+
+
+        <meta charset="UTF-8" />
+		<!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+		<meta name="language" content="fr-FR" />
+
+        
+
+		<link rel="icon" type="image/png" href="https://www.ma-calculatrice.fr/favicon.ico" />
+		<link rel="apple-touch-icon-precomposed" href="https://www.ma-calculatrice.fr/ma-calc-apple.png" />
+        <link rel="stylesheet" href="https://www.ma-calculatrice.fr/style-perso/style.css?version=5"/>
+
+        <meta name="verification" content="bed1be243847e0a42e6c87d80e906cd4" />
+
+
+  		<!-- <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
+		<META HTTP-EQUIV="Expires" CONTENT="-1"/> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
+
+
+    
+    <link rel="alternate" hreflang="pt" href="https://www.calculadora-online.xyz" />
+    <link rel="alternate" hreflang="fr" href="https://www.ma-calculatrice.fr" />
+    <title>Calculatrice en ligne</title>
+    <meta name="Description" content="Calculette ou calculatrice en ligne gratuite pour des calculs simples avec des opérations d'addition, de multiplication, de division et de soustraction" />
+	<meta name="keywords" content="calculatrice, calcul, calculette, calculateur, addition, soutraction, division, multiplication, calculatrice en ligne, en ligne" />
+    <!-- OG -->
+    <meta property="og:title" content="Calculatrice en ligne" />
+    <meta property="og:url" content="https://www.ma-calculatrice.fr/" />
+    <meta property="og:description" content="Calculette ou calculatrice en ligne gratuite pour des calculs simples avec des opérations d'addition, de multiplication, de division et de soustraction" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="images/images_calculatrices/calculatrice.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="ma-calculatrice.fr" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculatrice en ligne">
+    <meta name="twitter:description" content="Calculette ou calculatrice en ligne gratuite pour des calculs simples avec des opérations d'addition, de multiplication, de division et de soustraction">
+    <meta name="twitter:image" content="images/images_calculatrices/calculatrice.jpg">
+    
+    <style>
+        html {
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -o-user-select: none;
+            user-select: none
+        }
+
+        ::selection {
+            background: 0;
+            color: inherit
+        }
+
+        ::-moz-selection {
+            background: 0;
+            color: inherit
+        }
+
+        input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        #egale, #point, #zero, #addition, #moins, #un, #deux, #trois, #quatre, #cinq, #six, #sept, #huit, #neuf, #diviser, #multiplier, #C, #CE   {
+            touch-action: manipulation;
+        }
+
+        #calculatrice_simple {
+            padding-bottom: 0 !important;
+        }
+    </style>
+
+	</head>
+
+    
+	<body onkeydown="clavier(event);" onkeyup="clavierUp(event)" >
+                    
+        <div id="titre_simple"><div id="titre">ma-Calculatrice.fr</div><div id="simple">Des calculettes toutes simples</div></div>
+ 
+                
+        <div id="menu_hamburger"></div>
+
+	    <nav>
+            <div>CALCULATR.</div><div>TEMPS</div><div>FINAN.</div><div>INFORM.</div><div>DIV.</div><div>CONV.</div><div>GEOM.</div><div>JEUX</div><div class="cacher">CONNEXION</div> <!-- CONNEXION N'EST PAS ACTIF -->
+	    </nav>
+	    <div id="menu_detail"> <!-- après l'ajout d'une autre catégorie compléter le fichier fonctions_javascript.js (partie JQUERY > MENU). Pour identifier les lignes correspondantes, veuillez noter l'indication suivante : <. pour modification menu .> -->
+            <!-- Calculatrice -->
+	        <ul style="display:none">
+	            <li><a href="/" title="Calculatrice simple">Calculatrice</a></li>
+	            <li><a href="calcul-puissance" title="Calculer la puissance d'un nombre">Puissance</a></li>
+                <li><a href="calcul-racine-carree" title="Calculatrice rapide de racine carrée">Racine carrée √</a></li>
+                <li><a href="calcul-nombre-carre" title="Calculatrice pour le calcul d'un nombre au carré">Nombre au carrée <sup>2</sup></a></li>
+                <li><a href="calcul-log-logarithme" title="Calculer le logarithme en base de 10">Logarithme en base de 10</a></li>
+                <li><a href="tester-verifier-nombre-premier" title="Vérifie si un nombre est premier ou pas">Tester nombre premier</a></li>
+                <li><a href="liste-nombre-premier" title="Génère une liste de nombres premiers">Liste de nombres premiers</a></li>
+                <li><a href="resoudre-equation-premier-degre" title="Résoudre une équation de premier degré">Équation premier degré</a></li>
+                <li><a href="resoudre-equation-second-degre" title="Résoudre une équation du second degré">Équation second degré</a></li>
+                <li><a href="transformer-decimal-fraction" title="Transformer un nombre décimal en fraction">Transformer un nombre décimal en fraction</a></li>
+                <li><a href="fraction-irreductibles-simplifier" title="Simplifié le numérateur et le dénominateur pour rendre une fraction irréductible">Rendre une fraction irréductible</a></li>
+                <li><a href="verifier-point-droite-fonction-affine" title="Vérifier si un point appartient à une droite (fonction affine)">Vérifier si des coordonées appartiennent à une droite d'une fonction affine</a></li>
+	        </ul>
+	        <!-- Temps -->
+	        <ul style="display:none">
+	            <li><a href="calculatrice-temps" title="Calculatrice pour les durées">Calculatrice de durées</a></li>
+	            <li><a href="multiplier-temps-duree" title="Multiplier une durée">Calculatrice de multiplication d'une durée</a></li>
+	            <li><a href="diviser-temps-duree" title="Diviser une durée">Calculatrice de division d'une durée</a></li>
+                <li><a href="calculer-heure-travail" title="Calculatrice de temps de travail">Calculer le temps de travail</a></li>
+                <li><a href="calculer-plusieurs-durees" title="Calculatrice pour plusieurs durées">Calculer plusieurs durées</a></li>
+                <li><a href="calculer-addition-soustraction-date" title="Calculatrice pour additionner et soustraire des dates">Additionner ou soustraire une date</a></li>
+                <li><a href="calculer-duree-deux-dates" title="Connaître l'intervalle entre deux dates">Calculer la durée entre deux dates</a></li>
+	            <li><a href="convertir-heure-minute-decimal" title="Conversion heure en décimal et inversement">Convertir heure en nombre décimal</a></li>
+                <li><a href="convertir-temps-duree" title="Conversion de durée en minutes, heures, mois, années et jours">Convertir ou transformer: temps ou durée</a></li>
+                <li><a href="convertir-timestamp-date-epoch" title="Convertisseur timestamp">Convertir timestamp en date</a></li>
+                <li><a href="verifier-bixestile-annee" title="Vérifier si une année est bixestile">Année bixestile ?</a></li>
+	            <li><a href="chronometre" title="Chronomètre">Chronomètre</a></li>
+	        </ul>
+	        <!-- Finance -->
+	        <ul style="display:none">
+	            <li><a href="calculer-tva-ttc-ht-convertir" title="Calcul la TVA">Calculatrice de HT, TVA et TTC</a></li>
+                <li><a href="calculer-cotisations-auto-entrepreneur" title="Cotisations auto-entreprneur">Calculer les cotisations auto-entrepreneur</a></li>
+                <li><a href="calculer-achat-vente-action" title="Calculer le gain ou la perte d'une opération boursière">Calculer résultat action (Bourse)</a></li>
+	            <li><a href="pourcentage" title="Pourcentage">Le pourcentage</a></li>
+	            <li><a href="calculer-emprunt" title="Calculer un emprunt">Calculer un emprunt avec des annuités constantes ou dégressives</a></li>
+                <li><a href="convertir-bitcoin-euro-monnaie" title="Convertir bitcoin en euro">Convertir du bitcoin en euro et inversement</a></li>
+                <li><a href="convertir-litecoin-euro" title="Convertir litecoin en euro">Convertir du litcoin en euro et inversement</a></li>
+                <li><a href="convertir-ethereum-euro-altcoin" title="Convertir ethereum en euro">Convertir du ethereum en euro et inversement</a></li>
+            </ul>
+	        <!-- Informatique -->
+	        <ul style="display:none">
+	            <li><a href="generer-mot-passe-chaine-caracteres" title="Génération aléatoire d'un mot de passe ou d'une chaine de caractères">Générer un mot de passe ou une chaîne de caratères</a></li>
+	            <li><a href="crypter-decrypter-message" title="Crypter et décrypter un message en ligne">🔒 Crypter / Décrypter</a></li>
+	            <li><a href="convertir-binaire-hexadecimal" title="Conversion d'un nombre en binaire et en hexdécimal">Convertisseur de nombre en binaire et en hexadécimal</a></li>
+	            <li><a href="convertir-markdown" title="Convertir du Markdown au format HTML">Convertir du Markdown</a></li>
+	            <li><a href="addition-soustraction-hexadecimal" title="Calculer des nombres hexadécimaux">Calculer (addition et soustraction) nombres hexadécimaux</a></li>
+	            <li><a href="masque-reseau" title="Convertir un masque sous-réseau en binaire">Convertisseur de masque de sous-réseau (décimal - binaire - CIDR)</a></li>
+	            <li><a href="calcul-plage-adresse-ip" title="calculer une plage d'adresses ip avec masque de sous-réseau">Calcul plage d'adresses IP</a></li>
+	            <li><a href="compter-chaine-caractere" title="compteur de lettre et espace dans un message">Compteur chaînes de caractères</a></li>
+	            <li><a href="supprimer-espace-string" title="suppression d'espaces dans une chaîne de caractères">Supprimer les espaces</a></li>
+	        </ul>
+	        <!-- Divers -->
+	        <ul style="display:none">
+                <li><a href="comparer-heures-creuses-pleines-electricite" title="Comparer tarif électricité">Comparer tarif de base et heures creuses</a></li>
+                <li><a href="compteur-calories-proteines-glucides-lipides" title="Calculer les calories">Calcul des calories, des protéines, des glucides et des lipides de plusieurs aliments</a></li>
+	            <li><a href="le-prorata" title="Prorata et produit en croix">Le prorata</a></li>
+                <li><a href="calcul-moyenne" title="Calculer une moyenne">Calculatrice de moyenne</a></li>
+	            <li><a href="calcul-imc" title="Calculer l'IMC">Calcul IMC</a></li>
+	            <li><a href="calculer-cout-appareil-electrique" title="Calculer le coût énergétique">Calculer le coût énergétique d'un appareil électrique</a></li>
+	            <li><a href="volt-ampere-ohm-watt-calc" title="Calculer des unités électriques">Calculer (convertir) la tension, le courant, la résistance et la puissance électrique</a></li>
+                <li><a href="calculer-valeur-resistance-couleur" title="Calculer la valeur d'une résistance en ohms">Calculer la valeur d'une résistance (composant électrique) grâce aux couleurs des anneaux</a></li>
+                <li><a href="calculer-consommation-voiture-carburant" title="Calculatrice de consommation d'un véhicule">Calculer la consommation de carburant d'un véhicule</a></li>
+	        </ul>
+            <!-- Convertisseur -->
+	        <ul style="display:none">
+                <li><a href="convertir-puissance-kw-chevaux" title="Calculer puissance d'une voiture">Convertir puissance en kW ou en cheval-vapeur</a></li>
+                <li><a href="convertir-degres-fahrenheit-celsius" title="Convertir des unités de température">Convertir des degrés en Fahrenheit ou en Celsius</a></li>
+	            <li><a href="convertir-masse-kg-gramme" title="Convertir des grammes, des kilogrammes, des tonnes, des livres et des onces">Convertir: gramme, kilogramme, tonne, livre et once</a></li>
+                <li><a href="convertir-volume-litre-metre-cube" title="Convertir des litres et des mètres cubes (m3)">Convertir: litre et mètre cube (m<sup>3</sup>)</a></li>
+                <li><a href="calculer-resistance-thermique-lambda" title="Calculer la résistance thermique R grâce au lambda">Calculer la résistance thermique R</a></li>
+                <li><a href="convertir-code-rubiks-cube-2x" title="Convertir un algorithme de mouvements de rubik's cube 2x2x2 en image">Convertir l'algorithme d'un rubik's cube 2x2x2</a></li>
+	        </ul>
+
+            <!-- Géometrie -->
+            <ul style="display:none">
+                <li><a href="calculer-surface-carre" title="Calculatrice d'aire, de surface et de superficie">Calculer l'aire ou la superficie d'un carré ou d'un rectangle</a></li>
+                <li><a href="calculer-surface-cercle" title="Calculer l'aire d'un cercle ou d'un disque">Calculer l'aire ou la superficie d'un cercle</a></li>
+                <li><a href="calculer-surface-aire-triangle" title="Aire d'un triangle avec la méthode de Héron">Calculer l'aire ou la superficie d'un triangle avec la méthode de Héron</a></li>
+            </ul>
+
+            <!-- Games -->
+            <ul style="display:none">
+            <li><a href="jeu-calcul-mental-addition" title="Jeux : trouver rapidement le résultat d'une addition"> + Calcul mental : addition</a></li>
+                <li><a href="des-virtuels-simulateur" title="Simuler des dés virtuels">🎲 Lancer des dés virtuels en ligne de différentes couleurs</a></li>
+                <li><a href="trouver-decimal" title="Jeu pour deviner le nombre decimal d'un nombre binaire">Facile - Trouver le nombre décimal (d'un nombre binaire)</a></li>
+                <li><a href="trouver-binaire" title="Jeu pour deviner le nombre binaire d'un nombre décimal">Difficile - Trouver le nombre binaire (d'un nombre décimal)</a></li>
+                <li><a href="arithmetica-game" title="Jeu pour s'entrainer à calculer mentalement (avec 3 bonnes réponses)">Arithmetica game (niveau 2, 3 ou 4)</a></li>
+            </ul>
+        </div>
+        <!-- Menu -->
+        <!-- <div style="text-align: center; margin-top: 20px; font-size: 17px;margin-bottom: 10px; color: red">Mardi 10/12/24, une maintenance rapide du serveur entraînera une interruption temporaire de certains services</div> -->
+        <div id="toutes_les_parties">
+           <div id="partie_1">
+
+               <br />
+                                      <div id="publicite_1">
+
+                           <!-- ----------------- -->
+                           <!-- 5 - DÉBUT Cookie Adsense -->
+
+                           <div style="max-width:450px;">
+
+                                
+                            <!-- Vertical responsive -->
+
+                            <ins class="adsbygoogle"
+                                style="display:block"
+                                data-ad-client="ca-pub-9471493673183754"
+                                data-ad-slot="7601127884"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+
+                           </div>
+
+                           <!-- 5 - FIN Cookie Adsense -->
+                           <!-- ----------------- -->
+
+                           
+
+                           <!-- ----------------- -->
+                           <!-- 6 - DÉBUT Cookie Adsense -->
+
+                           <div style="margin-top: 20px;max-width:300px;">
+
+                                <!-- Vertical responsive -->
+
+                                <ins class="adsbygoogle"
+                                    style="display:block"
+                                    data-ad-client="ca-pub-9471493673183754"
+                                    data-ad-slot="7601127884"
+                                    data-ad-format="auto"
+                                    data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+
+                           </div>
+
+                           <!-- 6 - FIN Cookie Adsense -->
+                           <!-- ----------------- -->
+
+ 
+
+                        </div>
+
+                        <div style="width: 300px" class="hi_products">
+                            <a rel="external" href="https://fr.igraal.com/parrainage?parrain=AG_5d45c2c3d9643" target="_blank">
+
+                                <div><img width=300 src="images/igraal.webp" alt="iGraal 3 euros"></div>
+            
+                            </a>
+                        </div>
+                
+
+                           </div>           <div id="partie_2">
+                <br />
+
+                <div id="calculatrice_simple" class="calculatrice_simple_height " >
+                    <div id="titre_machine"><a href="https://www.ma-calculatrice.fr/" title="calculette en ligne">Ma Calculatrice toute simple</a>: Calculatrice simple</div>
+                    <div id="total">0</div>
+
+
+                    <input type="button" value="7" id="sept" onmousedown="seven()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="8" id="huit" onmousedown="eight()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="9" id="neuf" onmousedown="nine()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="CE" id="CE" onmousedown="effacer_le_total()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="C" id="C" onmousedown="reset()" class="bouton_calculatrice correction-btn-input-calculatrice">
+
+                    <input type="button" value="4" id="quatre" onmousedown="four()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="5" id="cinq" onmousedown="five()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="6" id="six" onmousedown="six()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="/" id="diviser" onmousedown="division()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="*" id="multiplier" onmousedown="multiplication()" class="bouton_calculatrice correction-btn-input-calculatrice">
+
+                    <input type="button" value="1" id="un" onmousedown="one()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="2" id="deux" onmousedown="two()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="3" id="trois" onmousedown="tree()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="-" id="moins" onmousedown="soustraction()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="+" id="addition" onmousedown="addition()" class="bouton_calculatrice correction-btn-input-calculatrice">
+
+                    <input type="button" value="0" id="zero" onmousedown="zero()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="." id="point" onmousedown="point()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <input type="button" value="=" id="egale" onmousedown="egale()" class="bouton_calculatrice correction-btn-input-calculatrice">
+
+                    
+                    <input type="button" value="Séparer milliers*" id="afficher_millier"  onmousedown="afficher_millier_calculatrice()" onmouseup="afficher_normal_calculatrice()" class="bouton_calculatrice correction-btn-input-calculatrice">
+                    <div id="message_afficher_millier">* Maintenir le bouton</div>
+
+
+                    
+                    <div id="brouillon_1">0</div>
+                    <div class="cacher" id="brouillon_Addition">0</div>
+                    <div class="cacher" id="brouillon_Soustraction">0</div>
+                    <div class="cacher" id="brouillon_Multiplication">0</div>
+                    <div class="cacher" id="brouillon_Division">0</div>
+                    <div class="cacher" id="brouillon_CE">0</div>
+                </div>
+    <br /><br />
+    <div id="publicite_2" style="display: block;margin: auto; max-width:1000px; padding: 10px;">
+
+        <!-- 1 - DÉBUT Cookie Adsense -->
+
+
+        <!-- celtak_display_carre_responsive -->
+
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-9471493673183754"
+            data-ad-slot="8647242635"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+
+        <!-- 1 - FIN Cookie Adsense-->
+
+        <!-- <div style="width: 300px; height: 310px; margin: auto;" class="hi_products">
+            <a rel="external" href="https://fr.igraal.com/parrainage?parrain=AG_5d45c2c3d9643" target="_blank">
+
+                <div><img width=300 src="images/igraal-300-15-euros.webp" alt="iGraal 15 euros"></div>
+
+            </a>
+        </div> -->
+        
+
+<div>class=<data value="1020">
+  <p> Place holder</p>
+  <table>
+    <tr>
+        <td>
+            
+        </td>
+    </tr>
+  </table>
+</data>
+ </div>
+    </div>
+
+<br /><br />
+                <div id='historique_resultat' class="cacher">
+                    <p>Historique des résultats</p>
+                    <table id='historique_resultat_tableau'>
+                        <thead> <!-- En-tête du tableau -->
+                           <tr class="entete_tableau">
+                               <th>Heures</th>
+                               <th>Opérations</th>
+                               <th>Résultats</th>
+                           </tr>
+                       </thead>
+                   </table>
+                   <form action="export_csv.php" id="formulaire_export" method="post">
+                   <input type="button" value="Export en CSV" class="bouton_petit" id="formulaire_export_CSV"/>
+                       <input id="total_elements" name="total_elements" type="hidden">
+                       <input id="data_token" name="data_token" type="hidden" value="b15508b0d375b8eff92da4f47b0cdfc48ff13892da9cc6fdacd465f550fa5b33">
+                   </form>          
+                </div>
+                <div id="Information_calculatrice">
+                    <h1>Instructions de la calculatrice (calculette)</h1>
+                    <p>Ma-calculatrice.fr est une <strong>calculette</strong> en ligne. Le principe de cette <strong>calculatrice</strong> est d'exécuter des opérations de calculs simples. Quatre opérations arithmétiques sont disponibles : l'addition, la multiplication, la division et la soustraction.</p>
+                    <p>C'est un outil très pratique et original par rapport aux autres calculatrice en ligne. Il est par exemple possible d'utiliser un clavier virtuel plutôt que celui de votre ordinateur.</p>
+                    <h2>L'utilisation de la calculatrice</h2>
+                    <p>Vous pouvez vous servir de votre clavier pour utiliser cette calculatrice: c'est-à-dire le pavé numérique pour les chiffres et les signes algébriques (note importante : sur le pavé directionnel, la flèche de gauche correspond au "CE" et celle de droite au "C").</p>
+                    <p><img loading="lazy" width="400" height="500" style="width:100%; max-width:400px;height:auto;" src="images/calculatrice-en-ligne.webp" alt="Calculatrice en ligne et gratuite"></p>
+                    <p>La longueur, la largeur et le positionnement des boutons du site s'adaptent au support utilisé : aux  smartphones ou aux tablettes.</p><p>Lorsque vous redimensionnez la fenêtre de votre ordinateur, le navigateur adapte automatiquement la largeur de la calculatrice. Si elle est inférieure à 600 pixels, le menu et la retenue disparaissent. Pour les faire réapparaître, le mieux est d'augmenter la taille de la fenêtre.</p>
+                    <h3>Utilisations des touches du clavier?</h3>
+                    <p>Il est possible de vous servir du pavé numérique. Sur le pavé directionnel la flèche de gauche correspond au "CE" et celle de droite au "C". La touche backspace (supprimer en français) est l'équivalent de la touche "C".</p><p>Vous pouvez également utiliser les touches = "1, 2, 3, ..." et la touche "a" pour l'addition, la touche "m" pour la multiplication, la touche "s" pour la soustraction la touche "c" pour C, la touche "x" pour CE et la touche ";" ou "." pour le point.</p><p>Lorsque vous appuyez sur une touche du clavier de votre ordinateur, automatiquement celui de la calculatrice est également enclenchée.</p>
+                    <h2>Séparer les milliers</h2>
+                    <p>Afin de augmenter la visibiliter sur certains grands chiffres (comme les millions et les milliards) il est possible de séparer les milliers en maintenant le bouton correpondant appuyé.</p>
+                    <h2>Nombre décimal</h2>
+                    <p>Cette calculatrice n’ira pas au-delà de 4 chiffres après la virgule pour les nombres décimaux. Si le calcul propose un résultat avec plus de quatre chiffres après la virgule, elle arrondira (par exemple 0,20689655 deviendra 0,2069).</p>
+                    <h2>Enregistrement des opérations</h2>
+                    <p>L'application en ligne retient le résultat de la dernière opération lorsque l'utilisateur utilise les signes +, -, * ou / et le lui indique visuellement en petit caractère sur l'écran de résultat en bas à gauche. Afin de gagner en lisibilité, la retenue n'est pas disponible lorsque les écrans ou les fenêtres sont inférieurs à 600px. Par exemple les smartphones.</p>
+                    <h2>L'historique des résultats</h2>
+                    <p>Chaque opération est enregistrée. Afin de les différencier l'heure d'éxécution est également enregistrée. Avec le résultat toutes ces informations apparaissent dans la partie "historique des résultats". Vous pouvez exporter le contenu de cet historique au format CSV en cliquant sur le bouton prévu à cet effet.</p>
+                    <h3 id="CSV_format"> Qu'est-ce que le format CSV?</h3>
+                    <p>Le format CSV signifie comma-separated values. C'est un simple fichier texte que l'on peut importer dans un tableur. Chaque ligne représente une ligne du tableur. Elles sont séparées par des séparateurs qui correspondent aux colonnes du tableur.</p>
+                    <h2>L'utilité de cette calculette</h2>
+                    <p>En comptabilité, une calculatrice peut être très pratique. Bien qu'il soit important de savoir calculer mentalement des opérations, certaines sont vraiment très lourdes et beaucoup trop compliquées, d'où l'utilité d'une calculette.</p>
+                    <p>Elle sera utile également pour calculer le montant total de la liste de vos courses, pour établir un budget, ...</p>
+                    <h2>Calculatrice ou calculette</h2>
+                    <p>De manière générale nous utilisons les deux expressions. Cependant le terme calculatrice concerne surtout les appareils très performants alors que calculette définit plutôt les appareils de moindres importances.</p>
+                </div>
+           </div>
+
+           <!-- Pour exporter  -->
+           <script async src="js-perso/export.js"></script>
+           </div>
+<br/>
+<footer>
+    <div>Ma-calculatrice.fr, Copyright © 2025, Tous droits réservés</div>
+
+
+        <div style="padding: 20px;padding-bottom: 40px;"><a rel="nofollow" href="contact" title="nous contacter">Contact</a> - <a rel="nofollow"
+                                   href="mentions_legales">Mentions
+                légales et politique de confidentialité</a> <!-- - <a href="partenaires.php">Partenaires</a> -->
+            - <a href="/annuaire">Annuaire</a> </div>
+    
+</footer>
+
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KF3ZRQVC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <script src="https://www.ma-calculatrice.fr/jquery.js?version=2"></script>
+    <script id="javascript_fichier" src="https://www.ma-calculatrice.fr/fonctions_javascript.js.php?version=10"></script>
+    <script src="https://www.ma-calculatrice.fr/typeScript/dist/js-ts.js?version=11"></script>
+
+
+</body>
+</html>

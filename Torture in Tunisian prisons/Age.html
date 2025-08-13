@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>إحصائيات السجون حسب الفئة العمرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Alexandria:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --font-arabic-primary: "Noto Kufi Arabic", "Alexandria", "Droid Arabic Kufi", "Tahoma", sans-serif;
+  --font-arabic-display: "Alexandria", "Noto Kufi Arabic", "Droid Arabic Kufi", sans-serif;
+  --font-size-xs: 1rem;
+  --font-size-sm: 1.125rem;
+  --font-size-base: 1.25rem;
+  --font-size-lg: 1.375rem;
+  --font-size-xl: 1.625rem;
+  --font-size-2xl: 2.25rem;
+  --font-size-3xl: 2.75rem;
+  --font-size-4xl: 3.25rem;
+  --line-height-tight: 1.4;
+  --line-height-base: 1.6;
+  --primary: #1f2937;
+  --primary-light: #374151;
+  --secondary: #4b5563;
+  --secondary-light: #6b7280;
+  --accent: #dc2626;
+  --accent-light: #ef4444;
+  --gray-25: #fdfdfd;
+  --gray-50: #fafafa;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  --gradient-bg: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+  --radius-sm: 0.5rem;
+  --radius: 0.875rem;
+  --radius-lg: 1.25rem;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow: 0 4px 16px rgba(0,0,0,0.10);
+  --timing: 0.4s cubic-bezier(0.25,0.8,0.25,1);
+  --timing-slow: 0.6s cubic-bezier(0.25,0.8,0.25,1);
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: var(--font-arabic-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background: var(--gradient-bg);
+  color: var(--gray-900);
+  min-height: 100vh;
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1{
+  font-family: var(--font-arabic-display);
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2{
+  font-family: var(--font-arabic-display);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+}
+
+button{
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  transition: var(--timing);
+}
+
+.dashboard{
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+.card{
+  background: var(--gray-25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  border: 1px solid var(--gray-200);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.card::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+header.card{
+  text-align: center;
+  background: linear-gradient(135deg, var(--gray-25) 0%, var(--gray-50) 100%);
+}
+
+.subtitle{
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+  line-height: var(--line-height-base);
+  color: var(--gray-600);
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stat-card{
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--timing);
+}
+
+.stat-card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  background: var(--gray-25);
+}
+
+.stat-number{
+  display: block;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label{
+  font-size: var(--font-size-base);
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.section-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-header h2{
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.toggle-switch{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gray-50);
+  padding: 0.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-label{
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.switch{
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+}
+
+.switch input{
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider{
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gray-300);
+  transition: var(--timing);
+  border-radius: 32px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.slider:before{
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 4px;
+  background: white;
+  transition: var(--timing);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+input:checked + .slider{
+  background: var(--gradient-primary);
+}
+
+input:checked + .slider:before{
+  transform: translateX(28px);
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.item{
+  position: relative;
+  transition: var(--timing);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.item.visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item:hover{
+  transform: translateY(-2px);
+}
+
+.item .label{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.age-label{
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.badge{
+  background: var(--gradient-accent);
+  color: var(--gray-25);
+  border-radius: 9999px;
+  padding: 0.25rem 1rem;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.badge::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: var(--timing);
+}
+
+.badge:hover::before{
+  left: 100%;
+}
+
+.chart-container{
+  background: var(--gray-25);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1rem;
+  min-height: 250px;
+}
+
+.chart-title{
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--gray-700);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.chart-legend{
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.legend-item{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-base);
+  color: var(--gray-600);
+}
+
+.legend-dot{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.detained{
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.legend-dot.convicted{
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.svg-chart{
+  width: 100%;
+  height: 180px;
+  overflow: visible;
+}
+
+.meta{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-base);
+  color: var(--gray-600);
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.meta-item{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.meta-dot.detained{
+  background: var(--gray-600);
+}
+
+.meta-dot.convicted{
+  background: var(--accent);
+}
+
+.footer{
+  margin-top: 3rem;
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid var(--gray-200);
+  background: var(--gray-25);
+}
+
+.footer p{
+  color: var(--gray-600);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media(max-width: 768px){
+  .dashboard{
+    padding: 1rem;
+  }
+  
+  .card{
+    padding: 1.5rem;
+  }
+  
+  .stats-grid{
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .chart-container{
+    padding: 1.5rem;
+    min-height: 180px;
+  }
+  
+  .chart-legend{
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .svg-chart{
+    height: 120px;
+  }
+  
+  .meta{
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  
+  .section-header{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .toggle-switch{
+    align-self: stretch;
+    justify-content: center;
+  }
+  
+  h1{
+    font-size: var(--font-size-3xl);
+  }
+  
+  .subtitle{
+    font-size: var(--font-size-lg);
+  }
+  
+  .age-label{
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media(max-width: 480px){
+  .dashboard{
+    padding: 0.5rem;
+  }
+  
+  .card{
+    padding: 1rem;
+  }
+  
+  .chart-container{
+    padding: 1rem;
+    min-height: 130px;
+  }
+  
+  .chart-legend{
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .legend-item{
+    font-size: 0.9rem;
+  }
+  
+  .legend-dot{
+    width: 10px;
+    height: 10px;
+  }
+  
+  .svg-chart{
+    height: 80px;
+  }
+  
+  .meta{
+    font-size: var(--font-size-sm);
+  }
+  
+  h1{
+    font-size: var(--font-size-2xl);
+  }
+  
+  .subtitle{
+    font-size: var(--font-size-base);
+  }
+  
+  .age-label{
+    font-size: var(--font-size-base);
+  }
+  
+  .chart-title{
+    font-size: var(--font-size-base);
+    margin-bottom: 1rem;
+  }
+  
+  .stat-number{
+    font-size: var(--font-size-2xl);
+  }
+  
+  .stats-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .stat-card{
+    padding: 1rem;
+  }
+  
+  .badge{
+    font-size: var(--font-size-sm);
+    padding: 0.2rem 0.8rem;
+  }
+}
+
+@media(prefers-reduced-motion: reduce){
+  *{
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="dashboard">
+  <header class="card">
+    <h1>إحصائيات السجون حسب الفئة العمرية</h1>
+    <p class="subtitle">تحليل شامل لتوزيع نزلاء السجون في تونس حسب الفئات العمرية وحالة الإيقاف</p>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number" id="total-count">0</span>
+        <span class="stat-label">المجموع الكلي</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="detained-total">0</span>
+        <span class="stat-label">موقوفين</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="convicted-total">0</span>
+        <span class="stat-label">محكومين</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="detention-rate">0%</span>
+        <span class="stat-label">معدل الإيقاف</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="section-header">
+      <h2>التوزيع حسب الفئة العمرية</h2>
+      <div class="toggle-switch">
+        <span class="toggle-label">أرقام</span>
+        <label class="switch">
+          <input type="checkbox" id="viewToggle">
+          <span class="slider"></span>
+        </label>
+        <span class="toggle-label">نسب مئوية</span>
+      </div>
+    </div>
+    
+    <div id="list" class="list"></div>
+  </section>
+
+  <footer class="footer">
+    <p>المصدر: تقرير رصد السجون التونسية 2021-2025‎ لرابطة حقوق الإنسان</p>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.1.2/dist/svg.min.js"></script>
+<script>
+const data = [
+  {
+    label: "من 18 إلى 29", 
+    range: "18-29", 
+    pct: 41, 
+    det: 6048, 
+    con: 3500, 
+    total: 9548
+  },
+  {
+    label: "من 30 إلى 39", 
+    range: "30-39", 
+    pct: 34.12, 
+    det: 4030, 
+    con: 3926, 
+    total: 7956
+  },
+  {
+    label: "من 40 إلى 49", 
+    range: "40-49", 
+    pct: 16.68, 
+    det: 1913, 
+    con: 1975, 
+    total: 3888
+  },
+  {
+    label: "من 50 إلى 59", 
+    range: "50-59", 
+    pct: 6.27, 
+    det: 719, 
+    con: 744, 
+    total: 1463
+  },
+  {
+    label: "من 60 فما فوق", 
+    range: "60+", 
+    pct: 1.93, 
+    det: 220, 
+    con: 230, 
+    total: 450
+  }
+];
+
+const grandTotal = data.reduce((sum, item) => sum + item.total, 0);
+const detainedTotal = data.reduce((sum, item) => sum + item.det, 0);
+const convictedTotal = data.reduce((sum, item) => sum + item.con, 0);
+const listEl = document.getElementById('list');
+const viewToggle = document.getElementById('viewToggle');
+let showPct = false;
+
+document.getElementById('total-count').textContent = grandTotal.toLocaleString();
+document.getElementById('detained-total').textContent = detainedTotal.toLocaleString();
+document.getElementById('convicted-total').textContent = convictedTotal.toLocaleString();
+document.getElementById('detention-rate').textContent = ((detainedTotal / grandTotal) * 100).toFixed(1) + '%';
+
+function createEnhancedChart(container, groupData, index) {
+  const containerWidth = container.offsetWidth - 60;
+  const svgWidth = Math.max(containerWidth, 300);
+  const svgHeight = window.innerWidth <= 480 ? 80 : window.innerWidth <= 768 ? 120 : 180;
+  
+  container.innerHTML = `
+    <div class="chart-title">الفئة العمرية ${groupData.label}</div>
+    <div class="chart-legend">
+      <div class="legend-item">
+        <div class="legend-dot detained"></div>
+        <span>موقوفين (${((groupData.det / groupData.total) * 100).toFixed(1)}%)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot convicted"></div>
+        <span>محكومين (${((groupData.con / groupData.total) * 100).toFixed(1)}%)</span>
+      </div>
+    </div>
+    <div class="svg-container"></div>
+  `;
+  
+  const svgContainer = container.querySelector('.svg-container');
+  const draw = SVG().addTo(svgContainer).size(svgWidth, svgHeight);
+  const detainedRatio = groupData.det / groupData.total;
+  const convictedRatio = groupData.con / groupData.total;
+  
+  // Optimized icon sizing and spacing for better mobile visibility
+  const iconSize = window.innerWidth <= 480 ? 16 : window.innerWidth <= 768 ? 18 : 20;
+  const spacing = window.innerWidth <= 480 ? 3 : window.innerWidth <= 768 ? 4 : 5;
+  const maxIconsPerRow = Math.floor((svgWidth - 40) / (iconSize + spacing));
+  
+  // Reduced maximum icons for better visibility while maintaining proportions
+  let maxTotalIcons;
+  if (window.innerWidth <= 480) {
+    maxTotalIcons = Math.min(maxIconsPerRow * 1, 12); // Reduced from 20 to 12
+  } else if (window.innerWidth <= 768) {
+    maxTotalIcons = Math.min(maxIconsPerRow * 2, 24); // Reduced from 40 to 24
+  } else {
+    maxTotalIcons = Math.min(maxIconsPerRow * 3, 60); // Reduced from 80 to 60
+  }
+  
+  const totalIcons = maxTotalIcons;
+  const detainedIconsCount = Math.round(totalIcons * detainedRatio);
+  const convictedIconsCount = totalIcons - detainedIconsCount; // Ensure total matches
+  
+  const personPath = "M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z";
+
+  let totalIconsDrawn = 0;
+  const startY = 20;
+  const rowHeight = window.innerWidth <= 480 ? 22 : window.innerWidth <= 768 ? 25 : 28;
+  
+  // Draw detained icons (gray)
+  for(let i = 0; i < detainedIconsCount; i++) {
+    const row = Math.floor(totalIconsDrawn / maxIconsPerRow);
+    const col = totalIconsDrawn % maxIconsPerRow;
+    const x = 20 + col * (iconSize + spacing);
+    const y = startY + row * rowHeight;
+    
+    const icon = draw.path(personPath)
+      .fill('#6b7280')
+      .stroke('#4b5563')
+      .stroke({ width: 0.8 })
+      .move(x, y)
+      .size(iconSize, iconSize)
+      .opacity(0);
+    
+    const animationDuration = window.innerWidth <= 768 ? 300 : 500;
+    const animationDelay = index * 150 + i * 40;
+    
+    icon.animate({ 
+      duration: animationDuration, 
+      delay: animationDelay,
+      ease: 'bounce'
+    }).opacity(1);
+    
+    totalIconsDrawn++;
+  }
+
+  // Draw convicted icons (red)
+  for(let i = 0; i < convictedIconsCount; i++) {
+    const row = Math.floor(totalIconsDrawn / maxIconsPerRow);
+    const col = totalIconsDrawn % maxIconsPerRow;
+    const x = 20 + col * (iconSize + spacing);
+    const y = startY + row * rowHeight;
+    
+    const icon = draw.path(personPath)
+      .fill('#dc2626')
+      .stroke('#991b1b')
+      .stroke({ width: 0.8 })
+      .move(x, y)
+      .size(iconSize, iconSize)
+      .opacity(0);
+    
+    const animationDuration = window.innerWidth <= 768 ? 300 : 500;
+    const animationDelay = index * 150 + (detainedIconsCount + i) * 40;
+    
+    icon.animate({ 
+      duration: animationDuration, 
+      delay: animationDelay,
+      ease: 'bounce'
+    }).opacity(1);
+    
+    totalIconsDrawn++;
+  }
+
+  // Store references for updates
+  container._svgDraw = draw;
+  container._groupData = groupData;
+  container._totalIcons = totalIcons;
+  container._detainedIconsCount = detainedIconsCount;
+  container._convictedIconsCount = convictedIconsCount;
+}
+
+function updateChartLabels() {
+  document.querySelectorAll('.chart-container').forEach((container, index) => {
+    if (container._groupData) {
+      const groupData = container._groupData;
+      
+      // Update legend items
+      const legendItems = container.querySelectorAll('.legend-item span');
+      if (legendItems.length >= 2) {
+        legendItems[0].textContent = `موقوفين (${((groupData.det / groupData.total) * 100).toFixed(1)}%)`;
+        legendItems[1].textContent = `محكومين (${((groupData.con / groupData.total) * 100).toFixed(1)}%)`;
+      }
+    }
+  });
+}
+
+function renderData() {
+  listEl.innerHTML = '';
+  
+  data.forEach((group, index) => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.style.transitionDelay = `${index * 0.1}s`;
+    
+    item.innerHTML = `
+      <div class="label">
+        <span class="age-label">الفئة العمرية: ${group.label}</span>
+        <span class="badge">${group.pct}%</span>
+      </div>
+      <div class="chart-container" id="chart-${index}"></div>
+      <div class="meta">
+        <div class="meta-item">
+          <div class="meta-dot detained"></div>
+          <span>موقوفين: <strong id="det-${index}">${group.det.toLocaleString()}</strong></span>
+        </div>
+        <div class="meta-item">
+          <div class="meta-dot convicted"></div>
+          <span>محكومين: <strong id="con-${index}">${group.con.toLocaleString()}</strong></span>
+        </div>
+        <div class="meta-item">
+          <span>المجموع: <strong>${group.total.toLocaleString()}</strong></span>
+        </div>
+      </div>
+    `;
+    
+    listEl.appendChild(item);
+    
+    setTimeout(() => {
+      const container = document.getElementById(`chart-${index}`);
+      if (container) {
+        createEnhancedChart(container, group, index);
+      }
+    }, index * 100);
+  });
+}
+
+function updateDisplayValues() {
+  data.forEach((group, index) => {
+    const detEl = document.getElementById(`det-${index}`);
+    const conEl = document.getElementById(`con-${index}`);
+    
+    if (detEl && conEl) {
+      if (showPct) {
+        detEl.textContent = `${(group.det * 100 / group.total).toFixed(1)}%`;
+        conEl.textContent = `${(group.con * 100 / group.total).toFixed(1)}%`;
+      } else {
+        detEl.textContent = group.det.toLocaleString();
+        conEl.textContent = group.con.toLocaleString();
+      }
+    }
+  });
+  
+  updateChartLabels();
+}
+
+viewToggle.addEventListener('change', () => {
+  showPct = viewToggle.checked;
+  updateDisplayValues();
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+renderData();
+
+setTimeout(() => {
+  document.querySelectorAll('.item').forEach(item => observer.observe(item));
+}, 100);
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    data.forEach((group, index) => {
+      const container = document.getElementById(`chart-${index}`);
+      if (container && container.offsetWidth > 0) {
+        createEnhancedChart(container, group, index);
+      }
+    });
+  }, 250);
+});
+</script>
+</body>
+</html>

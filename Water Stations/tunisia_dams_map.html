@@ -27,12 +27,6 @@
     <!-- Map Container -->
     <section class="map-section">
         <div class="map-container">
-            <!-- Loading Overlay -->
-            <div class="map-loading" id="mapLoading">
-                <div class="loading-spinner"></div>
-                <p>جاري تحميل الخريطة...</p>
-            </div>
-            
             <!-- Map Element -->
             <div id="damsMap" class="interactive-map"></div>
             
@@ -64,7 +58,7 @@
                     </div>
                 </div>
                 <div style="margin-top: 8px; font-size: 0.75rem; color: #666; text-align: center;">
-                    البيانات: 3 يونيو 2025
+                    البيانات: 3 جوان 2025
                 </div>
             </div>
         </div>
@@ -86,7 +80,7 @@
 
             <div class="stat-card">
                 <div class="stat-icon">📊</div>
-                <div class="stat-value" id="fillRate">39.8%</div>
+                <div class="stat-value" id="fillRate">40.6%</div>
                 <div class="stat-label">معدل الامتلاء</div>
             </div>
         </div>
@@ -94,7 +88,7 @@
 
     <!-- Footer -->
     <footer class="widget-footer">
-        <p>المصدر: وزارة الفلاحة والموارد المائية والصيد البحري • آخر تحديث: 3 يونيو 2025</p>
+        <p>المصدر: وزارة الفلاحة والموارد المائية والصيد البحري • آخر تحديث: 3 جوان 2025</p>
     </footer>
 </div>
 
@@ -208,41 +202,6 @@
     overflow: hidden;
     box-shadow: var(--shadow-medium);
     border: 2px solid var(--border-color);
-}
-
-.map-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: opacity var(--transition-medium);
-}
-
-.map-loading.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid var(--border-color);
-    border-top: 4px solid var(--primary-blue);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 16px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 .interactive-map {
@@ -486,44 +445,44 @@
 (function() {
     'use strict';
     
-    // Latest dams data from CSV (June 3, 2025)
+    // Exact data from CSV file for 2025-06-03 00:00:00 only (using stock for currentStock and Cap_tot_act for capacity)
     const DAMS_DATA = [
         { nameFr: 'mellegue', nameAr: 'مـــــلاق', latitude: 36.3144, longitude: 8.70273, capacity: 51.13, currentStock: 21.7656, fillPercentage: 42.6, yearBuilt: 1954, lastUpdated: '2025-06-03' },
         { nameFr: 'sarrat', nameAr: 'سراط', latitude: 35.8322, longitude: 8.4434, capacity: 21, currentStock: 9.37711, fillPercentage: 44.7, yearBuilt: 2016, lastUpdated: '2025-06-03' },
-        { nameFr: 'benmetir', nameAr: 'بني مطيــر', latitude: 36.7471, longitude: 8.7419, capacity: 60.393, currentStock: 45.2918, fillPercentage: 75.0, yearBuilt: 1954, lastUpdated: '2025-06-03' },
+        { nameFr: 'benmetir', nameAr: 'بني مطيــر', latitude: 36.7471, longitude: 8.7419, capacity: 60.393, currentStock: 45.2918, fillPercentage: 75, yearBuilt: 1954, lastUpdated: '2025-06-03' },
         { nameFr: 'kasseb', nameAr: 'كســاب', latitude: 36.7614, longitude: 9.0024, capacity: 76.9, currentStock: 27.1832, fillPercentage: 35.3, yearBuilt: 1968, lastUpdated: '2025-06-03' },
         { nameFr: 'barbara', nameAr: 'بربرة', latitude: 36.7341, longitude: 8.53173, capacity: 60.545, currentStock: 60.5881, fillPercentage: 100.1, yearBuilt: 1998, lastUpdated: '2025-06-03' },
-        { nameFr: 'sidisalem', nameAr: 'سيدي ســــالم', latitude: 36.5907, longitude: 9.3971, capacity: 580.348, currentStock: 185.967, fillPercentage: 32.0, yearBuilt: 1982, lastUpdated: '2025-06-03' },
-        { nameFr: 'bouheurtma', nameAr: 'بو هرتمـــــه', latitude: 36.6719, longitude: 8.78758, capacity: 145.037, currentStock: 72.1886, fillPercentage: 49.8, yearBuilt: 1976, lastUpdated: '2025-06-03' },
-        { nameFr: 'joumine', nameAr: 'جوميــــــن', latitude: 36.9909, longitude: 9.6137, capacity: 118.773, currentStock: 81.4451, fillPercentage: 68.6, yearBuilt: 1984, lastUpdated: '2025-06-03' },
-        { nameFr: 'ghezala', nameAr: 'غزالـــــــة', latitude: 37.0594, longitude: 9.5458, capacity: 10.004, currentStock: 5.99639, fillPercentage: 59.9, yearBuilt: 1998, lastUpdated: '2025-06-03' },
-        { nameFr: 'melah', nameAr: 'المالح', latitude: 37.0761, longitude: 9.4488, capacity: 41, currentStock: 17.6881, fillPercentage: 43.1, yearBuilt: 1954, lastUpdated: '2025-06-03' },
-        { nameFr: 'tine', nameAr: 'الطين', latitude: 36.8, longitude: 9.95, capacity: 26.5, currentStock: 14.8305, fillPercentage: 56.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'sejnane', nameAr: 'سجنــــــان', latitude: 37.0458, longitude: 9.2381, capacity: 59.5, currentStock: 13.3071, fillPercentage: 22.4, yearBuilt: 1994, lastUpdated: '2025-06-03' },
-        { nameFr: 'zarqa', nameAr: 'الزرقـة', latitude: 35.65, longitude: 8.85, capacity: 2.85, currentStock: 0.626025, fillPercentage: 22.0, yearBuilt: 1988, lastUpdated: '2025-06-03' },
-        { nameFr: 'elkebir', nameAr: 'الكبيــر', latitude: 36.4792, longitude: 9.2125, capacity: 128.45, currentStock: 30.7279, fillPercentage: 23.9, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'elmaoula', nameAr: 'المولى', latitude: 36.25, longitude: 9.05, capacity: 15, currentStock: 4.17375, fillPercentage: 27.8, yearBuilt: 1988, lastUpdated: '2025-06-03' },
-        { nameFr: 'sidibarrak', nameAr: 'سيدي البــــراق', latitude: 36.9, longitude: 10.1, capacity: 10, currentStock: 1.47735, fillPercentage: 14.8, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'ziatin', nameAr: 'الزياتيـن', latitude: 36.15, longitude: 10.4, capacity: 12, currentStock: 2.29248, fillPercentage: 19.1, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'qamqoum', nameAr: 'القمقـوم', latitude: 35.9, longitude: 10.25, capacity: 10.2, currentStock: 1.39926, fillPercentage: 13.7, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'haraka', nameAr: 'الحركـة', latitude: 35.75, longitude: 10.45, capacity: 7.5, currentStock: 1.2375, fillPercentage: 16.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'siliana', nameAr: 'سليانـــــــة', latitude: 36.0833, longitude: 9.3667, capacity: 64.5, currentStock: 25.1865, fillPercentage: 39.1, yearBuilt: 1987, lastUpdated: '2025-06-03' },
-        { nameFr: 'rmil', nameAr: 'الرميــــــل', latitude: 36.1, longitude: 8.7, capacity: 15, currentStock: 5.5125, fillPercentage: 36.8, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'nabhana', nameAr: 'نبهانــــــــة', latitude: 35.1, longitude: 9.45, capacity: 87.89, currentStock: 27.9448, fillPercentage: 31.8, yearBuilt: 1968, lastUpdated: '2025-06-03' },
-        { nameFr: 'bouzid', nameAr: 'بوزيد', latitude: 35.04, longitude: 9.11, capacity: 38.8, currentStock: 21.7576, fillPercentage: 56.1, yearBuilt: 1988, lastUpdated: '2025-06-03' },
-        { nameFr: 'skhira', nameAr: 'السخيرة', latitude: 34.3, longitude: 10.15, capacity: 2, currentStock: 0.3596, fillPercentage: 18.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'zeroud', nameAr: 'الزرود', latitude: 34.8, longitude: 9.9, capacity: 60, currentStock: 19.2, fillPercentage: 32.0, yearBuilt: 1987, lastUpdated: '2025-06-03' },
-        { nameFr: 'elhaouareb', nameAr: 'الهوارب', latitude: 35.6, longitude: 9.8, capacity: 67.5, currentStock: 27.4725, fillPercentage: 40.7, yearBuilt: 1989, lastUpdated: '2025-06-03' },
-        { nameFr: 'nebeur', nameAr: 'نبـــــــــــر', latitude: 36.15, longitude: 8.75, capacity: 28.5, currentStock: 12.9795, fillPercentage: 45.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'mtergua', nameAr: 'متــــــــــرقه', latitude: 33.5, longitude: 10.8, capacity: 5.2, currentStock: 1.14244, fillPercentage: 22.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'benzert', nameAr: 'بنزرت', latitude: 37.25, longitude: 9.8667, capacity: 65, currentStock: 13.065, fillPercentage: 20.1, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'chaiba', nameAr: 'الشايبة', latitude: 34.6, longitude: 10.5, capacity: 34, currentStock: 17.068, fillPercentage: 50.2, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'masri', nameAr: 'المسري', latitude: 33.1, longitude: 11.1, capacity: 18, currentStock: 8.28, fillPercentage: 46.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'sejoumi', nameAr: 'السجومـــــــي', latitude: 36.8, longitude: 10.2, capacity: 128, currentStock: 36.608, fillPercentage: 28.6, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'lakhmess', nameAr: 'لخمس', latitude: 35.4, longitude: 9.6, capacity: 15.5, currentStock: 7.20975, fillPercentage: 46.5, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'lechkel', nameAr: 'الشـــــــكال', latitude: 35.7, longitude: 10.3, capacity: 10.2, currentStock: 1.52766, fillPercentage: 15.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'zitouna', nameAr: 'الزيتونة', latitude: 35.9, longitude: 10.6, capacity: 12, currentStock: 2.76, fillPercentage: 23.0, yearBuilt: 1999, lastUpdated: '2025-06-03' },
-        { nameFr: 'bir_mcherga', nameAr: 'بئر مشارقة', latitude: 36.0, longitude: 10.8, capacity: 125, currentStock: 33.125, fillPercentage: 26.5, yearBuilt: 1999, lastUpdated: '2025-06-03' }
+        { nameFr: 'sidisalem', nameAr: 'سيدي ســــالم', latitude: 36.5907, longitude: 9.3971, capacity: 580.348, currentStock: 230.8, fillPercentage: 39.8, yearBuilt: 1981, lastUpdated: '2025-06-03' },
+        { nameFr: 'bouheurtma', nameAr: 'بو هرتمـــــه', latitude: 36.6719, longitude: 8.78758, capacity: 145.037, currentStock: 56.847, fillPercentage: 39.2, yearBuilt: 1976, lastUpdated: '2025-06-03' },
+        { nameFr: 'joumine', nameAr: 'جوميــــــن', latitude: 36.9909, longitude: 9.6137, capacity: 118.773, currentStock: 24.1667, fillPercentage: 20.3, yearBuilt: 1983, lastUpdated: '2025-06-03' },
+        { nameFr: 'ghezala', nameAr: 'غزالـــــــة', latitude: 37.0594, longitude: 9.5458, capacity: 10.004, currentStock: 1.99991, fillPercentage: 20, yearBuilt: 1984, lastUpdated: '2025-06-03' },
+        { nameFr: 'melah', nameAr: 'المالح', latitude: 37.0761, longitude: 9.4488, capacity: 41, currentStock: 10.5, fillPercentage: 25.6, yearBuilt: 2015, lastUpdated: '2025-06-03' },
+        { nameFr: 'tine', nameAr: 'الطين', latitude: 36.864, longitude: 9.6287, capacity: 34, currentStock: 2.941, fillPercentage: 8.6, yearBuilt: 2017, lastUpdated: '2025-06-03' },
+        { nameFr: 'sejnane', nameAr: 'سجنــــــان', latitude: 37.181, longitude: 9.4751, capacity: 132.59, currentStock: 58.274, fillPercentage: 44, yearBuilt: 1994, lastUpdated: '2025-06-03' },
+        { nameFr: 'zarga', nameAr: 'الزرقـة', latitude: 36.8824, longitude: 8.6992, capacity: 24.256, currentStock: 22.222, fillPercentage: 91.6, yearBuilt: 2012, lastUpdated: '2025-06-03' },
+        { nameFr: 'kebir', nameAr: 'الكبيــر', latitude: 36.8802, longitude: 8.7211, capacity: 64.4, currentStock: 46.4654, fillPercentage: 72.2, yearBuilt: 2014, lastUpdated: '2025-06-03' },
+        { nameFr: 'moula', nameAr: 'المولى', latitude: 36.9347, longitude: 8.845, capacity: 26.337, currentStock: 20.324, fillPercentage: 77.2, yearBuilt: 2013, lastUpdated: '2025-06-03' },
+        { nameFr: 'selbarrak', nameAr: 'سيدي البــــراق', latitude: 37.0244, longitude: 8.93652, capacity: 286.514, currentStock: 187.1, fillPercentage: 65.3, yearBuilt: 1999, lastUpdated: '2025-06-03' },
+        { nameFr: 'ziatine', nameAr: 'الزياتيـن', latitude: 37.1856, longitude: 9.2011, capacity: 33.3, currentStock: 15.1332, fillPercentage: 45.4, yearBuilt: 2012, lastUpdated: '2025-06-03' },
+        { nameFr: 'gamgoum', nameAr: 'القمقـوم', latitude: 37.1989, longitude: 9.2679, capacity: 18.3, currentStock: 9.18393, fillPercentage: 50.2, yearBuilt: 2012, lastUpdated: '2025-06-03' },
+        { nameFr: 'harka', nameAr: 'الحركـة', latitude: 37.222, longitude: 9.4024, capacity: 30.3, currentStock: 13.1563, fillPercentage: 43.4, yearBuilt: 2016, lastUpdated: '2025-06-03' },
+        { nameFr: 'siliana', nameAr: 'سليانـــــــة', latitude: 36.1571, longitude: 9.3521, capacity: 30.986, currentStock: 11.4897, fillPercentage: 37.1, yearBuilt: 1987, lastUpdated: '2025-06-03' },
+        { nameFr: 'lakhmess', nameAr: 'لخمـــــــاس', latitude: 35.9994, longitude: 9.4752, capacity: 7.22, currentStock: 2.21936, fillPercentage: 30.7, yearBuilt: 1966, lastUpdated: '2025-06-03' },
+        { nameFr: 'rmil', nameAr: 'الرميـــــــل', latitude: 36.3023, longitude: 9.5019, capacity: 2, currentStock: 0.802, fillPercentage: 40.1, yearBuilt: 2002, lastUpdated: '2025-06-03' },
+        { nameFr: 'birmcherga', nameAr: 'بئر المشارقـــة', latitude: 36.5119, longitude: 10.0102, capacity: 41.599, currentStock: 10.3645, fillPercentage: 24.9, yearBuilt: 1971, lastUpdated: '2025-06-03' },
+        { nameFr: 'rmel', nameAr: 'الرمــــــل', latitude: 36.3308, longitude: 10.3584, capacity: 23.825, currentStock: 19.6024, fillPercentage: 82.3, yearBuilt: 1998, lastUpdated: '2025-06-03' },
+        { nameFr: 'nebhana', nameAr: 'نبهانــــــة', latitude: 36.06, longitude: 9.8724, capacity: 64.61, currentStock: 5.7841, fillPercentage: 9, yearBuilt: 1965, lastUpdated: '2025-06-03' },
+        { nameFr: 'sidisaad', nameAr: 'سيدي سعـــد', latitude: 35.3902, longitude: 9.6948, capacity: 133.317, currentStock: 26.1335, fillPercentage: 19.6, yearBuilt: 1981, lastUpdated: '2025-06-03' },
+        { nameFr: 'elhaouareb', nameAr: 'هـــــــوارب', latitude: 35.5727, longitude: 9.7468, capacity: 77.47, currentStock: 0.885017, fillPercentage: 1.1, yearBuilt: 1989, lastUpdated: '2025-06-03' },
+        { nameFr: 'sficifa', nameAr: 'سفيسيفة', latitude: 35.3413, longitude: 9.0705, capacity: 7.71, currentStock: 2.06792, fillPercentage: 26.8, yearBuilt: 2005, lastUpdated: '2025-06-03' },
+        { nameFr: 'sidiach', nameAr: 'سيدي يعيــــش', latitude: 34.7468, longitude: 8.7476, capacity: 88, currentStock: 0, fillPercentage: 0, yearBuilt: 1997, lastUpdated: '2025-06-03' },
+        { nameFr: 'elbrek', nameAr: 'البــــــــرك', latitude: 35.4705, longitude: 8.9677, capacity: 14.6, currentStock: 0.558, fillPercentage: 3.8, yearBuilt: 2002, lastUpdated: '2025-06-03' },
+        { nameFr: 'bezirk', nameAr: 'بزيـــــــغ', latitude: 36.7195, longitude: 10.6272, capacity: 5.01, currentStock: 2.729, fillPercentage: 54.5, yearBuilt: 1959, lastUpdated: '2025-06-03' },
+        { nameFr: 'chiba', nameAr: 'شيبـــــــة', latitude: 36.6973, longitude: 10.772, capacity: 3.79, currentStock: 0.765911, fillPercentage: 20.2, yearBuilt: 1963, lastUpdated: '2025-06-03' },
+        { nameFr: 'masri', nameAr: 'مصــــــري', latitude: 36.534, longitude: 10.4911, capacity: 5.068, currentStock: 2.76604, fillPercentage: 54.6, yearBuilt: 1968, lastUpdated: '2025-06-03' },
+        { nameFr: 'lebna', nameAr: 'لبنــــــــة', latitude: 36.7388, longitude: 10.9218, capacity: 25.46, currentStock: 4.73868, fillPercentage: 18.6, yearBuilt: 1986, lastUpdated: '2025-06-03' },
+        { nameFr: 'hma', nameAr: 'الحمـــــى', latitude: 36.5874, longitude: 10.304, capacity: 12.854, currentStock: 3.2903, fillPercentage: 25.6, yearBuilt: 2002, lastUpdated: '2025-06-03' },
+        { nameFr: 'abid', nameAr: 'العبيـــــــد', latitude: 36.8308, longitude: 10.7086, capacity: 9.615, currentStock: 4.03703, fillPercentage: 42, yearBuilt: 2002, lastUpdated: '2025-06-03' }
     ];
     
     // Configuration
@@ -538,7 +497,7 @@
     let damMarkers = [];
     
     // DOM elements
-    let mapElement, mapLoading;
+    let mapElement;
     
     // Initialize the widget
     document.addEventListener('DOMContentLoaded', function() {
@@ -548,7 +507,6 @@
     function initializeWidget() {
         // Get DOM elements
         mapElement = document.getElementById('damsMap');
-        mapLoading = document.getElementById('mapLoading');
         
         if (!mapElement) {
             console.error('Tunisia Dams Map: Map element not found');
@@ -559,11 +517,6 @@
         initializeMap();
         setupEventListeners();
         updateStatistics();
-        
-        // Hide loading after a short delay
-        setTimeout(() => {
-            hideLoading();
-        }, 1500);
     }
     
     function initializeMap() {
@@ -751,33 +704,22 @@
     function updateStatistics() {
         const totalCapacity = DAMS_DATA.reduce((sum, dam) => sum + (dam.capacity || 0), 0);
         const totalCurrentStock = DAMS_DATA.reduce((sum, dam) => sum + (dam.currentStock || 0), 0);
-        const avgFillPercentage = DAMS_DATA.reduce((sum, dam) => sum + (dam.fillPercentage || 0), 0) / DAMS_DATA.length;
+        const actualFillPercentage = totalCurrentStock / totalCapacity * 100;
         
-        // Update DOM elements
+        // Update DOM elements with exact values from 2025-06-03 00:00:00 data
         const totalDamsEl = document.getElementById('totalDams');
         const totalCapacityEl = document.getElementById('totalCapacity');
-        const currentStockEl = document.getElementById('currentStock');
         const fillRateEl = document.getElementById('fillRate');
         
-        if (totalDamsEl) totalDamsEl.textContent = DAMS_DATA.length;
-        if (totalCapacityEl) totalCapacityEl.textContent = (totalCapacity / 1000).toFixed(2);
-        if (currentStockEl) currentStockEl.textContent = (totalCurrentStock / 1000).toFixed(2);
-        if (fillRateEl) fillRateEl.textContent = avgFillPercentage.toFixed(1) + '%';
-    }
-    
-    function hideLoading() {
-        if (mapLoading) {
-            mapLoading.classList.add('hidden');
-            setTimeout(() => {
-                mapLoading.style.display = 'none';
-            }, 300);
-        }
+        if (totalDamsEl) totalDamsEl.textContent = '36';
+        if (totalCapacityEl) totalCapacityEl.textContent = '2.37';
+        if (fillRateEl) fillRateEl.textContent = '40.6%';
     }
     
     function showMapError() {
-        if (mapLoading) {
-            mapLoading.innerHTML = `
-                <div style="text-align: center; color: #dc3545;">
+        if (mapElement) {
+            mapElement.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: #dc3545;">
                     <div style="font-size: 2rem; margin-bottom: 16px;">⚠️</div>
                     <p>حدث خطأ في تحميل الخريطة</p>
                     <button onclick="location.reload()" style="background: #0077be; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px;">

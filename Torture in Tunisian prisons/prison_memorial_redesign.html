@@ -1,0 +1,783 @@
+<!-- WordPress Isolated Prison Memorial Widget -->
+<div class="prison-memorial-widget-wrapper" style="all: initial; font-family: 'Tajawal', Arial, sans-serif; direction: rtl;">
+    <style scoped>
+        .prison-memorial-widget-wrapper {
+            all: initial !important;
+            font-family: 'Tajawal', Arial, sans-serif !important;
+            direction: rtl !important;
+            isolation: isolate !important;
+            contain: layout style !important;
+        }
+        
+        .prison-memorial-widget-wrapper,
+        .prison-memorial-widget-wrapper * {
+            box-sizing: border-box !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            font-size: 100% !important;
+            font: inherit !important;
+            vertical-align: baseline !important;
+            background: transparent !important;
+            color: initial !important;
+        }
+
+        .prison-memorial-isolated {
+            font-family: 'Tajawal', Arial, sans-serif !important;
+            background-color: #0f0f0f !important;
+            color: #f5f5f5 !important;
+            line-height: 1.6 !important;
+            direction: rtl !important;
+            position: relative !important;
+            overflow: hidden !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+            max-width: 100% !important;
+            margin: 20px 0 !important;
+            isolation: isolate !important;
+        }
+
+        .prison-background {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.05) 0%, transparent 50%) !important;
+            z-index: 1 !important;
+            animation: breathe 10s ease-in-out infinite !important;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3 !important; }
+            50% { opacity: 0.1 !important; }
+        }
+
+        .prison-container {
+            position: relative !important;
+            z-index: 2 !important;
+            padding: 20px !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+        }
+
+        .prison-header {
+            text-align: center !important;
+            margin-bottom: 40px !important;
+            padding: 60px 20px !important;
+            background: linear-gradient(135deg, #1a1a1a 0%, #262626 100%) !important;
+            border-radius: 20px !important;
+            border: 1px solid #404040 !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .prison-header::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 4px !important;
+            background: linear-gradient(90deg, #dc2626, #000000, #dc2626) !important;
+        }
+
+        .prison-title {
+            font-size: clamp(1.8rem, 4vw, 3rem) !important;
+            font-weight: 700 !important;
+            color: #f5f5f5 !important;
+            margin-bottom: 15px !important;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5) !important;
+            line-height: 1.2 !important;
+        }
+
+        .prison-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem) !important;
+            color: #d1d5db !important;
+            font-weight: 300 !important;
+            line-height: 1.4 !important;
+        }
+
+        .prison-tabs-container {
+            background-color: #1a1a1a !important;
+            border-radius: 15px !important;
+            padding: 10px !important;
+            margin-bottom: 30px !important;
+            border: 1px solid #404040 !important;
+        }
+
+        .prison-tabs {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+            gap: 10px !important;
+        }
+
+        .prison-tab {
+            padding: 20px !important;
+            background-color: #262626 !important;
+            border: 2px solid transparent !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            text-align: center !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .prison-tab::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent) !important;
+            transition: left 0.5s !important;
+        }
+
+        .prison-tab:hover::before {
+            left: 100% !important;
+        }
+
+        .prison-tab:hover {
+            border-color: #dc2626 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3) !important;
+        }
+
+        .prison-tab.active {
+            background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+            border-color: #dc2626 !important;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4) !important;
+        }
+
+        .tab-name {
+            font-size: 1.3rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
+            color: #f5f5f5 !important;
+            line-height: 1.2 !important;
+        }
+
+        .tab-age {
+            font-size: 0.9rem !important;
+            color: #9ca3af !important;
+            line-height: 1.2 !important;
+        }
+
+        .prison-tab.active .tab-age {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .prison-content-container {
+            background-color: #1a1a1a !important;
+            border-radius: 20px !important;
+            overflow: hidden !important;
+            border: 1px solid #404040 !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .prison-tab-content {
+            display: none !important;
+            animation: slideIn 0.5s ease-out !important;
+        }
+
+        .prison-tab-content.active {
+            display: block !important;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0 !important;
+                transform: translateY(20px) !important;
+            }
+            to {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        }
+
+        .prisoner-profile {
+            padding: 40px !important;
+            background: linear-gradient(135deg, #262626 0%, #1a1a1a 100%) !important;
+            position: relative !important;
+        }
+
+        .profile-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 30px !important;
+            margin-bottom: 40px !important;
+            flex-wrap: wrap !important;
+        }
+
+        .memorial-icon {
+            flex-shrink: 0 !important;
+            width: 100px !important;
+            height: 100px !important;
+            background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3) !important;
+            position: relative !important;
+        }
+
+        .memorial-icon::before {
+            content: '🪦' !important;
+            font-size: 3rem !important;
+            animation: flicker 2s ease-in-out infinite !important;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1 !important; }
+            50% { opacity: 0.7 !important; }
+        }
+
+        .profile-info {
+            flex: 1 !important;
+            min-width: 300px !important;
+        }
+
+        .prisoner-name {
+            font-size: 2.5rem !important;
+            font-weight: 700 !important;
+            color: #f5f5f5 !important;
+            margin-bottom: 15px !important;
+            line-height: 1.2 !important;
+        }
+
+        .info-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+
+        .info-item {
+            background-color: #0f0f0f !important;
+            padding: 20px !important;
+            border-radius: 12px !important;
+            border: 1px solid #404040 !important;
+            transition: transform 0.3s ease !important;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px) !important;
+        }
+
+        .info-label {
+            font-size: 0.9rem !important;
+            color: #9ca3af !important;
+            margin-bottom: 8px !important;
+            font-weight: 500 !important;
+            line-height: 1.2 !important;
+        }
+
+        .info-value {
+            font-size: 1.1rem !important;
+            color: #f5f5f5 !important;
+            font-weight: 600 !important;
+            line-height: 1.4 !important;
+        }
+
+        .health-timeline {
+            margin-top: 40px !important;
+            padding-top: 40px !important;
+            border-top: 2px solid #404040 !important;
+        }
+
+        .timeline-header {
+            text-align: center !important;
+            margin-bottom: 40px !important;
+        }
+
+        .timeline-title {
+            font-size: 1.8rem !important;
+            font-weight: 600 !important;
+            color: #f5f5f5 !important;
+            margin-bottom: 10px !important;
+            line-height: 1.2 !important;
+        }
+
+        .timeline-subtitle {
+            color: #9ca3af !important;
+            font-size: 1rem !important;
+            line-height: 1.4 !important;
+        }
+
+        .health-comparison {
+            display: grid !important;
+            grid-template-columns: 1fr auto 1fr !important;
+            gap: 30px !important;
+            align-items: center !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+        }
+
+        .health-state {
+            background-color: #0f0f0f !important;
+            border-radius: 15px !important;
+            padding: 30px !important;
+            text-align: center !important;
+            position: relative !important;
+            border: 2px solid transparent !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .health-before {
+            border-color: #10b981 !important;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.2) !important;
+        }
+
+        .health-after {
+            border-color: #ef4444 !important;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        .health-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 0 auto 20px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.8rem !important;
+        }
+
+        .health-before .health-icon {
+            background-color: #10b981 !important;
+        }
+
+        .health-after .health-icon {
+            background-color: #ef4444 !important;
+        }
+
+        .health-title {
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 15px !important;
+            color: #f5f5f5 !important;
+            line-height: 1.2 !important;
+        }
+
+        .health-description {
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+            color: #d1d5db !important;
+        }
+
+        .timeline-arrow {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: #dc2626 !important;
+            font-size: 2rem !important;
+            animation: pulse 2s infinite !important;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) !important; }
+            50% { transform: scale(1.1) !important; }
+        }
+
+        .memorial-message {
+            margin-top: 40px !important;
+            padding: 30px !important;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(153, 27, 27, 0.1)) !important;
+            border-radius: 15px !important;
+            border-right: 4px solid #dc2626 !important;
+            text-align: center !important;
+            position: relative !important;
+        }
+
+        .memorial-message::before {
+            content: '"' !important;
+            position: absolute !important;
+            top: 10px !important;
+            right: 20px !important;
+            font-size: 3rem !important;
+            color: #dc2626 !important;
+            opacity: 0.3 !important;
+        }
+
+        .memorial-text {
+            font-size: 1.1rem !important;
+            font-style: italic !important;
+            color: #d1d5db !important;
+            line-height: 1.8 !important;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .prison-container {
+                padding: 15px !important;
+            }
+
+            .prison-header {
+                padding: 40px 20px !important;
+                margin-bottom: 30px !important;
+            }
+
+            .prison-tabs {
+                grid-template-columns: 1fr !important;
+            }
+
+            .profile-header {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 20px !important;
+            }
+
+            .prisoner-profile {
+                padding: 25px !important;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .health-comparison {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            .timeline-arrow {
+                transform: rotate(-90deg) !important;
+            }
+        }
+    </style>
+
+    <div class="prison-memorial-isolated">
+        <div class="prison-background"></div>
+        
+        <div class="prison-container">
+            <header class="prison-header">
+                <h1 class="prison-title">حالة الموت المشتبه داخل السجون التونسية</h1>
+                <p class="prison-subtitle">شهادات على انتهاكات حقوق الإنسان</p>
+            </header>
+
+            <div class="prison-tabs-container">
+                <div class="prison-tabs">
+                    <div class="prison-tab active" onclick="showPrisonTab(0, this)">
+                        <div class="tab-name">عبيد</div>
+                        <div class="tab-age">19 سنة</div>
+                    </div>
+                    <div class="prison-tab" onclick="showPrisonTab(1, this)">
+                        <div class="tab-name">عبد السلام</div>
+                        <div class="tab-age">30 سنة</div>
+                    </div>
+                    <div class="prison-tab" onclick="showPrisonTab(2, this)">
+                        <div class="tab-name">حمدي</div>
+                        <div class="tab-age">27 سنة</div>
+                    </div>
+                    <div class="prison-tab" onclick="showPrisonTab(3, this)">
+                        <div class="tab-name">محمد حجي</div>
+                        <div class="tab-age">غير محدد</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prison-content-container">
+                <!-- Case 1: عبيد -->
+                <div class="prison-tab-content active">
+                    <div class="prisoner-profile">
+                        <div class="profile-header">
+                            <div class="memorial-icon"></div>
+                            <div class="profile-info">
+                                <h2 class="prisoner-name">عبيد</h2>
+                                <div class="info-grid">
+
+                                    <div class="info-item">
+                                        <div class="info-label">التهمة</div>
+                                        <div class="info-value">حيازة القنب الهندي</div>
+                                    </div>
+
+                                    <div class="info-item">
+                                        <div class="info-label">سبب الوفاة</div>
+                                        <div class="info-value">إهمال طبي</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-timeline">
+                            <div class="timeline-header">
+                                <h3 class="timeline-title">التطور الصحي</h3>
+                                <p class="timeline-subtitle">مقارنة الحالة الصحية قبل وبعد دخول السجن</p>
+                            </div>
+
+                            <div class="health-comparison">
+                                <div class="health-state health-before">
+                                    <div class="health-icon">✅</div>
+                                    <h4 class="health-title">قبل دخول السجن</h4>
+                                    <p class="health-description">بصحة جيدة</p>
+                                </div>
+                                
+                                <div class="timeline-arrow">❯</div>
+                                
+                                <div class="health-state health-after">
+                                    <div class="health-icon">💀</div>
+                                    <h4 class="health-title">بعد دخول السجن</h4>
+                                    <p class="health-description">تدهور مفاجئ لوضعه الصحي أدى إلى الوفاة</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memorial-message">
+                            <p class="memorial-text">شاب في مقتبل العمر فقد حياته بسبب إهمال النظام الصحي في السجن</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2: عبد السلام -->
+                <div class="prison-tab-content">
+                    <div class="prisoner-profile">
+                        <div class="profile-header">
+                            <div class="memorial-icon"></div>
+                            <div class="profile-info">
+                                <h2 class="prisoner-name">عبد السلام</h2>
+                                <div class="info-grid">
+
+                                    <div class="info-item">
+                                        <div class="info-label">التهمة</div>
+                                        <div class="info-value">إهانة موظف عمومي، السكر، انتهاك حظر التجول</div>
+                                    </div>
+
+                                    <div class="info-item">
+                                        <div class="info-label">سبب الوفاة</div>
+                                        <div class="info-value">عدم توفير الأنسولين</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-timeline">
+                            <div class="timeline-header">
+                                <h3 class="timeline-title">التطور الصحي</h3>
+                                <p class="timeline-subtitle">مقارنة الحالة الصحية قبل وبعد دخول السجن</p>
+                            </div>
+
+                            <div class="health-comparison">
+                                <div class="health-state health-before">
+                                    <div class="health-icon">⚠️</div>
+                                    <h4 class="health-title">قبل دخول السجن</h4>
+                                    <p class="health-description">يعاني من مرض السكري</p>
+                                </div>
+                                
+                                <div class="timeline-arrow">❯</div>
+                                
+                                <div class="health-state health-after">
+                                    <div class="health-icon">💀</div>
+                                    <h4 class="health-title">بعد دخول السجن</h4>
+                                    <p class="health-description">لم يُمكَّن من الأنسولين، مما أدى إلى الوفاة</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memorial-message">
+                            <p class="memorial-text">وفاة كان بالإمكان تجنبها لو تم توفير العلاج اللازم</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3: حمدي -->
+                <div class="prison-tab-content">
+                    <div class="prisoner-profile">
+                        <div class="profile-header">
+                            <div class="memorial-icon"></div>
+                            <div class="profile-info">
+                                <h2 class="prisoner-name">حمدي</h2>
+                                <div class="info-grid">
+
+                                    <div class="info-item">
+                                        <div class="info-label">التهمة</div>
+                                        <div class="info-value">السرقة</div>
+                                    </div>
+
+                                    <div class="info-item">
+                                        <div class="info-label">سبب الوفاة</div>
+                                        <div class="info-value">شلل جزئي وغيبوبة</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-timeline">
+                            <div class="timeline-header">
+                                <h3 class="timeline-title">التطور الصحي</h3>
+                                <p class="timeline-subtitle">مقارنة الحالة الصحية قبل وبعد دخول السجن</p>
+                            </div>
+
+                            <div class="health-comparison">
+                                <div class="health-state health-before">
+                                    <div class="health-icon">✅</div>
+                                    <h4 class="health-title">قبل دخول السجن</h4>
+                                    <p class="health-description">بصحة جيدة</p>
+                                </div>
+                                
+                                <div class="timeline-arrow">❯</div>
+                                
+                                <div class="health-state health-after">
+                                    <div class="health-icon">💀</div>
+                                    <h4 class="health-title">بعد دخول السجن</h4>
+                                    <p class="health-description">أصيب بشلل جزئي ثم دخل في غيبوبة وتوفي</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memorial-message">
+                            <p class="memorial-text">تدهور صحي مريب يثير التساؤلات حول ظروف الاحتجاز</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 4: محمد حجي -->
+                <div class="prison-tab-content">
+                    <div class="prisoner-profile">
+                        <div class="profile-header">
+                            <div class="memorial-icon"></div>
+                            <div class="profile-info">
+                                <h2 class="prisoner-name">محمد حجي</h2>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">العمر</div>
+                                        <div class="info-value">غير محدد</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">التهمة</div>
+                                        <div class="info-value">تجارة دواء مخدر</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">سبب الوفاة</div>
+                                        <div class="info-value">أزمة تنفسية حادة</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-timeline">
+                            <div class="timeline-header">
+                                <h3 class="timeline-title">التطور الصحي</h3>
+                                <p class="timeline-subtitle">مقارنة الحالة الصحية قبل وبعد دخول السجن</p>
+                            </div>
+
+                            <div class="health-comparison">
+                                <div class="health-state health-before">
+                                    <div class="health-icon">⚠️</div>
+                                    <h4 class="health-title">قبل دخول السجن</h4>
+                                    <p class="health-description">يعاني من مرض مزمن (قصور بالجهاز التنفسي)</p>
+                                </div>
+                                
+                                <div class="timeline-arrow">❯</div>
+                                
+                                <div class="health-state health-after">
+                                    <div class="health-icon">💀</div>
+                                    <h4 class="health-title">بعد دخول السجن</h4>
+                                    <p class="health-description">تعرض إلى أزمة صحية حادة أولى، ثم أزمة صحية ثانية نتجت عنها وفاته</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memorial-message">
+                            <p class="memorial-text">مريض مزمن لم يحصل على الرعاية الطبية اللازمة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function() {
+                // Use unique function name to avoid conflicts
+                window.showPrisonTab = function(index, element) {
+                    // Only select elements within this widget
+                    const widget = element.closest('.prison-memorial-widget-wrapper');
+                    if (!widget) return;
+
+                    const tabContents = widget.querySelectorAll('.prison-tab-content');
+                    const currentActive = widget.querySelector('.prison-tab-content.active');
+                    
+                    if (currentActive) {
+                        currentActive.style.opacity = '0';
+                        setTimeout(() => {
+                            currentActive.classList.remove('active');
+                            if (tabContents[index]) {
+                                tabContents[index].classList.add('active');
+                                tabContents[index].style.opacity = '1';
+                            }
+                        }, 150);
+                    } else if (tabContents[index]) {
+                        tabContents[index].classList.add('active');
+                    }
+
+                    // Update active tab
+                    const tabs = widget.querySelectorAll('.prison-tab');
+                    tabs.forEach(tab => tab.classList.remove('active'));
+                    element.classList.add('active');
+                };
+
+                // Initialize when DOM is ready
+                function initWidget() {
+                    const widget = document.querySelector('.prison-memorial-widget-wrapper');
+                    if (!widget) return;
+
+                    // Observe all major elements within this widget only
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.animationDelay = '0.2s';
+                                entry.target.style.animationFillMode = 'both';
+                                entry.target.style.animation = 'slideIn 0.6s ease-out';
+                            }
+                        });
+                    }, observerOptions);
+
+                    widget.querySelectorAll('.info-item, .health-state, .memorial-message').forEach(el => {
+                        observer.observe(el);
+                    });
+
+                    // Add touch gesture support for mobile (scoped to this widget)
+                    let startX = 0;
+                    let currentTab = 0;
+                    const totalTabs = 4;
+
+                    widget.addEventListener('touchstart', (e) => {
+                        startX = e.touches[0].clientX;
+                    });
+
+                    widget.addEventListener('touchend', (e) => {
+                        const endX = e.changedTouches[0].clientX;
+                        const threshold = 50;
+
+                        if (startX - endX > threshold && currentTab < totalTabs - 1) {
+                            currentTab++;
+                            const nextTab = widget.querySelectorAll('.prison-tab')[currentTab];
+                            window.showPrisonTab(currentTab, nextTab);
+                        } else if (endX - startX > threshold && currentTab > 0) {
+                            currentTab--;
+                            const prevTab = widget.querySelectorAll('.prison-tab')[currentTab];
+                            window.showPrisonTab(currentTab, prevTab);
+                        }
+                    });
+                }
+
+                // Initialize
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initWidget);
+                } else {
+                    initWidget();
+                }
+            })();
+        </script>
+    </div>
+</div>

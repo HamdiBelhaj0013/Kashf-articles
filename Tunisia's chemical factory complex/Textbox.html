@@ -1,0 +1,247 @@
+<div style="
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    direction: rtl;
+    padding: 8px;
+    margin: 8px auto;
+    max-width: 700px;
+">
+    <div style="
+        position: relative;
+        background: linear-gradient(135deg, #001F7F 0%, #0039A6 25%, #005BDB 50%, #3399FF 75%, #99CCFF 100%);
+        background-size: 400% 400%;
+        color: white;
+        padding: 20px 25px;
+        border-radius: 16px;
+        box-shadow: 
+            0 8px 20px rgba(0, 31, 127, 0.25),
+            0 3px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        animation: wp-phosphogypsum-gradient 15s ease infinite;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        line-height: 1.5;
+    "
+    onmouseover="this.style.transform='translateY(-2px) scale(1.005)'; this.style.boxShadow='0 12px 25px rgba(0, 31, 127, 0.35), 0 5px 12px rgba(0, 0, 0, 0.12)'"
+    onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 20px rgba(0, 31, 127, 0.25), 0 3px 8px rgba(0, 0, 0, 0.1)'">
+        
+        <!-- Smaller decorative elements -->
+        <div style="
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        "></div>
+        
+        <div style="
+            position: absolute;
+            bottom: -15px;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            pointer-events: none;
+        "></div>
+        
+        <!-- Content -->
+        <div style="position: relative; z-index: 2;">
+            <h3 style="
+                margin: 0 0 12px 0;
+                font-size: 1.2em;
+                font-weight: 700;
+                text-align: center;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                letter-spacing: 0.2px;
+            ">
+                <span style="
+                    font-size: 1.1em;
+                    background: rgba(255, 255, 255, 0.18);
+                    padding: 6px;
+                    border-radius: 8px;
+                    backdrop-filter: blur(8px);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 8px;
+                ">💡</span>
+                <br>
+                ماهي مادة الفوسفوجيبس
+            </h3>
+            
+            <div style="
+                background: rgba(255, 255, 255, 0.08);
+                padding: 14px;
+                border-radius: 10px;
+                margin: 8px 0;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(4px);
+            ">
+                <p style="
+                    margin: 0;
+                    line-height: 1.6;
+                    font-size: 0.95em;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                    font-weight: 400;
+                    text-align: justify;
+                ">
+                    الفوسفوجيبس هو مادة كيميائية ناتجة عن عملية تحويل الفسفاط لإنتاج الحامض الفوسفوري، وتحتوي هذه المادة على عدة معادن ثقيلة مثل <strong>الرصاص والزنك والكادميوم والزئبق</strong> والفوسفور غير المتفاعل و<strong>الزرنيخ والراديوم</strong> الذي ينبعث منه <strong style="color: #FFD700;">غاز الرادون 222</strong>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes wp-phosphogypsum-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Aggressive Mobile Optimization */
+@media (max-width: 768px) {
+    .wp-block-html div[style*="max-width: 700px"] {
+        padding: 5px !important;
+        margin: 5px auto !important;
+    }
+    
+    .wp-block-html div[style*="padding: 20px 25px"] {
+        padding: 14px 12px !important;
+        border-radius: 12px !important;
+    }
+    
+    .wp-block-html h3[style*="font-size: 1.2em"] {
+        font-size: 1em !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .wp-block-html p[style*="font-size: 0.95em"] {
+        font-size: 0.85em !important;
+        line-height: 1.5 !important;
+    }
+    
+    .wp-block-html span[style*="padding: 6px"] {
+        padding: 4px !important;
+        font-size: 0.9em !important;
+    }
+    
+    .wp-block-html div[style*="padding: 14px"] {
+        padding: 10px !important;
+        margin: 5px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .wp-block-html div[style*="max-width: 700px"] {
+        padding: 3px !important;
+        margin: 3px auto !important;
+    }
+    
+    .wp-block-html div[style*="padding: 20px 25px"] {
+        padding: 10px 8px !important;
+        border-radius: 10px !important;
+    }
+    
+    .wp-block-html h3[style*="font-size: 1.2em"] {
+        font-size: 0.9em !important;
+        margin-bottom: 6px !important;
+        letter-spacing: 0.1px !important;
+    }
+    
+    .wp-block-html p[style*="font-size: 0.95em"] {
+        font-size: 0.8em !important;
+        line-height: 1.4 !important;
+    }
+    
+    .wp-block-html div[style*="padding: 14px"] {
+        padding: 8px !important;
+        margin: 4px 0 !important;
+        border-radius: 8px !important;
+    }
+    
+    .wp-block-html span[style*="padding: 6px"] {
+        padding: 3px !important;
+        font-size: 0.8em !important;
+        margin-bottom: 4px !important;
+    }
+}
+
+/* Ultra Compact for Small Screens */
+@media (max-width: 360px) {
+    .wp-block-html div[style*="max-width: 700px"] {
+        padding: 2px !important;
+        margin: 2px auto !important;
+    }
+    
+    .wp-block-html div[style*="padding: 20px 25px"] {
+        padding: 8px 6px !important;
+        border-radius: 8px !important;
+    }
+    
+    .wp-block-html h3[style*="font-size: 1.2em"] {
+        font-size: 0.85em !important;
+        margin-bottom: 4px !important;
+    }
+    
+    .wp-block-html p[style*="font-size: 0.95em"] {
+        font-size: 0.75em !important;
+        line-height: 1.35 !important;
+    }
+    
+    .wp-block-html div[style*="padding: 14px"] {
+        padding: 6px !important;
+        margin: 3px 0 !important;
+    }
+    
+    .wp-block-html span[style*="padding: 6px"] {
+        padding: 2px !important;
+        font-size: 0.7em !important;
+    }
+    
+    /* Minimize decorative elements */
+    .wp-block-html div[style*="bottom: -15px"] {
+        width: 20px !important;
+        height: 20px !important;
+        bottom: -10px !important;
+        left: -10px !important;
+    }
+}
+
+/* Micro Screens */
+@media (max-width: 320px) {
+    .wp-block-html div[style*="max-width: 700px"] {
+        padding: 1px !important;
+        margin: 1px auto !important;
+    }
+    
+    .wp-block-html div[style*="padding: 20px 25px"] {
+        padding: 6px 4px !important;
+        border-radius: 6px !important;
+    }
+    
+    .wp-block-html h3[style*="font-size: 1.2em"] {
+        font-size: 0.8em !important;
+        margin-bottom: 3px !important;
+    }
+    
+    .wp-block-html p[style*="font-size: 0.95em"] {
+        font-size: 0.7em !important;
+        line-height: 1.3 !important;
+    }
+    
+    .wp-block-html div[style*="padding: 14px"] {
+        padding: 5px !important;
+        margin: 2px 0 !important;
+    }
+    
+    .wp-block-html span[style*="padding: 6px"] {
+        padding: 1px !important;
+        font-size: 0.65em !important;
+    }
+}
+</style>

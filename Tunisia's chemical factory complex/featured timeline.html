@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>جدول زمني: تاريخ المجمع الكيميائي التونسي</title>
-  <!-- Enhanced Google Fonts with better Arabic support -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { 
-      background: #f5f8fa; 
-      margin: 0; 
+    body {
+      background: #f5f8fa;
+      margin: 0;
       padding: 0;
       overflow-x: hidden;
     }
@@ -58,100 +56,6 @@
       line-height: 1.7;
       display: block;
     }
-
-    /* Navigation Controls */
-    .timeline-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      padding: 20px 36px;
-      background: #f8fcfd;
-      border-bottom: 1px solid #e1f0f5;
-      flex-wrap: wrap;
-    }
-
-    .nav-arrows {
-      display: flex;
-      gap: 10px;
-    }
-
-    .nav-arrow {
-      background: #237184;
-      color: white;
-      border: none;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      font-size: 1.2rem;
-    }
-
-    .nav-arrow:hover {
-      background: #1a5a6b;
-      transform: scale(1.1);
-    }
-
-    .nav-arrow:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .year-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .year-btn {
-      background: #eaf5fa;
-      color: #237184;
-      border: 1px solid #bedcf1;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .year-btn:hover, .year-btn.active {
-      background: #237184;
-      color: white;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(35, 113, 132, 0.3);
-    }
-
-    .auto-play-btn {
-      background: #219522;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Tajawal', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(33, 149, 34, 0.2);
-    }
-
-    .auto-play-btn:hover {
-      background: #1a7a1a;
-      transform: translateY(-1px);
-    }
-
-    .auto-play-btn.playing {
-      background: #e74c3c;
-    }
-
     .timeline-flow {
       position: relative;
       overflow-x: auto;
@@ -159,19 +63,6 @@
       background: #fff;
       padding: 60px 0 60px 0;
       scroll-behavior: smooth;
-      cursor: grab;
-      transition: all 0.5s ease;
-    }
-    .timeline-flow:active {
-      cursor: grabbing;
-    }
-    .timeline-flow.grabbing {
-      cursor: grabbing;
-      user-select: none;
-    }
-    .timeline-flow.zoomed-out {
-      transform: scale(0.7);
-      transform-origin: center;
     }
     .timeline-list {
       display: flex;
@@ -181,9 +72,8 @@
       min-height: 280px;
       position: relative;
       padding: 3px 90px;
-      transition: all 0.5s ease;
     }
-    
+   
     /* Enhanced connecting line that spans all boxes */
     .timeline-list::before {
       content: "";
@@ -198,7 +88,7 @@
       pointer-events: none;
       box-shadow: 0 2px 8px rgba(35, 113, 132, 0.15);
     }
-    
+   
     /* Connection points on timeline line */
     .timeline-list::after {
       content: "";
@@ -219,10 +109,10 @@
       z-index: 2;
       pointer-events: none;
     }
-    
+   
     .milestone {
       position: relative;
-      min-width: 280px; 
+      min-width: 280px;
       max-width: 280px;
       min-height: 200px;
       background: #fff;
@@ -232,26 +122,12 @@
       padding: 34px 25px 32px 18px;
       z-index: 4;
       transition: all 0.4s ease;
-      cursor: pointer;
       margin-bottom: 59px;
-      animation: appear 0.8s;
       text-align: right;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-between;
-    }
-
-    .milestone.active {
-      border-color: #219522;
-      background: #f0fff0;
-      box-shadow: 0 8px 25px rgba(33, 149, 34, 0.2);
-      transform: translateY(-3px) scale(1.02);
-    }
-
-    @keyframes appear {
-      from { opacity: .15; transform: scale(.92); }
-      to { opacity: 1; transform: scale(1); }
     }
     .milestone:hover {
       border-color: #237184;
@@ -261,10 +137,10 @@
     }
     .year-dot {
       position: absolute;
-      top: -60px; 
-      right: 50%; 
+      top: -60px;
+      right: 50%;
       transform: translateX(50%);
-      width: 64px; 
+      width: 64px;
       height: 64px;
       background: linear-gradient(135deg, #237184 80%, #489fc2 100%);
       color: #fff;
@@ -278,13 +154,7 @@
       justify-content: center;
       z-index: 9;
       border: 3px solid #eaf5fa;
-      animation: bounce-in 0.7s;
       filter: drop-shadow(0 2px 9px #d4eefb44) brightness(1.06);
-    }
-    @keyframes bounce-in {
-      0% { transform: translateX(50%) scale(.7); }
-      62% { transform: translateX(50%) scale(1.10); }
-      100% { transform: translateX(50%) scale(1); }
     }
     .milestone .milestone-type {
       display: inline-block;
@@ -316,7 +186,7 @@
       flex-grow: 1;
     }
     .milestone .milestone-description {
-      margin-top: 8px; 
+      margin-top: 8px;
       margin-bottom: 18px;
       font-size: 1.1em;
       line-height: 1.75;
@@ -357,35 +227,11 @@
       letter-spacing: -.3px;
       font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
       font-weight: 400;
+      line-height: 1.6;
     }
-    
+   
     /* Responsive mobile modifications */
     @media (max-width: 768px) {
-      .timeline-controls {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      .year-buttons {
-        gap: 6px;
-      }
-      
-      .year-btn {
-        padding: 8px 14px;
-        font-size: 0.85rem;
-      }
-      
-      .nav-arrow {
-        width: 40px;
-        height: 40px;
-      }
-      
-      .auto-play-btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
-      
       .timeline-article-block {
         margin: 16px 8px;
         border-radius: 16px;
@@ -404,33 +250,27 @@
         padding: 40px 24px 40px 24px;
         overflow-x: hidden;
         overflow-y: auto;
-        cursor: default;
       }
-      .timeline-flow.zoomed-out {
-        transform: scale(0.8);
-        overflow-y: visible;
-        height: auto;
-      }
-      .timeline-list { 
-        flex-direction: column; 
-        gap: 0; 
-        align-items: stretch; 
+      .timeline-list {
+        flex-direction: column;
+        gap: 0;
+        align-items: stretch;
         padding: 0;
         min-height: auto;
       }
-      
+     
       /* Vertical connecting line */
       .timeline-list::before {
-        right: 50px; 
+        right: 50px;
         left: auto;
         width: 6px;
         height: calc(100% - 40px);
-        top: 0; 
-        bottom: auto; 
+        top: 0;
+        bottom: auto;
         background: linear-gradient(180deg, #237184 0%, #4a9dc2 25%, #6bb8d6 50%, #4a9dc2 75%, #237184 100%);
         z-index: 1;
       }
-      
+     
       /* Vertical connection points */
       .timeline-list::after {
         right: 47px;
@@ -450,7 +290,7 @@
         );
         z-index: 2;
       }
-      
+     
       .milestone {
         min-width: 0;
         max-width: calc(100% - 100px);
@@ -479,7 +319,7 @@
         font-size: 1.05rem;
       }
     }
-    
+   
     /* Extra small screens */
     @media (max-width: 480px) {
       .timeline-header {
@@ -515,34 +355,6 @@
         padding: 18px 16px 14px 16px;
       }
     }
-
-    /* Touch scrolling improvements */
-    @media (max-width: 768px) {
-      .timeline-flow {
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-      }
-    }
-    @media (min-width: 769px) {
-      .timeline-flow::-webkit-scrollbar {
-        height: 8px;
-      }
-      
-      .timeline-flow::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-      }
-      
-      .timeline-flow::-webkit-scrollbar-thumb {
-        background: #b4d6e0;
-        border-radius: 4px;
-        transition: background 0.2s;
-      }
-      
-      .timeline-flow::-webkit-scrollbar-thumb:hover {
-        background: #237184;
-      }
-    }
   </style>
 </head>
 <body>
@@ -551,387 +363,103 @@
       <h1>تاريخ بناء المجمع الكيميائي التونسي</h1>
       <span class="subtitle">خط زمني لأبرز محطات تأسيس وتوسع المجمع الكيميائي التونسي</span>
     </div>
-    
-    <!-- Navigation Controls -->
-    <div class="timeline-controls">
-      <div class="nav-arrows">
-        <button class="nav-arrow" id="prevBtn">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <button class="nav-arrow" id="nextBtn">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-      </div>
-      
-      <div class="year-buttons" id="yearButtons"></div>
-      
-      <button class="auto-play-btn" id="autoPlayBtn">تشغيل تلقائي</button>
-    </div>
+   
+    <div class="timeline-flow">
+      <div class="timeline-list">
+        <!-- 1952 -->
+        <div class="milestone">
+          <div class="year-dot">1952</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">بعث أول مؤسسة لصناعة المواد الكيميائية (سياب)</div>
+          <div class="milestone-description">تأسست أول مؤسسة متخصصة في صناعة المواد الكيميائية في صفاقس لإنتاج ثلاثي الفسفاط الرفيع، مما يمثل بداية الصناعة الكيميائية في تونس.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">صفاقس</span>
+            <span class="milestone-tag">سياب</span>
+            <span class="milestone-tag">ثلاثي الفسفاط</span>
+          </div>
+        </div>
 
-    <div class="timeline-flow" id="scrollArea">
-      <div class="timeline-list" id="timeline"></div>
+        <!-- 1972 -->
+        <div class="milestone">
+          <div class="year-dot">1972</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">بعث مصنع لإنتاج الحامض الفسفوري بقابس (ICM)</div>
+          <div class="milestone-description">إنشاء مصنع الحامض الفسفوري في قابس تحت اسم الصناعات الكيميائية المغاربية، مما عزز قدرة تونس الصناعية في مجال الكيماويات.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">قابس</span>
+            <span class="milestone-tag">ICM</span>
+            <span class="milestone-tag">حامض فسفوري</span>
+          </div>
+        </div>
+
+        <!-- 1979 -->
+        <div class="milestone">
+          <div class="year-dot">1979</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">بعث مصنع الداب بقابس (SAEPA)</div>
+          <div class="milestone-description">إنشاء مصنع الداب تحت اسم الشركة العربية للأسمدة الفسفاطية والآزوتية في قابس، مما وسع نطاق إنتاج الأسمدة.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">قابس</span>
+            <span class="milestone-tag">SAEPA</span>
+            <span class="milestone-tag">الداب</span>
+          </div>
+        </div>
+
+        <!-- 1983 -->
+        <div class="milestone">
+          <div class="year-dot">1983</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">إنشاء مصنع الأمونيتر</div>
+          <div class="milestone-description">تأسيس مصنع متخصص في إنتاج سماد الأمونيتر، مما أضاف نوعاً جديداً من الأسمدة لمنظومة الإنتاج التونسية.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">أمونيتر</span>
+            <span class="milestone-tag">أسمدة</span>
+          </div>
+        </div>
+
+        <!-- 1985 -->
+        <div class="milestone">
+          <div class="year-dot">1985</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">إنشاء مصنع أسمدة قابس (EG) لإنتاج الداب</div>
+          <div class="milestone-description">إضافة مصنع جديد لإنتاج الداب في قابس تحت اسم أسمدة قابس، مما عزز الطاقة الإنتاجية للأسمدة الفسفاطية.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">قابس</span>
+            <span class="milestone-tag">EG</span>
+            <span class="milestone-tag">الداب</span>
+          </div>
+        </div>
+
+        <!-- 1985 -->
+        <div class="milestone">
+          <div class="year-dot">1985</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">إنشاء شركة الصناعات الكيميائية بقفصة (ICG)</div>
+          <div class="milestone-description">تأسيس شركة الصناعات الكيميائية في قفصة لتوسيع الخريطة الجغرافية للصناعة الكيميائية التونسية.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">قفصة</span>
+            <span class="milestone-tag">ICG</span>
+          </div>
+        </div>
+
+        <!-- 1988 -->
+        <div class="milestone">
+          <div class="year-dot">1988</div>
+          <span class="milestone-type تأسيس">تأسيس</span>
+          <div class="milestone-title">إنشاء مصنع الصخيرة لإنتاج الحامض الفسفوري</div>
+          <div class="milestone-description">بناء مصنع الصخيرة المتخصص في إنتاج الحامض الفسفوري، مما أضاف طاقة إنتاجية إضافية لهذا المكون الأساسي في صناعة الأسمدة.</div>
+          <div class="milestone-tags">
+            <span class="milestone-tag">الصخيرة</span>
+            <span class="milestone-tag">حامض فسفوري</span>
+          </div>
+        </div>
+      </div>
     </div>
-    
+   
     <div class="timeline-footer">
-      المصدر: وزارة الصناعة والمناجم والطاقة.
+      <strong>المصدر:</strong> وزارة الصناعة والمناجم والطاقة - الجمهورية التونسية<br>
+      <em>تم إعداد هذا الجدول الزمني بناءً على البيانات الرسمية المتاحة</em>
     </div>
   </div>
-  <script>
-    const events = [
-      {
-        id: 1,
-        date: "1952",
-        year: 1952,
-        title: "بعث أول مؤسسة لصناعة المواد الكيميائية (سياب)",
-        description: "تأسست أول مؤسسة متخصصة في صناعة المواد الكيميائية في صفاقس لإنتاج ثلاثي الفسفاط الرفيع، مما يمثل بداية الصناعة الكيميائية في تونس.",
-        type: "تأسيس",
-        tags: ["صفاقس", "سياب", "ثلاثي الفسفاط"]
-      },
-      {
-        id: 2,
-        date: "1972",
-        year: 1972,
-        title: "بعث مصنع لإنتاج الحامض الفسفوري بقابس (ICM)",
-        description: "إنشاء مصنع الحامض الفسفوري في قابس تحت اسم الصناعات الكيميائية المغاربية، مما عزز قدرة تونس الصناعية في مجال الكيماويات.",
-        type: "تأسيس",
-        tags: ["قابس", "ICM", "حامض فسفوري"]
-      },
-      {
-        id: 3,
-        date: "1979",
-        year: 1979,
-        title: "بعث مصنع الداب بقابس (SAEPA)",
-        description: "إنشاء مصنع الداب تحت اسم الشركة العربية للأسمدة الفسفاطية والآزوتية في قابس، مما وسع نطاق إنتاج الأسمدة.",
-        type: "تأسيس",
-        tags: ["قابس", "SAEPA", "الداب"]
-      },
-      {
-        id: 4,
-        date: "1983",
-        year: 1983,
-        title: "إنشاء مصنع الأمونيتر",
-        description: "تأسيس مصنع متخصص في إنتاج سماد الأمونيتر، مما أضاف نوعاً جديداً من الأسمدة لمنظومة الإنتاج التونسية.",
-        type: "تأسيس",
-        tags: ["أمونيتر", "أسمدة"]
-      },
-      {
-        id: 5,
-        date: "1985",
-        year: 1985,
-        title: "إنشاء مصنع أسمدة قابس (EG) لإنتاج الداب",
-        description: "إضافة مصنع جديد لإنتاج الداب في قابس تحت اسم أسمدة قابس، مما عزز الطاقة الإنتاجية للأسمدة الفسفاطية.",
-        type: "تأسيس",
-        tags: ["قابس", "EG", "الداب"]
-      },
-      {
-        id: 6,
-        date: "1985",
-        year: 1985,
-        title: "إنشاء شركة الصناعات الكيميائية بقفصة (ICG)",
-        description: "تأسيس شركة الصناعات الكيميائية في قفصة لتوسيع الخريطة الجغرافية للصناعة الكيميائية التونسية.",
-        type: "تأسيس",
-        tags: ["قفصة", "ICG"]
-      },
-      {
-        id: 7,
-        date: "1988",
-        year: 1988,
-        title: "إنشاء مصنع الصخيرة لإنتاج الحامض الفسفوري",
-        description: "بناء مصنع الصخيرة المتخصص في إنتاج الحامض الفسفوري، مما أضاف طاقة إنتاجية إضافية لهذا المكون الأساسي في صناعة الأسمدة.",
-        type: "تأسيس",
-        tags: ["الصخيرة", "حامض فسفوري"]
-      }
-    ];
-
-    // Timeline state
-    let currentIndex = 0;
-    let autoPlayInterval = null;
-    let isAutoPlaying = false;
-
-    function renderTimeline() {
-      const timeline = document.getElementById('timeline');
-      timeline.innerHTML = '';
-      events.forEach((event, idx) => {
-        const item = document.createElement('div');
-        item.className = 'milestone';
-        item.setAttribute('data-index', idx);
-        
-        // Main year dot
-        const yearDot = document.createElement('div');
-        yearDot.className = 'year-dot';
-        yearDot.textContent = event.year;
-        item.appendChild(yearDot);
-
-        // Type of step badge
-        const type = document.createElement('span');
-        type.className = `milestone-type ${event.type}`;
-        type.textContent = event.type;
-        item.appendChild(type);
-
-        // Title
-        const title = document.createElement('div');
-        title.className = 'milestone-title';
-        title.textContent = event.title;
-        item.appendChild(title);
-
-        // Description
-        const desc = document.createElement('div');
-        desc.className = 'milestone-description';
-        desc.textContent = event.description;
-        item.appendChild(desc);
-
-        // Tags
-        const tags = document.createElement('div');
-        tags.className = 'milestone-tags';
-        tags.innerHTML = event.tags.map(tag =>
-          `<span class="milestone-tag">${tag}</span>`
-        ).join('');
-        item.appendChild(tags);
-
-        timeline.appendChild(item);
-      });
-    }
-
-    function renderYearButtons() {
-      const yearButtons = document.getElementById('yearButtons');
-      const uniqueYears = [...new Set(events.map(e => e.year))];
-      
-      yearButtons.innerHTML = uniqueYears.map(year => 
-        `<button class="year-btn" data-year="${year}">${year}</button>`
-      ).join('');
-    }
-
-    function jumpToYear(year) {
-      const eventIndex = events.findIndex(e => e.year === year);
-      if (eventIndex !== -1) {
-        scrollToMilestone(eventIndex);
-      }
-    }
-
-    function scrollToMilestone(index) {
-      const milestones = document.querySelectorAll('.milestone');
-      const scrollArea = document.getElementById('scrollArea');
-      
-      if (milestones[index]) {
-        // Remove active class from all milestones
-        milestones.forEach(m => m.classList.remove('active'));
-        
-        // Add active class to current milestone
-        milestones[index].classList.add('active');
-        
-        if (window.innerWidth > 768) {
-          // Horizontal scroll for desktop
-          const milestone = milestones[index];
-          const scrollLeft = milestone.offsetLeft - scrollArea.offsetWidth / 2 + milestone.offsetWidth / 2;
-          scrollArea.scrollTo({
-            left: scrollLeft,
-            behavior: 'smooth'
-          });
-        } else {
-          // Vertical scroll for mobile
-          const milestone = milestones[index];
-          const scrollTop = milestone.offsetTop - scrollArea.offsetHeight / 2 + milestone.offsetHeight / 2;
-          scrollArea.scrollTo({
-            top: scrollTop,
-            behavior: 'smooth'
-          });
-        }
-        
-        currentIndex = index;
-        updateButtons();
-      }
-    }
-
-    function updateButtons() {
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const yearButtons = document.querySelectorAll('.year-btn');
-      
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === events.length - 1;
-      
-      // Update year button active state
-      yearButtons.forEach(btn => {
-        const year = parseInt(btn.dataset.year);
-        const hasActiveEvent = events.some((e, idx) => e.year === year && idx === currentIndex);
-        btn.classList.toggle('active', hasActiveEvent);
-      });
-    }
-
-    function zoomOutToShowAll() {
-      const scrollArea = document.getElementById('scrollArea');
-      scrollArea.classList.add('zoomed-out');
-      
-      // Reset scroll position to show all items
-      setTimeout(() => {
-        if (window.innerWidth > 768) {
-          scrollArea.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 100);
-    }
-
-    function zoomInToNormal() {
-      const scrollArea = document.getElementById('scrollArea');
-      scrollArea.classList.remove('zoomed-out');
-    }
-
-    function startAutoPlay() {
-      if (isAutoPlaying) return;
-      
-      isAutoPlaying = true;
-      const autoPlayBtn = document.getElementById('autoPlayBtn');
-      autoPlayBtn.textContent = 'إيقاف';
-      autoPlayBtn.classList.add('playing');
-      
-      // First zoom out to show all years
-      zoomOutToShowAll();
-      currentIndex = -1; // Start before first item
-      
-      // Wait 2 seconds to show overview, then start progression
-      setTimeout(() => {
-        zoomInToNormal();
-        
-        autoPlayInterval = setInterval(() => {
-          if (currentIndex < events.length - 1) {
-            scrollToMilestone(currentIndex + 1);
-          } else {
-            // Restart from beginning
-            currentIndex = -1;
-            setTimeout(() => {
-              zoomOutToShowAll();
-              setTimeout(() => {
-                zoomInToNormal();
-              }, 1500);
-            }, 1000);
-          }
-        }, 3000);
-      }, 2000);
-    }
-
-    function stopAutoPlay() {
-      if (!isAutoPlaying) return;
-      
-      isAutoPlaying = false;
-      const autoPlayBtn = document.getElementById('autoPlayBtn');
-      autoPlayBtn.textContent = 'تشغيل تلقائي';
-      autoPlayBtn.classList.remove('playing');
-      
-      zoomInToNormal();
-      
-      if (autoPlayInterval) {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = null;
-      }
-    }
-
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-      renderTimeline();
-      renderYearButtons();
-      updateButtons();
-      
-      // Year buttons
-      document.getElementById('yearButtons').addEventListener('click', (e) => {
-        if (e.target.classList.contains('year-btn')) {
-          const year = parseInt(e.target.dataset.year);
-          jumpToYear(year);
-        }
-      });
-      
-      // Navigation arrows
-      document.getElementById('prevBtn').addEventListener('click', () => {
-        if (currentIndex > 0) {
-          scrollToMilestone(currentIndex - 1);
-        }
-      });
-      
-      document.getElementById('nextBtn').addEventListener('click', () => {
-        if (currentIndex < events.length - 1) {
-          scrollToMilestone(currentIndex + 1);
-        }
-      });
-      
-      // Auto-play button
-      document.getElementById('autoPlayBtn').addEventListener('click', () => {
-        if (isAutoPlaying) {
-          stopAutoPlay();
-        } else {
-          startAutoPlay();
-        }
-      });
-    });
-
-    // Enhanced scrolling mechanism
-    let isDown = false, startX, startY, scrollLeftPos, scrollTopPos;
-    
-    function handleDesktopScrolling() {
-      if (window.innerWidth > 768) {
-        const scrollArea = document.getElementById('scrollArea');
-        
-        scrollArea.addEventListener('mousedown', (e) => {
-          isDown = true;
-          scrollArea.classList.add('grabbing');
-          startX = e.pageX - scrollArea.offsetLeft;
-          scrollLeftPos = scrollArea.scrollLeft;
-          e.preventDefault();
-        });
-        
-        scrollArea.addEventListener('mouseleave', () => {
-          isDown = false;
-          scrollArea.classList.remove('grabbing');
-        });
-        
-        scrollArea.addEventListener('mouseup', () => {
-          isDown = false;
-          scrollArea.classList.remove('grabbing');
-        });
-        
-        scrollArea.addEventListener('mousemove', (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - scrollArea.offsetLeft;
-          const walk = (x - startX) * 2;
-          scrollArea.scrollLeft = scrollLeftPos - walk;
-        });
-      }
-    }
-
-    function handleMobileScrolling() {
-      if (window.innerWidth <= 768) {
-        const scrollArea = document.getElementById('scrollArea');
-        let startY, scrollTopPos;
-        
-        scrollArea.addEventListener('touchstart', (e) => {
-          startY = e.touches[0].pageY;
-          scrollTopPos = scrollArea.scrollTop;
-        }, { passive: true });
-        
-        scrollArea.addEventListener('touchmove', (e) => {
-          if (!startY) return;
-          const y = e.touches[0].pageY;
-          const walk = startY - y;
-          scrollArea.scrollTop = scrollTopPos + walk;
-        }, { passive: true });
-        
-        scrollArea.addEventListener('touchend', () => {
-          startY = null;
-        });
-      }
-    }
-
-    function initializeScrolling() {
-      handleDesktopScrolling();
-      handleMobileScrolling();
-    }
-
-    // Event listeners
-    window.addEventListener('resize', () => {
-      initializeScrolling();
-    });
-
-    initializeScrolling();
-  </script>
 </body>
 </html>

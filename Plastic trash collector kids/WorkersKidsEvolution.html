@@ -1,0 +1,262 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+  .berbacha-widget * { box-sizing: border-box; margin: 0; padding: 0; }
+  .berbacha-widget { background: #f5f5f5; font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; direction: rtl; }
+  .berbacha-widget .chart-container { max-width: 1100px; margin: 30px auto; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.1); border-radius: 20px; padding: 40px; animation: fadeInUp 0.8s ease-out;}
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
+  .berbacha-widget h2 { text-align: center; color: #2c3e50; font-size: 32px; margin-bottom: 30px; font-weight: bold; animation: slideDown 0.6s ease-out; line-height: 1.4;}
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-20px);} to { opacity: 1; transform: translateY(0);} }
+  .berbacha-widget .difference-alert { background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%); border-right: 4px solid #ffc107; padding: 20px; border-radius: 12px; margin: 20px 0; color: #856404; animation: pulse 2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); line-height: 1.6;}
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.01); } }
+  .berbacha-widget .difference-alert strong { color: #e67e22; font-size: 20px; }
+  .berbacha-widget .chart-wrapper { position: relative; margin: 40px 0; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; animation: fadeIn 1s ease-out 0.4s backwards; min-height: 400px; }
+  .berbacha-widget .chart-canvas-container { position: relative; width: 100%; height: 450px;}
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .berbacha-widget .gender-section { margin: 30px 0; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; animation: fadeIn 1s ease-out 0.6s backwards; }
+  .berbacha-widget .gender-title { text-align: center; color: #2c3e50; font-size: 22px; font-weight: bold; margin-bottom: 25px; line-height: 1.4;}
+  .berbacha-widget .gender-bars { display: flex; flex-direction: column; gap: 20px;}
+  .berbacha-widget .gender-bar-container { position: relative; transition: transform 0.3s;}
+  .berbacha-widget .gender-bar-container:hover { transform: translateX(-5px);}
+  .berbacha-widget .gender-bar-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px; color: #2c3e50; font-weight: 600; flex-wrap: wrap; gap: 8px;}
+  .berbacha-widget .gender-bar-bg { background: #e0e0e0; height: 60px; border-radius: 12px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); display: flex;}
+  .berbacha-widget .gender-bar-fill { height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; transition: flex 1.5s cubic-bezier(0.65, 0, 0.35, 1); position: relative; overflow: hidden;}
+  .berbacha-widget .gender-bar-fill::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite;}
+  @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+  .berbacha-widget .gender-bar-fill.male { background: linear-gradient(90deg, #6c757d 0%, #495057 100%);}
+  .berbacha-widget .gender-bar-fill.female { background: linear-gradient(90deg, #cf2d1d 0%, #cf2d1d 100%);}
+  .berbacha-widget .gender-source { text-align: center; margin-top: 20px; font-size: 13px; color: #7f8c8d; font-style: italic; line-height: 1.5;}
+  .berbacha-widget .caption { text-align: center; margin-top: 25px; color: #7f8c8d; font-size: 14px; line-height: 1.8; padding: 20px; background: #ecf0f1; border-radius: 10px; animation: fadeIn 1s ease-out 0.8s backwards;}
+  @media (max-width: 768px) { 
+    .berbacha-widget { padding: 15px;}
+    .berbacha-widget .chart-container { padding: 25px 20px; margin: 15px auto; border-radius: 15px;} 
+    .berbacha-widget h2 { font-size: 22px; margin-bottom: 20px; line-height: 1.5;} 
+    .berbacha-widget .difference-alert { font-size: 14px; padding: 18px; line-height: 1.7;} 
+    .berbacha-widget .difference-alert strong { font-size: 17px; display: block; margin-bottom: 8px;} 
+    .berbacha-widget .chart-wrapper { padding: 15px; margin: 30px 0; min-height: 350px;} 
+    .berbacha-widget .chart-canvas-container { height: 350px;} 
+    .berbacha-widget .gender-section { padding: 20px;} 
+    .berbacha-widget .gender-title { font-size: 19px; margin-bottom: 20px;} 
+    .berbacha-widget .gender-bar-fill { font-size: 12px;} 
+    .berbacha-widget .gender-bar-bg { height: 55px;} 
+    .berbacha-widget .gender-bar-label { font-size: 14px;} 
+    .berbacha-widget .caption { font-size: 13px; padding: 18px; line-height: 1.7;} 
+  }
+  @media (max-width: 480px) { 
+    .berbacha-widget { padding: 10px;}
+    .berbacha-widget .chart-container { padding: 20px 15px; margin: 10px auto; border-radius: 12px;} 
+    .berbacha-widget h2 { font-size: 18px; margin-bottom: 18px;} 
+    .berbacha-widget .difference-alert { font-size: 13px; padding: 15px; border-radius: 10px;} 
+    .berbacha-widget .difference-alert strong { font-size: 16px;} 
+    .berbacha-widget .chart-wrapper { padding: 12px; margin: 25px 0; min-height: 300px; border-radius: 12px;} 
+    .berbacha-widget .chart-canvas-container { height: 300px;} 
+    .berbacha-widget .gender-section { padding: 18px 15px;} 
+    .berbacha-widget .gender-title { font-size: 17px; margin-bottom: 18px;} 
+    .berbacha-widget .gender-bars { gap: 15px;} 
+    .berbacha-widget .gender-bar-label { font-size: 13px;} 
+    .berbacha-widget .gender-bar-bg { height: 50px;} 
+    .berbacha-widget .gender-bar-fill { font-size: 11px;} 
+    .berbacha-widget .gender-source { font-size: 12px; margin-top: 15px;} 
+    .berbacha-widget .caption { font-size: 12px; padding: 15px; line-height: 1.6;} 
+  }
+</style>
+
+<div class="berbacha-widget">
+  <div class="chart-container">
+    <h2>رسم بياني  لعدد "البرباشة" في تونس بين 2019 و2025</h2>
+    <div class="chart-wrapper">
+      <div class="chart-canvas-container">
+        <canvas id="berbachaChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="difference-alert">
+      ⚠️ <strong>فرق كبير بين الأرقام:</strong> الوكالة الوطنية تشير إلى 10,000 بينما الغرفة الوطنية تقدر العدد بـ 25,000 - فرق 150%  
+    </div>
+    
+    <div class="gender-section">
+      <div class="gender-title">التوزيع الجندري حسب الغرفة الوطنية (2025)</div>
+      <div class="gender-bars">
+        <div class="gender-bar-container">
+          <div class="gender-bar-label">
+          </div>
+          <div class="gender-bar-bg">
+            <div class="gender-bar-fill female" data-width="23" style="flex: 0;">👩 النساء 23%</div>
+            <div class="gender-bar-fill male" data-width="77" style="flex: 0;">👨 الرجال 77%</div>
+
+          </div>
+        </div>
+        <div class="gender-bar-label" style="justify-content: space-around; font-size: 14px; color: #495057; margin-top: 10px;">
+          <span>👩 5,750 امرأة</span>
+          <span>👨 19,250 رجل</span>
+        </div>
+      </div>
+      <div class="gender-source">المصدر: الغرفة الوطنية لمجمعي النفايات البلاستيكية 2025</div>
+    </div>
+    
+    <div class="caption">
+      <strong>ملاحظة:</strong> البيانات المعروضة تعتمد على مصدرين مختلفين مما يفسر الفارق الكبير في الأرقام.<br>
+      الوكالة الوطنية للتصرف في النفايات،  الغرفة الوطنية لمجمعي النفايات البلاستيكية .
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  function initBerbachaChart() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.classList.contains('gender-bar-fill')) {
+            const width = entry.target.dataset.width;
+            setTimeout(() => {
+              entry.target.style.flex = width + '%';
+            }, 300);
+            observer.unobserve(entry.target);
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    document.querySelectorAll('.berbacha-widget .gender-bar-fill').forEach(el => observer.observe(el));
+    
+    function isMobile() { return window.innerWidth <= 768; }
+    
+    function getChartConfig() {
+      const mobile = isMobile();
+      const verySmall = window.innerWidth <= 480;
+      return {
+        titleSize: verySmall ? 14 : mobile ? 16 : 18,
+        bodySize: verySmall ? 12 : mobile ? 13 : 15,
+        legendSize: verySmall ? 11 : mobile ? 12 : 14,
+        axisTitleSize: verySmall ? 12 : mobile ? 13 : 16,
+        axisLabelSize: verySmall ? 9 : mobile ? 10 : 12,
+        padding: verySmall ? 10 : mobile ? 12 : 15,
+        legendPadding: verySmall ? 12 : mobile ? 15 : 20
+      };
+    }
+    
+    const config = getChartConfig();
+    const labels = ['2019', '2025'];
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'الوكالة الوطنية للتصرف في النفايات',
+          data: [8000, 10000],
+          backgroundColor: 'rgba(108, 117, 125, 0.8)',
+          borderColor: 'rgba(108, 117, 125, 1)',
+          borderWidth: 2,
+          borderRadius: 8,
+          barThickness: 'flex',
+          maxBarThickness: 60
+        },
+        {
+          label: 'الغرفة الوطنية لمجمعي النفايات البلاستيكية',
+          data: [null, 25000],
+          backgroundColor: 'rgba(220, 53, 69, 0.8)',
+          borderColor: 'rgba(220, 53, 69, 1)',
+          borderWidth: 2,
+          borderRadius: 8,
+          barThickness: 'flex',
+          maxBarThickness: 60
+        }
+      ]
+    };
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'x',
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { size: config.legendSize, weight: 'bold' },
+            padding: config.legendPadding,
+            usePointStyle: true
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          padding: config.padding,
+          titleFont: { size: config.titleSize },
+          bodyFont: { size: config.bodySize },
+          borderColor: 'rgba(255,255,255,0.2)',
+          borderWidth: 1,
+          displayColors: true,
+          callbacks: {
+            label: context => {
+              const value = context.parsed.y;
+              if (value === null) return null;
+              return `${context.dataset.label}: ${value.toLocaleString()} شخص`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          min: 0,
+          max: 30000,
+          ticks: {
+            stepSize: 5000,
+            callback: value => (isMobile() && window.innerWidth <= 480 ? (value / 1000) + 'k' : value.toLocaleString()),
+            font: { size: config.axisLabelSize }
+          },
+          title: {
+            display: true,
+            text: 'عدد البرباشة',
+            color: '#2c3e50',
+            font: { size: config.axisTitleSize, weight: 'bold' }
+          },
+          grid: { color: 'rgba(0,0,0,0.1)', drawBorder: false }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'السنة والمصدر',
+            color: '#2c3e50',
+            font: { size: config.axisTitleSize, weight: 'bold' }
+          },
+          grid: { color: 'rgba(0,0,0,0.07)', drawBorder: false },
+          ticks: { font: { size: config.axisLabelSize } }
+        }
+      },
+      animation: {
+        duration: 2000,
+        easing: 'easeInOutQuart'
+      }
+    };
+    
+    let chart = new Chart(document.getElementById('berbachaChart').getContext('2d'), { type: 'bar', data, options });
+    
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (chart) {
+          chart.destroy();
+          const newConfig = getChartConfig();
+          options.plugins.legend.labels.font.size = newConfig.legendSize;
+          options.plugins.legend.labels.padding = newConfig.legendPadding;
+          options.plugins.tooltip.padding = newConfig.padding;
+          options.plugins.tooltip.titleFont.size = newConfig.titleSize;
+          options.plugins.tooltip.bodyFont.size = newConfig.bodySize;
+          options.scales.y.title.font.size = newConfig.axisTitleSize;
+          options.scales.x.title.font.size = newConfig.axisTitleSize;
+          options.scales.y.ticks.font.size = newConfig.axisLabelSize;
+          options.scales.x.ticks.font.size = newConfig.axisLabelSize;
+          chart = new Chart(document.getElementById('berbachaChart').getContext('2d'), { type: 'bar', data, options });
+        }
+      }, 250);
+    });
+    
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBerbachaChart);
+  } else {
+    initBerbachaChart();
+  }
+})();
+</script>

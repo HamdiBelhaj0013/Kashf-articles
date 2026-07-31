@@ -1,0 +1,76 @@
+<style>
+#ajhdt7-scene{width:100%;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px 16px;background:transparent;position:relative;}
+#ajhdt7-intro{
+  direction:rtl;
+  font-family:'Almarai',sans-serif;
+  font-size:15px;
+  color:#999999;
+  text-align:center;
+  margin-bottom:14px;
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1),transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+#ajhdt7-intro.on{opacity:1;transform:translateY(0);}
+#ajhdt7-intro .name{color:#006eff;font-weight:700;}
+
+#ajhdt7-text{direction:rtl;font-family:'Amiri',Georgia,serif;font-size:24px;line-height:2.4;text-align:center;max-width:680px;color:#222222;position:relative;}
+@media(max-width:600px){#ajhdt7-text{font-size:19px;line-height:2.2;}}
+.ajhdt7-w{display:inline-block;opacity:0;transform:translateY(12px);filter:blur(5px);transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1),transform 0.55s cubic-bezier(0.22,1,0.36,1),filter 0.55s cubic-bezier(0.22,1,0.36,1);color:#222222;font-weight:400;white-space:nowrap;text-decoration:none;}
+.ajhdt7-w.on{opacity:1;transform:translateY(0);filter:blur(0);}
+.ajhdt7-k{color:#E8650A;font-weight:700;}
+.ajhdt7-k.on{animation:ajhdt7-pop 0.7s cubic-bezier(0.22,1,0.36,1) forwards;}
+@keyframes ajhdt7-pop{0%{opacity:0;transform:translateY(14px) scale(0.88);filter:blur(6px);color:#006eff;}60%{opacity:1;transform:translateY(-4px) scale(1.07);filter:blur(0);color:#006eff;}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);color:#006eff;}}
+.ajhdt7-sp{display:inline-block;width:0.3em;}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="ajhdt7-scene">
+  <div id="ajhdt7-intro">تقول <span class="name">حياة</span> بصوت هادئ:</div>
+  <div id="ajhdt7-text"></div>
+</div>
+
+<script>
+(function(){
+  var W=[
+    {t:"بعد",k:false},{t:"تلك",k:false},{t:"التجربة",k:true},{t:"الأليمة،",k:true},
+    {t:"فعلا",k:false},{t:"لم",k:false},{t:"أعد",k:true},{t:"أفكر",k:true},
+    {t:"في",k:false},{t:"الإنجاب",k:true},{t:"مرة",k:false},{t:"أخرى",k:false}
+  ];
+
+  var box=document.getElementById("ajhdt7-text");
+  var intro=document.getElementById("ajhdt7-intro");
+  var scene=document.getElementById("ajhdt7-scene");
+  var played=false;
+
+  function play(){
+    if(played)return;
+    played=true;
+
+    intro.classList.add("on");
+
+    W.forEach(function(w,i){
+      var s=document.createElement("span");
+      s.className=w.k?"ajhdt7-w ajhdt7-k":"ajhdt7-w";
+      s.textContent=w.t;
+      box.appendChild(s);
+      if(i<W.length-1){var sp=document.createElement("span");sp.className="ajhdt7-sp";box.appendChild(sp);}
+    });
+    var els=box.querySelectorAll(".ajhdt7-w");
+    els.forEach(function(el,i){
+      setTimeout(function(){el.classList.add("on");},i*145+400);
+    });
+  }
+
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){play();io.disconnect();}
+    },{threshold:0.2,rootMargin:"0px 0px -60px 0px"});
+    io.observe(scene);
+  } else {
+    play();
+  }
+})();
+</script>

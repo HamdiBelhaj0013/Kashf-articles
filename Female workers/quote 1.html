@@ -1,0 +1,59 @@
+<style>
+#ajhdt-scene{width:100%;min-height:260px;display:flex;align-items:center;justify-content:center;padding:40px 20px;background:transparent;position:relative;}
+#ajhdt-text{direction:rtl;font-family:'Amiri',Georgia,serif;font-size:24px;line-height:2.4;text-align:center;max-width:680px;color:#222222;position:relative;}
+@media(max-width:600px){#ajhdt-text{font-size:19px;line-height:2.2;}}
+.ajhdt-w{display:inline-block;opacity:0;transform:translateY(12px);filter:blur(5px);transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1),transform 0.55s cubic-bezier(0.22,1,0.36,1),filter 0.55s cubic-bezier(0.22,1,0.36,1);color:#222222;font-weight:400;white-space:nowrap;text-decoration:none;}
+.ajhdt-w.on{opacity:1;transform:translateY(0);filter:blur(0);}
+.ajhdt-k{color:#008cff;font-weight:700;}
+.ajhdt-k.on{animation:ajhdt-pop 0.7s cubic-bezier(0.22,1,0.36,1) forwards;}
+@keyframes ajhdt-pop{0%{opacity:0;transform:translateY(14px) scale(0.88);filter:blur(6px);color:#006eff;}60%{opacity:1;transform:translateY(-4px) scale(1.07);filter:blur(0);color:#0077ff;}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);color:#0077ff;}}
+.ajhdt-sp{display:inline-block;width:0.3em;}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="ajhdt-scene">
+  <div id="ajhdt-text"></div>
+</div>
+
+<script>
+(function(){
+  var W=[
+    {t:"أجهضت",k:true},{t:"وأنا",k:false},{t:"أعمل",k:false},{t:"في",k:false},
+    {t:"المكتب",k:true},{t:"لأن",k:false},{t:"مشغّلي",k:true},{t:"رفض",k:true},
+    {t:"منحي",k:false},{t:"يوم",k:false},{t:"عطلة",k:false},{t:"رغم",k:false},
+    {t:"حصولي",k:false},{t:"على",k:false},{t:"شهادة",k:true},{t:"طبية",k:true},
+    {t:"تثبت",k:false},{t:"وضعي",k:false},{t:"الصحي",k:false}
+  ];
+  var D=[0,320,600,820,980,1260,1500,1760,1980,2180,2380,2620,2840,3020,3240,3500,3720,3900,4080];
+  var box=document.getElementById("ajhdt-text");
+  var scene=document.getElementById("ajhdt-scene");
+  var played=false;
+
+  function play(){
+    if(played)return;
+    played=true;
+    W.forEach(function(w,i){
+      var s=document.createElement("span");
+      s.className=w.k?"ajhdt-w ajhdt-k":"ajhdt-w";
+      s.textContent=w.t;
+      box.appendChild(s);
+      if(i<W.length-1){var sp=document.createElement("span");sp.className="ajhdt-sp";box.appendChild(sp);}
+    });
+    var els=box.querySelectorAll(".ajhdt-w");
+    els.forEach(function(el,i){
+      setTimeout(function(){el.classList.add("on");},(D[i]||i*220)+80);
+    });
+  }
+
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){play();io.disconnect();}
+    },{threshold:0.2,rootMargin:"0px 0px -60px 0px"});
+    io.observe(scene);
+  } else {
+    play();
+  }
+})();
+</script>

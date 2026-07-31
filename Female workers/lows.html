@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>القانون القديم مقابل القانون الجديد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+.gba *, .gba *::before, .gba *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.gba {
+  --gray: #888780; --gray-bg: #f1efe8; --gray-txt: #444441;
+  --blue: #185FA5; --blue-bg: #E6F1FB; --blue-txt: #0C447C;
+  --border: #ebebeb; --t1: #111111; --t2: #555555; --t3: #aaaaaa;
+  --radius: 16px; --mono: 'Oswald', sans-serif; --sans: 'Almarai', sans-serif;
+  font-family: var(--sans); direction: rtl; display: flex; flex-direction: column; gap: 18px;
+}
+.gba .hdr { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.gba .hdr-title { font-size: clamp(18px, 4vw, 24px); font-weight: 800; color: var(--t1); line-height: 1.4; }
+.gba .hdr-title span { color: var(--blue); }
+.gba .hdr-sub { font-size: 13px; font-weight: 300; color: var(--t2); margin-top: 6px; }
+
+.gba .row { display: flex; flex-direction: column; gap: 8px; opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .5s; }
+.gba .row.vis { opacity: 1; transform: translateY(0); }
+.gba .row-title { font-size: 13px; font-weight: 700; color: var(--t1); padding: 0 2px; }
+
+.gba .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.gba .cell { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; box-shadow: 0 1px 6px rgba(0,0,0,.04); }
+.gba .cell.old { border-color: var(--border); }
+.gba .cell.new { border-color: #B5D4F4; }
+.gba .cell.empty { background: #faf9f7; display: flex; align-items: center; justify-content: center; }
+.gba .cell.empty .item-val { color: var(--t3); }
+
+.gba .cell-tag { font-size: 9.5px; font-weight: 700; color: var(--t3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .3px; }
+.gba .cell.old .cell-tag { color: var(--gray-txt); }
+.gba .cell.new .cell-tag { color: var(--blue-txt); }
+
+.gba .item-date { font-family: var(--mono); font-size: 9.5px; font-weight: 500; color: var(--t3); margin-bottom: 6px; display: block; }
+.gba .item-val { font-family: var(--mono); font-size: 17px; font-weight: 600; line-height: 1.3; }
+.gba .cell.old .item-val { color: var(--gray-txt); }
+.gba .cell.new .item-val { color: var(--blue-txt); }
+.gba .item-sub { font-size: 11px; color: var(--t2); line-height: 1.55; margin-top: 4px; font-weight: 300; }
+
+.gba .src { font-size: 10px; font-weight: 300; color: var(--t3); text-align: center; padding-top: 4px; }
+
+@media (max-width: 560px) {
+  .gba .row-grid { grid-template-columns: 1fr; }
+  .gba .item-val { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="gba">
+  <div class="hdr">
+    <h2 class="hdr-title">عطلة الأمومة: <span>القانون القديم</span> مقابل القانون الجديد</h2>
+    <p class="hdr-sub">مقارنة مباشرة بنداً بند بين النصوص السابقة والقانون الذي صادق عليه البرلمان في 31 جويلية 2024 وصدر بالرائد الرسمي في 12 أوت 2024</p>
+  </div>
+
+  <div id="rows" style="display:flex;flex-direction:column;gap:16px;">
+
+    <div class="row">
+      <div class="row-title">عطلة الولادة الأساسية للأم</div>
+      <div class="row-grid">
+        <div class="cell old">
+          <div class="cell-tag">قديم</div>
+          <div class="item-date">الفصل 48، القانون عدد 112 لسنة 1983 — الوظيفة العمومية</div>
+          <div class="item-val">شهران</div>
+          <div class="item-sub">مع استحقاق كامل المرتب، ويمكن الجمع بين هذه العطلة وعطلة الاستراحة.</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">3 أشهر</div>
+          <div class="item-sub">انتفاع الأم بعطلة ولادة مدتها 3 أشهر، ترفع وجوبا إلى 4 أشهر في حالات خاصة.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">عطلة الأمومة — القطاع الخاص</div>
+      <div class="row-grid">
+        <div class="cell old">
+          <div class="cell-tag">قديم</div>
+          <div class="item-date">الفصل 20، مجلة الشغل، 1966</div>
+          <div class="item-val">30 يوماً</div>
+          <div class="item-sub">قابلة للتمديد بـ15 يوماً في كل مرة تُدلي فيها بشهادة طبية.</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">3 أشهر</div>
+          <div class="item-sub">سحب عطلة ما بعد الولادة على القطاع الخاص، أي تطبيق المدة الجديدة الموحّدة.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">عطلة ما قبل الولادة</div>
+      <div class="row-grid">
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">15 يوماً</div>
+          <div class="item-sub">كحدّ أقصى خلال الشهر الأخير من مدّة الحمل.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">حالة ولادة توأم أو إعاقة أو خداجة أو تشوهات</div>
+      <div class="row-grid">
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">4 أشهر</div>
+          <div class="item-sub">ترفع عطلة الولادة وجوبا إلى 4 أشهر في صورة ولادة توأم أو أكثر أو إذا كان المولود حاملا لإعاقة أو خديجا أو حاملا لتشوهات خلقيّة.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">عطلة وضع طفل ميّت</div>
+      <div class="row-grid">
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">شهر</div>
+          <div class="item-sub">إحداث عطلة ولادة لفائدة الأم التي وضعت طفلا ميّتا مدّتها شهر.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">عطلة الأبوة</div>
+      <div class="row-grid">
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">7 أيّام</div>
+          <div class="item-sub">تُرفع إلى 10 أيام في صورة ولادة توأم أو أكثر أو طفل حامل لإعاقة أو مولود خديج أو حامل لتشوهات خلقية، و3 أيام في حالة ولادة الأم لمولود ميّت.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">راحة الرضاعة</div>
+      <div class="row-grid">
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+        <div class="cell new">
+          <div class="cell-tag">جديد</div>
+          <div class="item-date">القانون الجديد، 2024</div>
+          <div class="item-val">9 أشهر</div>
+          <div class="item-sub">الترفيع في راحة الرضاعة لمدّة تسعة أشهر.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-title">الحماية من الطرد أثناء التغيب</div>
+      <div class="row-grid">
+        <div class="cell old">
+          <div class="cell-tag">قديم</div>
+          <div class="item-date">الفصل 20، مجلة الشغل، 1966</div>
+          <div class="item-val">12 أسبوعاً</div>
+          <div class="item-sub">لا يجوز للمؤجر أن يفصل المرأة على العمل أثناء هذا التغيب، وفي صورة تعمد طردها فيحق لها المطالبة بغرامة تعويضية.</div>
+        </div>
+        <div class="cell empty">
+          <div class="item-val">لم يتم ادراجها</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="src">المصدر: القانون عدد 112 لسنة 1983، مجلة الشغل 1966، والقانون الجديد الصادر بالرائد الرسمي للجمهورية التونسية بتاريخ 12 أوت 2024</p>
+</div>
+
+<script>
+(function () {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const rows = entry.target.querySelectorAll('.row');
+      rows.forEach((r, i) => setTimeout(() => r.classList.add('vis'), i * 100));
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.1 });
+  const rows = document.getElementById('rows');
+  if (rows) obs.observe(rows);
+})();
+</script>
+</body>
+</html>

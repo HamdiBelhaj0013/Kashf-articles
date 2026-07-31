@@ -1,0 +1,84 @@
+<style>
+#ajhdt2-scene{width:100%;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px 16px;background:transparent;position:relative;}
+#ajhdt2-text{direction:rtl;font-family:'Amiri',Georgia,serif;font-size:24px;line-height:2.4;text-align:center;max-width:680px;color:#222222;position:relative;}
+@media(max-width:600px){#ajhdt2-text{font-size:19px;line-height:2.2;}}
+.ajhdt2-w{display:inline-block;opacity:0;transform:translateY(12px);filter:blur(5px);transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1),transform 0.55s cubic-bezier(0.22,1,0.36,1),filter 0.55s cubic-bezier(0.22,1,0.36,1);color:#222222;font-weight:400;white-space:nowrap;text-decoration:none;}
+.ajhdt2-w.on{opacity:1;transform:translateY(0);filter:blur(0);}
+.ajhdt2-k{color:#000000;font-weight:700;}
+.ajhdt2-k.on{animation:ajhdt2-pop 0.7s cubic-bezier(0.22,1,0.36,1) forwards;}
+@keyframes ajhdt2-pop{0%{opacity:0;transform:translateY(14px) scale(0.88);filter:blur(6px);color:#006eff;}60%{opacity:1;transform:translateY(-4px) scale(1.07);filter:blur(0);color:#006eff;}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);color:#006eff;}}
+.ajhdt2-sp{display:inline-block;width:0.3em;}
+
+#ajhdt2-credit{
+  direction:rtl;
+  font-family:'Almarai',sans-serif;
+  font-size:14px;
+  color:#999999;
+  text-align:center;
+  margin-top:20px;
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1),transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+#ajhdt2-credit.on{opacity:1;transform:translateY(0);}
+#ajhdt2-credit .name{color:#000000;font-weight:700;}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="ajhdt2-scene">
+  <div id="ajhdt2-text"></div>
+  <div id="ajhdt2-credit"><span class="name">حياة</span> (اسم مستعار)، موظفة تعمل بالقطاع الخاص</div>
+</div>
+
+<script>
+(function(){
+  var W=[
+    {t:"كنت",k:false},{t:"قد",k:false},{t:"باشرت",k:false},{t:"العمل",k:false},
+    {t:"منذ",k:false},{t:"حوالي",k:false},{t:"3",k:false},{t:"أشهر،",k:false},
+    {t:"وكانت",k:false},{t:"ظروفي",k:true},{t:"المادية",k:true},{t:"صعبة",k:true},
+    {t:"للغاية،",k:false},{t:"لكن",k:false},{t:"شاءت",k:false},{t:"الأقدار",k:false},
+    {t:"أن",k:false},{t:"أحمل",k:false},{t:"ورغم",k:false},{t:"أنني",k:false},
+    {t:"أعلمت",k:false},{t:"مشغلي",k:true},{t:"بوضعي",k:false},{t:"الصحي",k:false},
+    {t:"لكن",k:false},{t:"تجاهل",k:true},{t:"ذلك",k:false},{t:"وأصر",k:true},
+    {t:"على",k:false},{t:"حضوري",k:false},{t:"إلى",k:false},{t:"المكتب..",k:false},
+    {t:"وهناك،",k:false},{t:"اجهضت",k:true},{t:"طفلي",k:true},{t:"وأنا",k:false},
+    {t:"داخل",k:false},{t:"المكتب",k:true}
+  ];
+
+  var box=document.getElementById("ajhdt2-text");
+  var credit=document.getElementById("ajhdt2-credit");
+  var scene=document.getElementById("ajhdt2-scene");
+  var played=false;
+  var baseDelay=120;
+
+  function play(){
+    if(played)return;
+    played=true;
+    W.forEach(function(w,i){
+      var s=document.createElement("span");
+      s.className=w.k?"ajhdt2-w ajhdt2-k":"ajhdt2-w";
+      s.textContent=w.t;
+      box.appendChild(s);
+      if(i<W.length-1){var sp=document.createElement("span");sp.className="ajhdt2-sp";box.appendChild(sp);}
+    });
+    var els=box.querySelectorAll(".ajhdt2-w");
+    els.forEach(function(el,i){
+      setTimeout(function(){el.classList.add("on");},i*baseDelay+80);
+    });
+
+    var lastDelay=(W.length-1)*baseDelay+80+600;
+    setTimeout(function(){credit.classList.add("on");},lastDelay);
+  }
+
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){play();io.disconnect();}
+    },{threshold:0.2,rootMargin:"0px 0px -60px 0px"});
+    io.observe(scene);
+  } else {
+    play();
+  }
+})();
+</script>

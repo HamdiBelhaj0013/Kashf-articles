@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الساعة الديمغرافية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    .gjc *, .gjc *::before, .gjc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .gjc {
+      --pink:     #D4537E;
+      --pink-bg:  #FBEAF0;
+      --pink-txt: #993556;
+      --blue:     #185FA5;
+      --blue-bg:  #E6F1FB;
+      --blue-txt: #0C447C;
+      --border:   #e8e8e8;
+      --bg:       #ffffff;
+      --bg2:      #f8f7f5;
+      --t1:       #0f0f0f;
+      --t2:       #555555;
+      --t3:       #aaaaaa;
+      --radius:   16px;
+      --sans:     'Almarai', sans-serif;
+      --num:      'Oswald', sans-serif;
+
+      font-family: var(--sans);
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── HEADER ── */
+    .gjc .hdr {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .gjc .hdr-title {
+      font-size: clamp(17px, 4vw, 22px);
+      font-weight: 800;
+      color: var(--t1);
+      line-height: 1.35;
+    }
+    .gjc .hdr-title em { color: var(--blue); font-style: normal; }
+    .gjc .hdr-sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.6;
+    }
+
+    /* ── YEAR BUTTONS ── */
+    .gjc .year-btns {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .gjc .yr-btn {
+      font-family: var(--num);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 7px 20px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--t3);
+      cursor: pointer;
+      transition: all .22s ease;
+      letter-spacing: .02em;
+    }
+    .gjc .yr-btn:hover { border-color: var(--t2); color: var(--t2); }
+    .gjc .yr-btn.active {
+      background: var(--t1);
+      color: var(--bg);
+      border-color: var(--t1);
+    }
+
+    /* ── CLOCK STAGE ── */
+    .gjc .clock-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .gjc .clock-svg-wrap {
+      position: relative;
+      width: min(260px, 80vw);
+      height: min(260px, 80vw);
+    }
+    .gjc .clock-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── STAT CARDS ── */
+    .gjc .stat-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+    .gjc .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+    .gjc .stat-card.highlight {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .gjc .stat-card-num {
+      font-family: var(--num);
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1;
+      transition: color .4s ease;
+    }
+    .gjc .stat-card-lbl {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.45;
+    }
+    .gjc .stat-card-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .gjc .stat-card-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .gjc .stat-card-tag {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--t3);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* ── CHANGE BADGE ── */
+    .gjc .change-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--blue-bg);
+      color: var(--blue-txt);
+      transition: opacity .4s ease;
+    }
+    .gjc .change-badge.hidden { opacity: 0; pointer-events: none; }
+    .gjc .change-num { font-family: var(--num); font-size: 14px; }
+
+    /* ── LEGEND ── */
+    .gjc .legend {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+    }
+    .gjc .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--t2);
+    }
+    .gjc .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── SOURCE ── */
+    .gjc .src {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--t3);
+      text-align: center;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 420px) {
+      .gjc .yr-btn { font-size: 13px; padding: 6px 14px; }
+      .gjc .stat-card-num { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gjc">
+
+  <div class="hdr">
+    <h2 class="hdr-title">شبح <em>الشيخوخة</em> يهدد تونس</h2>
+    <p class="hdr-sub">اضغط على السنة لمشاهدة كيف تحوّل مؤشر الشيخوخة عبر الزمن</p>
+  </div>
+
+  <div class="year-btns">
+    <button class="yr-btn" onclick="setClock('1975')">1975</button>
+    <button class="yr-btn" onclick="setClock('2014')">2014</button>
+    <button class="yr-btn active" onclick="setClock('2024')">2024</button>
+  </div>
+
+  <div class="clock-stage">
+
+    <div class="clock-svg-wrap">
+      <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Outer track -->
+        <circle cx="130" cy="130" r="108"
+                fill="none" stroke="#f0eeea" stroke-width="32"/>
+
+        <!-- Blue arc: elderly (drawn first, underneath) -->
+        <circle id="arcElder" cx="130" cy="130" r="108"
+                fill="none" stroke="#185FA5" stroke-width="32"
+                stroke-dasharray="0 679" stroke-linecap="butt"
+                transform="rotate(-90 130 130)"
+                style="transition: stroke-dasharray 1.1s cubic-bezier(.4,0,.2,1); opacity:.88"/>
+
+        <!-- Pink arc: youth (drawn on top) -->
+        <circle id="arcYouth" cx="130" cy="130" r="108"
+                fill="none" stroke="#D4537E" stroke-width="32"
+                stroke-dasharray="679 0" stroke-linecap="butt"
+                stroke-dashoffset="0"
+                transform="rotate(-90 130 130)"
+                style="transition: stroke-dasharray 1.1s cubic-bezier(.4,0,.2,1), stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1); opacity:.88"/>
+
+        <!-- Thin separator ring -->
+        <circle cx="130" cy="130" r="124" fill="none" stroke="white" stroke-width="1.5" opacity=".6"/>
+        <circle cx="130" cy="130" r="92"  fill="none" stroke="white" stroke-width="1.5" opacity=".6"/>
+
+        <!-- Center bg -->
+        <circle cx="130" cy="130" r="80" fill="white"/>
+
+        <!-- Center: year -->
+        <text id="cYear" x="130" y="118" text-anchor="middle"
+              font-family="Oswald,sans-serif" font-size="38" font-weight="600"
+              fill="#0f0f0f">2024</text>
+
+        <!-- Center: pct -->
+        <text id="cPct" x="130" y="148" text-anchor="middle"
+              font-family="Oswald,sans-serif" font-size="20" font-weight="500"
+              fill="#185FA5">73.9%</text>
+
+        <!-- Center: label -->
+        <text x="130" y="164" text-anchor="middle"
+              font-family="Almarai,sans-serif" font-size="10"
+              fill="#aaaaaa">مؤشر الشيخوخة</text>
+
+      </svg>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stat-cards">
+      <div class="stat-card" id="cardElder">
+        <div class="stat-card-head">
+          <div class="stat-card-dot" style="background:var(--blue)"></div>
+          <div class="stat-card-tag">شيخوخة</div>
+        </div>
+        <div class="stat-card-num" style="color:var(--blue)" id="numElder">73.9%</div>
+        <div class="stat-card-lbl">مؤشر الشيخوخة</div>
+      </div>
+      <div class="stat-card" id="cardYouth">
+        <div class="stat-card-head">
+          <div class="stat-card-dot" style="background:var(--pink)"></div>
+          <div class="stat-card-tag">شباب</div>
+        </div>
+        <div class="stat-card-num" style="color:var(--pink)" id="numYouth">26.1%</div>
+        <div class="stat-card-lbl">سكان دون الشيخوخة</div>
+      </div>
+    </div>
+
+    <!-- Change badge -->
+    <div class="change-badge hidden" id="changeBadge">
+      <span>ارتفع بـ</span>
+      <span class="change-num" id="changeNum"></span>
+      <span>نقطة منذ</span>
+      <span class="change-num" id="changeFrom"></span>
+    </div>
+
+    <div class="legend">
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--pink)"></div>
+        شباب ومتوسطو العمر
+      </div>
+      <div class="leg-item">
+        <div class="leg-dot" style="background:var(--blue)"></div>
+        مؤشر الشيخوخة
+      </div>
+    </div>
+
+  </div>
+
+  <p class="src">المصدر: المعهد الوطني للإحصاء · تعداد 2024</p>
+
+</div>
+
+<script>
+(function () {
+
+  const CIRC = 2 * Math.PI * 108;
+
+  const data = {
+    '1975': { elder: 13.3, youth: 86.7, change: null,  from: null },
+    '2014': { elder: 49.2, youth: 50.8, change: 35.9,  from: '1975' },
+    '2024': { elder: 73.9, youth: 26.1, change: 24.7,  from: '2014' }
+  };
+
+  let current = '2024';
+
+  function animNum(el, target, dur) {
+    const s = performance.now(), isInt = target % 1 === 0;
+    (function tick(now) {
+      const p = Math.min((now - s) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      const val = isInt ? Math.round(e * target) : Math.round(e * target * 10) / 10;
+      el.textContent = val + '%';
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = target + '%';
+    })(s);
+  }
+
+  window.setClock = function setClock(year) {
+    if (year === current) return;
+    current = year;
+
+    document.querySelectorAll('.gjc .yr-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim() === year);
+    });
+
+    const d = data[year];
+    const elderArc = (d.elder / 100) * CIRC;
+    const youthArc = CIRC - elderArc;
+
+    /* arcs */
+    document.getElementById('arcElder').setAttribute('stroke-dasharray', elderArc + ' ' + (CIRC - elderArc));
+    document.getElementById('arcYouth').setAttribute('stroke-dasharray', youthArc + ' ' + elderArc);
+    document.getElementById('arcYouth').setAttribute('stroke-dashoffset', -elderArc);
+
+    /* center */
+    document.getElementById('cYear').textContent = year;
+    document.getElementById('cPct').textContent = d.elder + '%';
+
+    /* stat cards */
+    animNum(document.getElementById('numElder'), d.elder, 800);
+    animNum(document.getElementById('numYouth'), d.youth, 800);
+
+    /* change badge */
+    const badge = document.getElementById('changeBadge');
+    if (d.change !== null) {
+      document.getElementById('changeNum').textContent = d.change + ' نقطة';
+      document.getElementById('changeFrom').textContent = d.from;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  /* init at 2024, then on scroll trigger 1975 for effect */
+  setClock('2024');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      /* start from 1975 and auto-progress to 2024 */
+      current = '2014'; /* trick so setClock('1975') fires */
+      setClock('1975');
+      setTimeout(() => setClock('2014'), 1600);
+      setTimeout(() => setClock('2024'), 3200);
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.4 });
+
+  const stage = document.querySelector('.gjc .clock-stage');
+  if (stage) obs.observe(stage);
+
+})();
+</script>
+</body>
+</html>

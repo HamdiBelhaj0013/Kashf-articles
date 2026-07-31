@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تراجع المواليد في تونس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    .gjc *, .gjc *::before, .gjc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .gjc {
+      --pink:       #D4537E;
+      --pink-bg:    #FBEAF0;
+      --pink-txt:   #993556;
+      --amber:      #C07A00;
+      --amber-bg:   #FEF3E2;
+      --amber-txt:  #9A5A00;
+      --red:        #B03020;
+      --red-bg:     #FCEBEB;
+      --red-txt:    #A32D2D;
+      --blue:       #185FA5;
+      --blue-bg:    #E6F1FB;
+      --blue-txt:   #0C447C;
+      --border:     #e4e4e4;
+      --bg:         #ffffff;
+      --bg2:        #f8f7f5;
+      --t1:         #0f0f0f;
+      --t2:         #555555;
+      --t3:         #aaaaaa;
+      --radius:     16px;
+      --mono:       'Oswald', sans-serif;
+      --sans:       'Almarai', sans-serif;
+
+      font-family: var(--sans);
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── HEADER ── */
+    .gjc .hdr {
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .gjc .hdr-title {
+      font-size: clamp(19px, 4.5vw, 26px);
+      font-weight: 800;
+      color: var(--t1);
+      line-height: 1.3;
+    }
+    .gjc .hdr-title em { color: var(--red); font-style: normal; }
+    .gjc .hdr-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.65;
+    }
+
+    /* ── TIMELINE ── */
+    .gjc .tl { display: flex; flex-direction: column; }
+
+    /* ── ITEM ── */
+    .gjc .tl-item {
+      display: grid;
+      grid-template-columns: 56px 28px 1fr;
+      gap: 0 14px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+    }
+    .gjc .tl-item.vis { opacity: 1; transform: translateY(0); }
+
+    /* year */
+    .gjc .tl-year {
+      padding-top: 24px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--t3);
+      text-align: left;
+      direction: ltr;
+      line-height: 1.3;
+    }
+
+    /* spine */
+    .gjc .tl-spine { display: flex; flex-direction: column; align-items: center; }
+    .gjc .tl-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-top: 22px;
+      flex-shrink: 0;
+      z-index: 2;
+      position: relative;
+      transition: transform .25s ease, box-shadow .25s ease;
+      cursor: pointer;
+    }
+    .gjc .tl-item.active .tl-dot,
+    .gjc .tl-dot:hover {
+      transform: scale(1.35);
+      box-shadow: 0 0 0 4px rgba(0,0,0,0.07);
+    }
+    .gjc .tl-line { flex: 1; width: 1.5px; background: var(--border); min-height: 12px; }
+    .gjc .tl-item:last-child .tl-line { display: none; }
+
+    /* card */
+    .gjc .tl-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin: 6px 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: box-shadow .25s ease, border-color .25s ease, transform .2s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gjc .tl-card::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      opacity: .5;
+      transition: opacity .25s ease;
+    }
+
+    .gjc .tl-item.active .tl-card,
+    .gjc .tl-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+      transform: translateX(-3px);
+    }
+    .gjc .tl-item.active .tl-card::after { opacity: 1; }
+
+    /* card head */
+    .gjc .tl-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+
+    .gjc .tl-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--t1);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .gjc .tl-delta {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    /* expandable body */
+    .gjc .tl-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+    }
+    .gjc .tl-item.active .tl-body {
+      grid-template-rows: 1fr;
+    }
+    .gjc .tl-body-inner {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gjc .tl-card-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.7;
+      padding-top: 10px;
+    }
+
+    /* bar */
+    .gjc .tl-bar-wrap {
+      height: 6px;
+      background: var(--bg2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .gjc .tl-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* stat pill */
+    .gjc .tl-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 2px;
+    }
+    .gjc .tl-stat-num {
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .gjc .tl-stat-label {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.45;
+    }
+
+    /* chevron toggle */
+    .gjc .tl-chevron {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--t3);
+      transition: transform .35s ease, color .2s ease;
+    }
+    .gjc .tl-item.active .tl-chevron { transform: rotate(180deg); color: var(--t2); }
+
+    /* sharp card */
+    .gjc .tl-item.sharp .tl-card { border-color: #F7C1C1; }
+    .gjc .tl-item.sharp .tl-card-title { color: var(--red); }
+
+    /* hint text */
+    .gjc .tl-hint {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--t3);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity .25s ease;
+    }
+    .gjc .tl-item.active .tl-hint { opacity: 0; height: 0; overflow: hidden; margin: 0; }
+    .gjc .hint-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--t3); flex-shrink: 0;
+      animation: gjc-blink 2.2s ease infinite;
+    }
+    @keyframes gjc-blink { 0%,100%{opacity:.2} 50%{opacity:1} }
+
+    /* footer */
+    .gjc .tl-footer {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--blue-bg);
+      border: 1px solid #B5D4F4;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-top: 4px;
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+    .gjc .tl-footer.vis { opacity: 1; }
+    .gjc .tl-footer-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #ffffff;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .gjc .tl-footer-icon svg { width: 15px; height: 15px; }
+    .gjc .tl-footer-text {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--blue-txt);
+      line-height: 1.65;
+    }
+    .gjc .tl-footer-text strong { font-weight: 700; color: var(--blue); }
+
+    /* source */
+    .gjc .src {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--t3);
+      text-align: center;
+      padding-top: 12px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 500px) {
+      .gjc .tl-item { grid-template-columns: 44px 22px 1fr; gap: 0 10px; }
+      .gjc .tl-year { font-size: 9px; padding-top: 20px; }
+      .gjc .tl-dot { width: 12px; height: 12px; margin-top: 19px; }
+      .gjc .tl-card { padding: 14px 14px; margin-bottom: 14px; }
+      .gjc .tl-card-title { font-size: 14px; }
+      .gjc .tl-delta { font-size: 12px; padding: 3px 9px; }
+      .gjc .tl-card-sub { font-size: 13px; }
+      .gjc .tl-stat-num { font-size: 24px; }
+      .gjc .hdr-title { font-size: clamp(17px, 5vw, 22px); }
+      .gjc .hdr-sub { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gjc">
+
+  <div class="hdr">
+    <h2 class="hdr-title">تراجع نسب <em>الولادات</em> في تونس</h2>
+    <p class="hdr-sub">اضغط على كل محطة لاكتشاف تفاصيلها · مسار تراجع عدد المواليد منذ 2015</p>
+  </div>
+
+  <div class="tl" id="gjcTl">
+
+    <!-- ITEM 1 -->
+    <div class="tl-item" data-delay="0"
+         data-color="var(--pink)" data-bg="var(--pink-bg)" data-txt="var(--pink-txt)"
+         data-accent="#D4537E">
+      <div class="tl-year">2015<br>→<br>2016</div>
+      <div class="tl-spine">
+        <div class="tl-dot" style="background:var(--pink)"></div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card" style="--accent:var(--pink)">
+        <div class="tl-head">
+          <div class="tl-card-title">بداية التراجع</div>
+          <div class="tl-delta" style="background:var(--pink-bg);color:var(--pink-txt)">↓ 3,000 ولادة</div>
+          <svg class="tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tl-hint"><span class="hint-dot"></span>اضغط للتفاصيل</div>
+        <div class="tl-body">
+          <div class="tl-body-inner">
+            <p class="tl-card-sub">تسجيل أول انخفاض في عدد المواليد بنحو 3 آلاف ولادة بين سنتي 2015 و2016.</p>
+            <div class="tl-stat">
+              <div class="tl-stat-num" style="color:var(--pink)">3,000</div>
+              <div class="tl-stat-label">ولادة أقل<br>في سنة واحدة</div>
+            </div>
+            <div class="tl-bar-wrap"><div class="tl-bar-fill" style="background:var(--pink)" data-w="14"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="tl-item" data-delay="150"
+         data-color="var(--amber)" data-bg="var(--amber-bg)" data-txt="var(--amber-txt)"
+         data-accent="#C07A00">
+      <div class="tl-year">2016<br>→<br>2019</div>
+      <div class="tl-spine">
+        <div class="tl-dot" style="background:var(--amber)"></div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-head">
+          <div class="tl-card-title">منحنى تنازلي ثابت</div>
+          <div class="tl-delta" style="background:var(--amber-bg);color:var(--amber-txt)">↓ 7,800 / سنة</div>
+          <svg class="tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tl-hint"><span class="hint-dot"></span>اضغط للتفاصيل</div>
+        <div class="tl-body">
+          <div class="tl-body-inner">
+            <p class="tl-card-sub">تواصل المنحى التنازلي بمعدل انخفاض سنوي قُدِّر بحوالي 7800 ولادة خلال الفترة الممتدة بين 2016 و2019.</p>
+            <div class="tl-stat">
+              <div class="tl-stat-num" style="color:var(--amber)">7,800</div>
+              <div class="tl-stat-label">ولادة أقل<br>في المتوسط سنوياً</div>
+            </div>
+            <div class="tl-bar-wrap"><div class="tl-bar-fill" style="background:var(--amber)" data-w="37"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM 3 SHARP -->
+    <div class="tl-item sharp" data-delay="300"
+         data-color="var(--red)" data-bg="var(--red-bg)" data-txt="var(--red-txt)"
+         data-accent="#B03020">
+      <div class="tl-year">2019<br>→<br>2020</div>
+      <div class="tl-spine">
+        <div class="tl-dot" style="background:var(--red)"></div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card sharp">
+        <div class="tl-head">
+          <div class="tl-card-title">انهيار حاد غير مسبوق</div>
+          <div class="tl-delta" style="background:var(--red-bg);color:var(--red-txt)">↓ 21,000 ولادة</div>
+          <svg class="tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tl-hint"><span class="hint-dot"></span>اضغط للتفاصيل</div>
+        <div class="tl-body">
+          <div class="tl-body-inner">
+            <p class="tl-card-sub">شهد عدد المواليد تراجعاً حاداً بين سنتي 2019 و2020 بلغ أكثر من 21 ألف ولادة.</p>
+            <div class="tl-stat">
+              <div class="tl-stat-num" style="color:var(--red)">21,000</div>
+              <div class="tl-stat-label">ولادة أقل<br>في سنة واحدة فقط</div>
+            </div>
+            <div class="tl-bar-wrap"><div class="tl-bar-fill" style="background:var(--red)" data-w="100"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM 4 -->
+    <div class="tl-item" data-delay="450"
+         data-color="var(--blue)" data-bg="var(--blue-bg)" data-txt="var(--blue-txt)"
+         data-accent="#185FA5">
+      <div class="tl-year">2020<br>→<br>2024</div>
+      <div class="tl-spine">
+        <div class="tl-dot" style="background:var(--blue)"></div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-head">
+          <div class="tl-card-title">الاستمرار حتى اليوم</div>
+          <div class="tl-delta" style="background:var(--blue-bg);color:var(--blue-txt)">↓ 13,000 / سنة</div>
+          <svg class="tl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tl-hint"><span class="hint-dot"></span>اضغط للتفاصيل</div>
+        <div class="tl-body">
+          <div class="tl-body-inner">
+            <p class="tl-card-sub">استمر المنحى التنازلي خلال الفترة 2020 و2024 بمعدل سنوي يناهز 13 ألف ولادة.</p>
+            <div class="tl-stat">
+              <div class="tl-stat-num" style="color:var(--blue)">13,000</div>
+              <div class="tl-stat-label">ولادة أقل<br>في المتوسط سنوياً</div>
+            </div>
+            <div class="tl-bar-wrap"><div class="tl-bar-fill" style="background:var(--blue)" data-w="62"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- footer insight -->
+  <div class="tl-footer" id="gjcFooter">
+    <div class="tl-footer-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+    </div>
+    <p class="tl-footer-text">
+      انخفض مؤشر الخصوبة إلى <strong>1.7</strong> طفل لكل امرأة، وهي نسبة أقل من المعدل المطلوب للحفاظ على تجديد الأجيال البالغ <strong>2.1</strong> لكل امرأة، مما أدى إلى تقلص واضح في قاعدة الهرم السكاني، إذ لا تتجاوز نسبة الأطفال من الفئة العمرية 0-4 سنوات <strong>5.9%</strong> سنة 2024 مقابل 8.9% سنة 2014 و16% سنة 1975.
+    </p>
+  </div>
+
+  <p class="src">المصدر: المعهد الوطني للإحصاء · تعداد 2024</p>
+
+</div>
+
+<script>
+(function () {
+
+  /* ── accordion toggle ── */
+  function toggle(item) {
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.gjc .tl-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) {
+      item.classList.add('active');
+      const bar = item.querySelector('.tl-bar-fill');
+      if (bar && bar.style.width === '0px' || bar && !bar.style.width) {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 80);
+      }
+    }
+  }
+
+  document.querySelectorAll('.gjc .tl-card').forEach(card => {
+    card.addEventListener('click', () => toggle(card.closest('.tl-item')));
+  });
+
+  /* ── scroll reveal ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      entry.target.querySelectorAll('.tl-item').forEach(item => {
+        const delay = parseInt(item.dataset.delay) || 0;
+        setTimeout(() => item.classList.add('vis'), delay);
+      });
+
+      setTimeout(() => {
+        document.getElementById('gjcFooter').classList.add('vis');
+      }, 850);
+
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.1 });
+
+  const tl = document.getElementById('gjcTl');
+  if (tl) obs.observe(tl);
+
+  /* ── auto-open first card after reveal ── */
+  setTimeout(() => {
+    const first = document.querySelector('.gjc .tl-item');
+    if (first) toggle(first);
+  }, 900);
+
+})();
+</script>
+</body>
+</html>

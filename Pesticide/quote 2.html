@@ -1,0 +1,64 @@
+<style>
+#ajhdt4-scene{width:100%;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:transparent;position:relative;gap:14px;}
+#ajhdt4-text{direction:rtl;font-family:'Amiri',Georgia,serif;font-size:24px;line-height:2.4;text-align:center;max-width:680px;color:#000000;position:relative;}
+#ajhdt4-source{direction:rtl;font-family:'Amiri',Georgia,serif;font-size:15px;color:#a49b86;text-align:center;opacity:0;transform:translateY(8px);transition:opacity 0.6s ease,transform 0.6s ease;}
+#ajhdt4-source.on{opacity:1;transform:translateY(0);}
+#ajhdt4-source::before{content:"— ";}
+@media(max-width:600px){#ajhdt4-text{font-size:19px;line-height:2.2;} #ajhdt4-source{font-size:13px;}}
+.ajhdt4-w{display:inline-block;opacity:0;transform:translateY(12px);filter:blur(5px);transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1),transform 0.55s cubic-bezier(0.22,1,0.36,1),filter 0.55s cubic-bezier(0.22,1,0.36,1);color:#000000;font-weight:400;white-space:nowrap;text-decoration:none;}
+.ajhdt4-w.on{opacity:1;transform:translateY(0);filter:blur(0);}
+.ajhdt4-k{color:#958460;font-weight:700;}
+.ajhdt4-k.on{animation:ajhdt4-pop 0.7s cubic-bezier(0.22,1,0.36,1) forwards;}
+@keyframes ajhdt4-pop{0%{opacity:0;transform:translateY(14px) scale(0.88);filter:blur(6px);color:#c2b696;}60%{opacity:1;transform:translateY(-4px) scale(1.07);filter:blur(0);color:#958460;}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);color:#958460;}}
+.ajhdt4-sp{display:inline-block;width:0.3em;}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="ajhdt4-scene">
+  <div id="ajhdt4-text"></div>
+  <div id="ajhdt4-source">مهدي العبدلي، خبير بيئي</div>
+</div>
+
+<script>
+(function(){
+  var W=[
+    {t:"ملف",k:false},{t:"المبيدات",k:false},{t:"لم",k:false},{t:"يعد",k:false},
+    {t:"قضية",k:false},{t:"فلاحية",k:false},{t:"بل",k:false},{t:"أصبح",k:false},
+    {t:"قضية",k:false},{t:"أمن",k:true},{t:"مائي",k:true},{t:"وغذائي",k:true},
+    {t:"وبيئي",k:true},{t:"وطني",k:true}
+  ];
+
+  var box=document.getElementById("ajhdt4-text");
+  var scene=document.getElementById("ajhdt4-scene");
+  var source=document.getElementById("ajhdt4-source");
+  var played=false;
+
+  function play(){
+    if(played)return;
+    played=true;
+    W.forEach(function(w,i){
+      var s=document.createElement("span");
+      s.className=w.k?"ajhdt4-w ajhdt4-k":"ajhdt4-w";
+      s.textContent=w.t;
+      box.appendChild(s);
+      if(i<W.length-1){var sp=document.createElement("span");sp.className="ajhdt4-sp";box.appendChild(sp);}
+    });
+    var els=box.querySelectorAll(".ajhdt4-w");
+    els.forEach(function(el,i){
+      setTimeout(function(){el.classList.add("on");},i*160+80);
+    });
+    setTimeout(function(){source.classList.add("on");},els.length*160+400);
+  }
+
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){play();io.disconnect();}
+    },{threshold:0.2,rootMargin:"0px 0px -60px 0px"});
+    io.observe(scene);
+  } else {
+    play();
+  }
+})();
+</script>

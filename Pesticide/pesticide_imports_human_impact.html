@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>واردات مبيدات الآفات في تونس وكلفتها الإنسانية</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  #pig-wrap{
+    --pig-green:#958460;
+    --pig-green-dark:#6b5a3d;
+    --pig-green-soft:#f1ece2;
+    --pig-orange:#B27955;
+    --pig-orange-soft:#f7ece5;
+    --pig-red:#96A32E;
+    --pig-red-soft:#eff3e0;
+    --pig-red-dark:#5f6b1e;
+    --pig-ink:#1c1a17;
+    --pig-sub:#6b6459;
+    --pig-line:#e7e1d8;
+    --pig-bg:#faf8f4;
+    font-family:'Almarai',sans-serif; direction:rtl; color:var(--pig-ink);
+    max-width:900px; margin:0 auto; padding:24px 14px 40px;
+  }
+  #pig-wrap *{box-sizing:border-box;}
+  #pig-wrap img{max-width:100%;}
+
+  /* ============ HEADER ============ */
+  .pig-head{text-align:center; margin-bottom:26px;}
+  .pig-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Oswald',sans-serif; font-size:clamp(10.5px,3vw,12px); letter-spacing:.09em;
+    color:var(--pig-green); text-transform:uppercase; margin-bottom:10px;
+  }
+  .pig-eyebrow::before,.pig-eyebrow::after{content:"";width:18px;height:2px;background:var(--pig-green);}
+  .pig-head h2{
+    font-size:clamp(19px,5.2vw,24px); margin:0 0 10px; font-weight:800; line-height:1.5;
+  }
+  .pig-head p{
+    color:var(--pig-sub); font-size:clamp(12.5px,3.4vw,14px); margin:0; line-height:1.9;
+    max-width:640px; margin-inline:auto;
+  }
+
+  /* ============ SHARED CARD ============ */
+  .pig-card{
+    background:#fff; border:1px solid var(--pig-line); border-radius:18px;
+    padding:20px 16px 16px; box-shadow:0 6px 20px rgba(60,50,35,.06); margin-bottom:16px;
+  }
+  @media(min-width:560px){ .pig-card{ padding:26px 22px 18px; border-radius:20px; } }
+
+  .pig-card-title{font-size:clamp(13.5px,3.6vw,15.5px); font-weight:800; margin:0 0 3px; display:flex; align-items:center; gap:8px;}
+  .pig-card-sub{font-size:clamp(10.5px,3vw,12px); color:var(--pig-sub); margin:0 0 18px;}
+
+  /* ============ TREND CHART ============ */
+  .pig-chart{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:4px; height:180px; padding:0 2px; position:relative;
+    border-bottom:1px solid var(--pig-line);
+  }
+  @media(min-width:480px){ .pig-chart{ height:220px; gap:8px; padding:0 4px; } }
+
+  .pig-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative; min-width:0;}
+  .pig-bar-wrap{width:100%; max-width:40px; height:100%; display:flex; align-items:flex-end; justify-content:center;}
+  @media(min-width:480px){ .pig-bar-wrap{ max-width:50px; } }
+
+  .pig-bar{
+    width:100%; border-radius:7px 7px 0 0; background:linear-gradient(180deg, #b7ab86, var(--pig-green));
+    height:0; transition:height 1s cubic-bezier(.2,.8,.2,1); position:relative;
+  }
+  .pig-bar.pig-flag{background:linear-gradient(180deg, #d9a688, var(--pig-orange));}
+  .pig-val{
+    position:absolute; top:-22px; left:50%; transform:translateX(-50%);
+    font-family:'Oswald',sans-serif; font-size:clamp(8.5px,2.6vw,11px); font-weight:600; color:var(--pig-ink);
+    opacity:0; transition:opacity .4s ease .6s; white-space:nowrap;
+  }
+  .pig-bar.pig-in .pig-val{opacity:1;}
+  .pig-year{
+    margin-top:8px; font-family:'Oswald',sans-serif; font-size:clamp(9.5px,2.8vw,12.5px); color:var(--pig-sub);
+  }
+  .pig-col.pig-flag-col .pig-year{color:var(--pig-orange); font-weight:700;}
+
+  .pig-avgline{
+    position:absolute; left:0; right:0; border-top:2px dashed #c9c2b4;
+    display:flex; justify-content:flex-end; pointer-events:none;
+  }
+  .pig-avgline span{
+    background:var(--pig-bg); color:var(--pig-sub); font-family:'Oswald',sans-serif;
+    font-size:clamp(8.5px,2.4vw,10px); padding:2px 7px; border-radius:6px; transform:translateY(-50%);
+    border:1px solid var(--pig-line); white-space:nowrap;
+  }
+
+  /* ============ CALLOUT ============ */
+  .pig-callout{
+    margin-top:18px; background:var(--pig-orange-soft); border:1px solid #e9cbb8;
+    border-radius:14px; padding:13px 14px; display:flex; gap:11px; align-items:flex-start;
+  }
+  .pig-callout .pig-icon{
+    width:32px; height:32px; border-radius:50%; background:var(--pig-orange); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .pig-callout .pig-icon svg{width:17px; height:17px;}
+  .pig-callout p{margin:0; font-size:clamp(12px,3.2vw,13px); line-height:1.85; color:#5a4a3a;}
+  .pig-callout b{color:var(--pig-orange); font-weight:800;}
+
+  /* ============ DONUT ============ */
+  .pig-split-inner{
+    display:flex; gap:22px; align-items:center; flex-wrap:wrap;
+  }
+  .pig-donut-box{
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap; width:100%; justify-content:center;
+  }
+  @media(min-width:480px){ .pig-donut-box{ justify-content:flex-start; } }
+
+  .pig-donut-svg{width:128px; height:128px; flex-shrink:0;}
+  @media(min-width:480px){ .pig-donut-svg{ width:148px; height:148px; } }
+  .pig-donut-svg circle{transition:stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1);}
+
+  .pig-legend{display:flex; flex-direction:column; gap:9px;}
+  .pig-legend-item{display:flex; align-items:center; gap:9px; font-size:clamp(12px,3.2vw,13px);}
+  .pig-legend-dot{width:11px; height:11px; border-radius:4px; flex-shrink:0;}
+  .pig-legend-item b{font-family:'Oswald',sans-serif; font-size:clamp(12.5px,3.4vw,13.5px);}
+
+  /* ============ CONNECTOR ============ */
+  .pig-connector{
+    display:flex; flex-direction:column; align-items:center; gap:4px; margin:6px 0 16px;
+  }
+  .pig-connector .pig-line{width:2px; height:22px; background:linear-gradient(var(--pig-line), var(--pig-red-soft));}
+  .pig-connector .pig-chip{
+    font-family:'Oswald',sans-serif; font-size:11px; color:var(--pig-red-dark);
+    background:var(--pig-red-soft); border:1px solid #dbe4c4; padding:5px 14px;
+    border-radius:20px; display:flex; align-items:center; gap:6px; white-space:nowrap;
+  }
+  .pig-connector .pig-chip svg{width:13px; height:13px;}
+
+  /* ============ HUMAN IMPACT CARD ============ */
+  .pig-human-card{
+    background:linear-gradient(165deg, #fff 0%, var(--pig-red-soft) 130%);
+    border:1px solid #dbe4c4; border-radius:18px; padding:20px 16px;
+    box-shadow:0 6px 20px rgba(95,107,30,.08);
+  }
+  @media(min-width:560px){ .pig-human-card{ padding:26px 22px; border-radius:20px; } }
+
+  .pig-human-title{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+  .pig-human-title .pig-icon{
+    width:36px; height:36px; border-radius:50%; background:var(--pig-red); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .pig-human-title .pig-icon svg{width:18px; height:18px;}
+  .pig-human-title h3{font-size:clamp(15px,4vw,17px); font-weight:800; margin:0;}
+  .pig-human-sub{font-size:clamp(11.5px,3.1vw,12.5px); color:var(--pig-sub); margin:0 0 18px; line-height:1.8;}
+
+  .pig-stat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:18px;}
+  .pig-stat{
+    background:#fff; border:1px solid #dbe4c4; border-radius:13px; padding:14px 12px;
+    opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;
+  }
+  .pig-stat.pig-in{opacity:1; transform:translateY(0);}
+  .pig-stat .pig-num{
+    font-family:'Oswald',sans-serif; font-size:clamp(21px,6vw,27px); font-weight:600; color:var(--pig-red-dark); line-height:1;
+  }
+  .pig-stat .pig-label{font-size:clamp(11px,3vw,12px); color:var(--pig-sub); margin-top:6px; line-height:1.6;}
+
+  .pig-demo-title{font-size:clamp(12.5px,3.4vw,13.5px); font-weight:800; margin:20px 0 12px;}
+  .pig-demo-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px;}
+  .pig-demo{
+    text-align:center; opacity:0; transform:scale(.9); transition:opacity .4s ease, transform .4s ease;
+    background:#fff; border:1px solid #dbe4c4; border-radius:12px; padding:10px 4px;
+  }
+  .pig-demo.pig-in{opacity:1; transform:scale(1);}
+  .pig-demo .pig-demo-num{
+    font-family:'Oswald',sans-serif; font-size:clamp(15.5px,4.4vw,19px); font-weight:600; color:var(--pig-orange);
+  }
+  .pig-demo .pig-demo-label{font-size:clamp(9px,2.6vw,10.5px); color:var(--pig-sub); margin-top:3px; line-height:1.4;}
+
+  .pig-quote{
+    background:#fff; border-inline-start:4px solid var(--pig-orange); border-radius:10px;
+    padding:13px 14px; font-size:clamp(12px,3.2vw,13px); line-height:1.9; color:#4a3f36;
+  }
+  .pig-quote b{color:var(--pig-orange);}
+
+  /* ============ NARROW MOBILE TUNING ============ */
+  @media(max-width:400px){
+    .pig-stat-grid{grid-template-columns:1fr 1fr; gap:8px;}
+    .pig-demo-grid{grid-template-columns:repeat(2,1fr); gap:8px;}
+    .pig-donut-svg{width:112px; height:112px;}
+  }
+</style>
+</head>
+<body>
+<div id="pig-wrap">
+
+  <div class="pig-head">
+    <h2>واردات مبيدات الآفات في تونس... وكلفتها الإنسانية</h2>
+    <p>خلف الأرقام المرتفعة لواردات المبيدات، يبرز جانب آخر أكثر إثارة للقلق يتعلق بتأثير هذه المواد على صحة الإنسان</p>
+  </div>
+
+  <!-- TREND CHART -->
+  <div class="pig-card">
+    <div class="pig-card-title">الكمية المستوردة سنويًا (بالطن)، 2016–2022</div>
+    <div class="pig-card-sub">أطلس مبيدات الآفات 2025 — الصفحة 60</div>
+    <div class="pig-chart" id="pigChart"></div>
+    <div class="pig-callout">
+      <div class="pig-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+      </div>
+      <p>انخفاض 2022 لا يعكس وعيًا بخطورة المبيدات، بل يعود إلى <b>تقلّص المساحات المزروعة بفعل الجفاف وندرة المياه</b>. متوسط الواردات بين 2016 و2021 تجاوز 6,000 طن سنويًا.</p>
+    </div>
+  </div>
+
+  <!-- CONNECTOR -->
+  <div class="pig-connector">
+    <div class="pig-line"></div>
+    <div class="pig-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      وماذا يعني هذا على صحة التونسيين والتونسيات؟
+    </div>
+    <div class="pig-line"></div>
+  </div>
+
+  <!-- HUMAN IMPACT -->
+  <div class="pig-human-card">
+    <div class="pig-human-title">
+      <div class="pig-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2C20 17.5 12 22 12 22z"/></svg>
+      </div>
+      <h3>عواقب على الصحة العامة</h3>
+    </div>
+    <p class="pig-human-sub">تجارب اكلينيكية اعتمدت على ملفات الطب الشرعي بمستشفى فرحات حشاد بسوسة، للفترة بين 1991 و2009</p>
+
+    <div class="pig-stat-grid" id="pigStats"></div>
+
+    <div class="pig-demo-title">الفئات الأكثر عرضة للخطر</div>
+    <div class="pig-demo-grid" id="pigDemo"></div>
+
+    <div class="pig-quote">
+      يؤكد الطبيب <b>رفيق قاسم</b> أن استعمال المبيدات ضروري علميًا لحماية المحاصيل، إلا أن الخطر يكمن أساسًا في طريقة الاستخدام ومدى احترام قواعد السلامة المرتبطة بهذه المواد الكيماوية.
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var DATA = [
+    {year:2016, val:6662},
+    {year:2017, val:4805},
+    {year:2018, val:5764},
+    {year:2019, val:6250},
+    {year:2020, val:6778.3},
+    {year:2021, val:6234.9},
+    {year:2022, val:4161.2, flag:true}
+  ];
+  var MAX = 8000;
+  var AVG = (6662+4805+5764+6250+6778.3+6234.9)/6;
+
+  /* ---- trend chart ---- */
+  var chart = document.getElementById('pigChart');
+  var avgTopPct = 100 - (AVG / MAX * 100);
+  var avgLine = document.createElement('div');
+  avgLine.className = 'pig-avgline';
+  avgLine.style.top = avgTopPct + '%';
+  avgLine.innerHTML = '<span>متوسط 16–21: ' + Math.round(AVG).toLocaleString() + ' طن</span>';
+  chart.appendChild(avgLine);
+
+  DATA.forEach(function(d){
+    var col = document.createElement('div');
+    col.className = 'pig-col' + (d.flag ? ' pig-flag-col' : '');
+    var heightPct = (d.val / MAX * 100);
+    col.innerHTML =
+      '<div class="pig-bar-wrap">'+
+        '<div class="pig-bar'+(d.flag?' pig-flag':'')+'" data-h="'+heightPct+'">'+
+          '<span class="pig-val">'+ (Number.isInteger(d.val) ? d.val.toLocaleString() : d.val.toFixed(1)) +'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="pig-year">'+d.year+'</div>';
+    chart.appendChild(col);
+  });
+
+  var chartIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var bars = chart.querySelectorAll('.pig-bar');
+        bars.forEach(function(bar, i){
+          setTimeout(function(){
+            bar.style.height = bar.getAttribute('data-h') + '%';
+            bar.classList.add('pig-in');
+          }, i * 110);
+        });
+        chartIo.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.3});
+  chartIo.observe(chart);
+
+  /* ---- stats ---- */
+  var STATS = [
+    {num:'130', label:'حالة وفاة بالتسمم بالمبيدات بين 1991 و2009'},
+    {num:'41.9%', label:'من مجموع وفيات التسمم القاتل في الفترة نفسها'},
+    {num:'+90%', label:'من الوفيات حدثت في سياق انتحاري'},
+    {num:'11 ألف', label:'حالة وفاة عالميًا سنويًا بسبب التسمم غير المقصود'}
+  ];
+  var statsBox = document.getElementById('pigStats');
+  STATS.forEach(function(s){
+    var el = document.createElement('div');
+    el.className = 'pig-stat';
+    el.innerHTML = '<div class="pig-num">'+s.num+'</div><div class="pig-label">'+s.label+'</div>';
+    statsBox.appendChild(el);
+  });
+
+  var statsIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var els = statsBox.querySelectorAll('.pig-stat');
+        els.forEach(function(el,i){ setTimeout(function(){ el.classList.add('pig-in'); }, i*100); });
+        statsIo.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.3});
+  statsIo.observe(statsBox);
+
+  /* ---- demographics ---- */
+  var DEMO = [
+    {num:'72%', label:'من أوساط ريفية'},
+    {num:'61%', label:'دون عمل'},
+    {num:'76%', label:'غير متزوجين'},
+    {num:'62%', label:'نساء'}
+  ];
+  var demoBox = document.getElementById('pigDemo');
+  DEMO.forEach(function(d){
+    var el = document.createElement('div');
+    el.className = 'pig-demo';
+    el.innerHTML = '<div class="pig-demo-num">'+d.num+'</div><div class="pig-demo-label">'+d.label+'</div>';
+    demoBox.appendChild(el);
+  });
+
+  var demoIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var els = demoBox.querySelectorAll('.pig-demo');
+        els.forEach(function(el,i){ setTimeout(function(){ el.classList.add('pig-in'); }, i*90); });
+        demoIo.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.3});
+  demoIo.observe(demoBox);
+})();
+</script>
+</body>
+</html>

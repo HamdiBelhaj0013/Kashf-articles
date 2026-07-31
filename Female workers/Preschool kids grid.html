@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>التعليم قبل المدرسي — تونس 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    .gjc *, .gjc *::before, .gjc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .gjc {
+      --pink:      #D4537E;
+      --blue:      #185FA5;
+      --green:     #2DA878;
+      --orange:    #F57927;
+      --gray-icon: #dddbd6;
+      --border:    #ebebeb;
+      --t1:        #111111;
+      --t2:        #5a5a5a;
+      --t3:        #b8b8b8;
+      --radius:    16px;
+      --mono:      'IBM Plex Mono', monospace;
+      --sans:      'Almarai', sans-serif;
+
+      font-family: var(--sans);
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* ── HEADER ── */
+    .gjc .hdr {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gjc .hdr-title {
+      font-size: clamp(17px, 3.8vw, 23px);
+      font-weight: 800;
+      color: var(--t1);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .gjc .hdr-title span {
+      color: var(--orange);
+    }
+
+    .gjc .hdr-sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--t2);
+      line-height: 1.6;
+    }
+
+    /* ── CARDS GRID ── */
+    .gjc .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    /* ── SINGLE CARD ── */
+    .gjc .card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    }
+
+    .gjc .card-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t2);
+      text-align: center;
+      letter-spacing: .01em;
+    }
+
+    /* ── KID GRID ── */
+    .gjc .kid-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2.5px;
+      width: 100%;
+    }
+
+    .gjc .kid {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .18s ease, opacity .18s ease;
+      opacity: 0;
+      transform: scale(0.3);
+    }
+
+    .gjc .kid svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .gjc .kid.shown {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── STAT ── */
+    .gjc .stat-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      width: 100%;
+    }
+
+    .gjc .stat-num {
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .gjc .stat-fraction {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--t2);
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    /* ── SOURCE ── */
+    .gjc .src {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--t3);
+      text-align: center;
+      padding-top: 2px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 560px) {
+      .gjc .cards { grid-template-columns: 1fr; gap: 8px; }
+      .gjc .card {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 12px 10px;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .gjc .card-label { width: 100%; text-align: right; }
+      .gjc .kid-grid { gap: 2px; }
+      .gjc .stat-row { flex-direction: row; align-items: baseline; gap: 8px; }
+      .gjc .stat-num { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gjc">
+
+  <div class="hdr">
+    <h2 class="hdr-title">نسبة إلتحاق الأطفال <span>بالتعليم قبل المدرسي</span> في تونس</h2>
+    <p class="hdr-sub">كل أيقونة تمثّل طفلاً واحداً من كل 100 طفل تتراوح أعمارهم بين 3 و5 سنوات · الملوّن = ملتحق</p>
+  </div>
+
+  <div class="cards" id="gjcCards">
+
+    <div class="card" id="cardNat">
+      <div class="card-label">المعدل الوطني</div>
+      <div class="kid-grid" id="gridNat"></div>
+      <div class="stat-row">
+        <div class="stat-num" style="color:var(--pink)" id="numNat">0%</div>
+        <div class="stat-fraction">3 من كل 4 أطفال</div>
+      </div>
+    </div>
+
+    <div class="card" id="cardUrb">
+      <div class="card-label">المناطق الحضرية</div>
+      <div class="kid-grid" id="gridUrb"></div>
+      <div class="stat-row">
+        <div class="stat-num" style="color:var(--blue)" id="numUrb">0%</div>
+        <div class="stat-fraction">أكثر من 4 من كل 5</div>
+      </div>
+    </div>
+
+    <div class="card" id="cardRur">
+      <div class="card-label">المناطق الريفية</div>
+      <div class="kid-grid" id="gridRur"></div>
+      <div class="stat-row">
+        <div class="stat-num" style="color:var(--green)" id="numRur">0%</div>
+        <div class="stat-fraction">طفل واحد من كل اثنين</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="src">المصدر: المعهد الوطني للإحصاء — 2024</p>
+
+</div>
+
+<script>
+(function () {
+
+  function kidSVG(color) {
+    return `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="5" r="3.4" fill="${color}"/>
+      <path d="M4.5 13.5C4.5 10.5 7 8.5 10 8.5C13 8.5 15.5 10.5 15.5 13.5V16.5H4.5Z" fill="${color}" opacity=".75"/>
+      <path d="M6 16.5L5 19.5H15L14 16.5" fill="${color}" opacity=".45"/>
+    </svg>`;
+  }
+
+  const OFF = '#dddbd6';
+
+  function buildGrid(gridId, pct, color) {
+    const el = document.getElementById(gridId);
+    const filled = Math.round(pct);
+    let html = '';
+    for (let i = 0; i < 100; i++) {
+      html += `<span class="kid">${kidSVG(i < filled ? color : OFF)}</span>`;
+    }
+    el.innerHTML = html;
+  }
+
+  buildGrid('gridNat', 73.3, '#D4537E');
+  buildGrid('gridUrb', 83,   '#185FA5');
+  buildGrid('gridRur', 58,   '#2DA878');
+
+  function animNum(el, target, dur, delay) {
+    setTimeout(() => {
+      const s = performance.now(), isInt = target % 1 === 0;
+      (function tick(now) {
+        const p = Math.min((now - s) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = isInt ? Math.round(e * target) + '%' : (e * target).toFixed(1) + '%';
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target + '%';
+      })(s);
+    }, delay || 0);
+  }
+
+  function revealKids(gridId, numId, target, baseDelay) {
+    const kids = document.getElementById(gridId).querySelectorAll('.kid');
+    kids.forEach((kid, i) => {
+      setTimeout(() => kid.classList.add('shown'), baseDelay + i * 7);
+    });
+    animNum(document.getElementById(numId), target, 850, baseDelay + 180);
+  }
+
+  let triggered = false;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        revealKids('gridNat', 'numNat', 73.3, 0);
+        revealKids('gridUrb', 'numUrb', 83,   120);
+        revealKids('gridRur', 'numRur', 58,   240);
+        obs.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const cards = document.getElementById('gjcCards');
+  if (cards) obs.observe(cards);
+
+})();
+</script>
+</body>
+</html>

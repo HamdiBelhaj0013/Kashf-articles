@@ -1,0 +1,74 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+.gjc.lc-root{--lc-accent:#E8650A;--lc-men:#5b6068;--lc-ink:#23262c;--lc-muted:#7a7770;--lc-line:#e6e1d8;--lc-rim:#ece8e1;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--lc-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.lc-root *{box-sizing:border-box}
+.gjc.lc-root .lc-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 20px}
+.gjc.lc-root .lc-wheels{display:flex;justify-content:center;gap:clamp(18px,6vw,64px);flex-wrap:wrap}
+.gjc.lc-root .lc-w{text-align:center;width:min(260px,42vw);min-width:150px}
+.gjc.lc-root .lc-box{position:relative}
+.gjc.lc-root .lc-svg{display:block;width:100%;height:auto}
+.gjc.lc-root .lc-prog{transition:stroke-dashoffset 1.8s cubic-bezier(.22,.8,.3,1)}
+.gjc.lc-root .lc-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(22px,5.4vw,34px);direction:ltr}
+.gjc.lc-root .lc-name{font-size:17px;font-weight:800;margin:12px 0 0}
+.gjc.lc-root .lc-src{font-size:12px;line-height:1.6;color:var(--lc-muted);margin:22px 0 0;border-top:1px solid var(--lc-line);padding-top:8px}
+.gjc.lc-root .lc-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){.gjc.lc-root .lc-prog{transition:none}}
+</style>
+
+<div class="gjc lc-root" id="lc-root" dir="rtl">
+  <h3 class="lc-title">نسبة البالغين 18 سنة فأكثر الحاملين لرخصة سياقة</h3>
+  <div class="lc-wheels" id="lc-wheels"></div>
+  <p class="lc-src">المصدر: <a href="https://www.ins.tn/sites/default/files/publication/pdf/rapport%20national%20genre%20Site%20_0.pdf" target="_blank" rel="noopener">تقرير وطني حول النوع الاجتماعي</a></p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('lc-root');
+  if (!root) return;
+  var NS = 'http://www.w3.org/2000/svg', R = 80, C = 2 * Math.PI * R;
+  var DATA = [
+    { name: 'النساء', v: 13.2, color: '#E8650A' },
+    { name: 'الرجال', v: 61.9, color: '#5b6068' }
+  ];
+  var host = document.getElementById('lc-wheels'), items = [];
+  function el(tag, attrs){ var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  for (var i = 0; i !== DATA.length; i++){
+    var d = DATA[i];
+    var w = document.createElement('div'); w.className = 'lc-w';
+    var box = document.createElement('div'); box.className = 'lc-box';
+    box.setAttribute('role', 'img'); box.setAttribute('aria-label', d.name + ' ' + d.v + '%');
+    var svg = el('svg', { viewBox: '0 0 200 200', 'class': 'lc-svg', 'aria-hidden': 'true' });
+    svg.appendChild(el('circle', { cx: 100, cy: 100, r: R, fill: 'none', stroke: '#ece8e1', 'stroke-width': 18 }));
+    var prog = el('circle', { cx: 100, cy: 100, r: R, fill: 'none', stroke: d.color, 'stroke-width': 18, 'stroke-linecap': 'round',
+      'stroke-dasharray': C, 'stroke-dashoffset': C, transform: 'rotate(-90 100 100)', 'class': 'lc-prog' });
+    svg.appendChild(prog);
+    svg.appendChild(el('path', { d: 'M22 104 Q60 92 70 104 L130 104 Q140 92 178 104', fill: 'none', stroke: '#d6d1c8', 'stroke-width': 12, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('path', { d: 'M100 130 L100 178', fill: 'none', stroke: '#d6d1c8', 'stroke-width': 12, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('circle', { cx: 100, cy: 104, r: 38, fill: '#fff', stroke: '#d6d1c8', 'stroke-width': 3 }));
+    var num = document.createElement('div'); num.className = 'lc-num'; num.style.color = d.color; num.style.paddingTop = '4%';
+    num.textContent = '0%';
+    box.appendChild(svg); box.appendChild(num);
+    var nm = document.createElement('p'); nm.className = 'lc-name'; nm.textContent = d.name;
+    w.appendChild(box); w.appendChild(nm); host.appendChild(w);
+    items.push({ d: d, prog: prog, num: num });
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(){
+    var start = 0, dur = reduce ? 0 : 1800;
+    for (var i = 0; i !== items.length; i++) items[i].prog.setAttribute('stroke-dashoffset', C * (1 - items[i].d.v / 100));
+    function f(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1, e = 1 - Math.pow(1 - t, 3);
+      for (var k = 0; k !== items.length; k++) items[k].num.textContent = (items[k].d.v * e).toFixed(1) + '%';
+      if (t !== 1) requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ io.disconnect(); setTimeout(go, 150); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { go(); }
+})();
+</script>

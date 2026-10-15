@@ -1,0 +1,209 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+.gjc.nm-root{--nm-accent:#E8650A;--nm-ink:#23262c;--nm-muted:#7a7770;--nm-dot:#c9c5bd;--nm-line:#e6e1d8;--nm-soft:#f6f3ee;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--nm-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.nm-root *{box-sizing:border-box}
+.gjc.nm-root .nm-title{font-family:'Almarai',sans-serif;font-weight:800;font-size:clamp(20px,4.4vw,26px);line-height:1.4;margin:0 0 14px;color:var(--nm-ink)}
+.gjc.nm-root .nm-tabs{display:flex;gap:0;border-bottom:2px solid var(--nm-line);overflow-x:auto;scrollbar-width:none}
+.gjc.nm-root .nm-tabs::-webkit-scrollbar{display:none}
+.gjc.nm-root .nm-tab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;padding:10px 14px;font-family:'Almarai',sans-serif;font-size:15px;font-weight:700;color:var(--nm-muted);cursor:pointer;white-space:nowrap}
+.gjc.nm-root .nm-tab[aria-selected="true"]{color:var(--nm-ink);border-bottom-color:var(--nm-accent)}
+.gjc.nm-root .nm-tab:focus-visible,.gjc.nm-root .nm-yr:focus-visible{outline:2px solid var(--nm-accent);outline-offset:2px}
+.gjc.nm-root .nm-years{display:flex;gap:6px;margin:14px 0 0;min-height:32px}
+.gjc.nm-root .nm-yr{border:1px solid var(--nm-line);background:#fff;border-radius:16px;padding:5px 14px;font-family:'Oswald',sans-serif;font-size:15px;color:var(--nm-muted);cursor:pointer}
+.gjc.nm-root .nm-yr.nm-on{background:var(--nm-ink);border-color:var(--nm-ink);color:#fff}
+.gjc.nm-root .nm-stat{display:flex;align-items:baseline;gap:12px;margin:16px 0 12px;flex-wrap:wrap}
+.gjc.nm-root .nm-big{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(46px,11vw,72px);line-height:1;color:var(--nm-accent)}
+.gjc.nm-root .nm-lbl{font-size:16px;line-height:1.6;max-width:44ch}
+.gjc.nm-root .nm-stage{position:relative;background:var(--nm-soft);border-radius:6px;padding:14px}
+.gjc.nm-root .nm-cv{display:block;width:100%}
+.gjc.nm-root .nm-ov{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:rgba(246,243,238,.72)}
+.gjc.nm-root .nm-ov.nm-show{display:flex}
+.gjc.nm-root .nm-ov-q{font-family:'Almarai',sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--nm-accent)}
+.gjc.nm-root .nm-ov-t{font-size:15px;line-height:1.7;max-width:34ch;margin-top:8px;font-weight:700}
+.gjc.nm-root .nm-seats{display:none;flex-wrap:wrap;gap:14px;justify-content:center;padding:26px 6px}
+.gjc.nm-root .nm-seats.nm-show{display:flex}
+.gjc.nm-root .nm-seat{width:44px;height:44px;border-radius:50%;background:var(--nm-accent);border:3px solid var(--nm-accent);transition:background .7s ease,border-color .7s ease,transform .7s ease}
+.gjc.nm-root .nm-seat.nm-off{background:transparent;border-color:var(--nm-dot);border-style:dashed;transform:scale(.86)}
+.gjc.nm-root .nm-note{font-size:14px;line-height:1.7;color:var(--nm-ink);margin:12px 0 0}
+.gjc.nm-root .nm-legend{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 0;font-size:13px;color:var(--nm-muted)}
+.gjc.nm-root .nm-legend span{display:inline-flex;align-items:center;gap:6px}
+.gjc.nm-root .nm-legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
+.gjc.nm-root .nm-src{font-size:12px;line-height:1.6;color:var(--nm-muted);margin:10px 0 0;border-top:1px solid var(--nm-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.nm-root .nm-seat{transition:none}}
+</style>
+
+<div class="gjc nm-root" id="nm-root" dir="rtl">
+  <h3 class="nm-title">النساء خلف المقود بالأرقام</h3>
+  <div class="nm-tabs" role="tablist" aria-label="المهن">
+    <button class="nm-tab" role="tab" data-nm-tab="taxi" aria-selected="true">التاكسي</button>
+    <button class="nm-tab" role="tab" data-nm-tab="bus" aria-selected="false">الحافلات</button>
+    <button class="nm-tab" role="tab" data-nm-tab="metro" aria-selected="false">المترو</button>
+    <button class="nm-tab" role="tab" data-nm-tab="school" aria-selected="false">تعليم السياقة</button>
+  </div>
+  <div class="nm-years" id="nm-years"></div>
+  <div class="nm-stat"><span class="nm-big" id="nm-big"></span><span class="nm-lbl" id="nm-lbl"></span></div>
+  <div class="nm-stage">
+    <canvas class="nm-cv" id="nm-cv" aria-hidden="true"></canvas>
+    <div class="nm-ov" id="nm-ov"><div class="nm-ov-q">؟</div><div class="nm-ov-t">لا توجد معطيات منشورة تفصّل عدد النساء ضمن المكوّنين</div></div>
+    <div class="nm-seats" id="nm-seats" aria-hidden="true"></div>
+  </div>
+  <p class="nm-note" id="nm-note"></p>
+  <div class="nm-legend" id="nm-legend"></div>
+  <p class="nm-src" id="nm-src"></p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('nm-root');
+  if (!root) return;
+  var ACCENT = '#E8650A', DOT = '#c9c5bd';
+  var D = {
+    taxi: { years: ['2014','2019'], v: {
+      '2014': { w: 40, t: 16000, big: '40', lbl: 'نحو 40 سائقة من أصل 16 ألف سائق في تونس الكبرى', note: '', src: 'المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى' },
+      '2019': { w: 30, t: 18000, big: '30', lbl: 'نحو 30 سائقة من أصل 18 ألف سائق', note: '', src: 'المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى' } } },
+    bus: { years: ['قبل 2011'], v: {
+      'قبل 2011': { w: 13, t: 3382, big: '13', lbl: '13 سائقة حافلة من أصل 3382 سائقًا', note: 'أرقام تعود إلى فترة ما قبل سنة 2011', src: 'المصدر: دراسة حول النوع الاجتماعي والنقل في تونس' } } },
+    metro: { years: ['2017','2026'], v: {
+      '2017': { w: 11, t: 219, big: '11', lbl: '11 سائقة من أصل 219 سائقًا', note: '', src: 'المصدر: دراسة حول النوع الاجتماعي والنقل في تونس' },
+      '2026': { seats: true, before: 7, now: 4, big: '4', lbl: 'سائقات مترو ناشطات، بعد أن كان عددهن سبعًا', note: 'انتقلت بعض السائقات إلى مهام إدارية', src: 'المصدر: تصريح سائقة المترو ابتسام النابلي في برنامج إذاعي، أوت 2026' } } },
+    school: { years: [], v: {
+      '': { unknown: true, w: 0, t: 3265, big: '3265', lbl: 'مؤسسة لتعليم السياقة', note: 'كل نقطة تمثّل مؤسسة، لا مدرّبًا', src: 'المصدر: رئيس الغرفة النقابية الوطنية لأصحاب مدارس تعليم السياقة محمد الفاضل البكوش، سبتمبر 2025' } } }
+  };
+
+  var cv = document.getElementById('nm-cv'), ctx = cv.getContext('2d');
+  var ov = document.getElementById('nm-ov'), seats = document.getElementById('nm-seats');
+  var elBig = document.getElementById('nm-big'), elLbl = document.getElementById('nm-lbl');
+  var elNote = document.getElementById('nm-note'), elSrc = document.getElementById('nm-src');
+  var elYears = document.getElementById('nm-years'), elLegend = document.getElementById('nm-legend');
+  var tabs = root.querySelectorAll('.nm-tab');
+  var cur = { tab: 'taxi', year: '2014' }, seen = false, raf = 0, seatTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function seeded(seed){ var s = seed; return function(){ s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; }
+  function pickWomen(w, t, seed){
+    var r = seeded(seed), used = {}, out = [], guard = 0;
+    while (out.length !== w && guard !== 100000){ var k = Math.floor(r() * t); if (!used[k]){ used[k] = 1; out.push(k); } guard++; }
+    return out;
+  }
+  function layout(total){
+    var W = cv.parentNode.clientWidth - 28;
+    var tH = Math.min(380, Math.max(200, W * 0.55));
+    var p = Math.min(24, Math.sqrt(W * tH / total));
+    var cols = Math.max(1, Math.floor(W / p));
+    var rows = Math.ceil(total / cols);
+    return { W: W, H: rows * p, p: p, cols: cols, off: (W - cols * p) / 2 };
+  }
+  function pos(i, L){
+    var c = i % L.cols, r = Math.floor(i / L.cols);
+    return { x: L.W - L.off - (c + 0.5) * L.p, y: (r + 0.5) * L.p };
+  }
+  function ease(t){ var c = 1.70158; var u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; }
+
+  function drawGrid(d, animate){
+    cancelAnimationFrame(raf);
+    var L = layout(d.t), dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(L.W * dpr); cv.height = Math.round(L.H * dpr);
+    cv.style.height = L.H + 'px';
+    var base = document.createElement('canvas');
+    base.width = cv.width; base.height = cv.height;
+    var b = base.getContext('2d'); b.scale(dpr, dpr);
+    var rg = Math.max(0.9, L.p * 0.32);
+    b.fillStyle = DOT; b.globalAlpha = d.unknown ? 0.55 : 1;
+    for (var i = 0; i !== d.t; i++){ var q = pos(i, L); b.beginPath(); b.arc(q.x, q.y, rg, 0, 6.2832); b.fill(); }
+    var women = pickWomen(d.w, d.t, d.t + d.w * 7);
+    var rw = Math.max(3.4, L.p * 0.36);
+    var start = 0, dur = (animate && !reduce) ? 1600 : 0;
+    function frame(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1;
+      ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
+      ctx.globalAlpha = Math.min(1, t * 2.5); ctx.drawImage(base, 0, 0);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      var t2 = Math.max(0, Math.min(1, (t - 0.4) / 0.6));
+      var s = t2 ? ease(t2) : 0;
+      for (var j = 0; j !== women.length; j++){
+        var q = pos(women[j], L);
+        ctx.globalAlpha = 0.22 * t2; ctx.fillStyle = ACCENT;
+        ctx.beginPath(); ctx.arc(q.x, q.y, rw * 2.6 * s, 0, 6.2832); ctx.fill();
+        ctx.globalAlpha = t2; ctx.beginPath(); ctx.arc(q.x, q.y, rw * s, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (t !== 1) raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function drawSeats(d, animate){
+    clearTimeout(seatTimer);
+    seats.textContent = '';
+    for (var i = 0; i !== d.before; i++){ var s = document.createElement('span'); s.className = 'nm-seat'; seats.appendChild(s); }
+    var list = seats.children;
+    function dim(){ for (var k = d.now; k !== d.before; k++){ list[k].className = 'nm-seat nm-off'; } }
+    if (animate && !reduce) seatTimer = setTimeout(dim, 900); else dim();
+  }
+
+  function legend(kind){
+    elLegend.textContent = '';
+    var items = kind === 'seats' ? [[ACCENT,'سائقة ناشطة'],['transparent','لم تعد تقود']] : kind === 'unknown' ? [[DOT,'مؤسسة لتعليم السياقة']] : [[ACCENT,'سائقة'],[DOT,'سائق']];
+    for (var i = 0; i !== items.length; i++){
+      var sp = document.createElement('span'), dot = document.createElement('i');
+      dot.style.background = items[i][0];
+      if (items[i][0] === 'transparent') dot.style.border = '1.5px dashed ' + DOT;
+      sp.appendChild(dot); sp.appendChild(document.createTextNode(items[i][1])); elLegend.appendChild(sp);
+    }
+  }
+
+  function render(animate){
+    var set = D[cur.tab], d = set.v[cur.year];
+    elBig.textContent = d.big; elLbl.textContent = d.lbl;
+    elNote.textContent = d.note; elNote.style.display = d.note ? '' : 'none';
+    elSrc.textContent = d.src;
+    elYears.textContent = '';
+    for (var i = 0; i !== set.years.length; i++){
+      var y = set.years[i], btn = document.createElement('button');
+      btn.className = 'nm-yr' + (y === cur.year ? ' nm-on' : ''); btn.textContent = y; btn.setAttribute('data-nm-year', y);
+      btn.setAttribute('aria-pressed', y === cur.year ? 'true' : 'false');
+      elYears.appendChild(btn);
+    }
+    ov.className = 'nm-ov' + (d.unknown ? ' nm-show' : '');
+    if (d.seats){
+      cancelAnimationFrame(raf); cv.style.display = 'none'; seats.className = 'nm-seats nm-show';
+      drawSeats(d, animate); legend('seats');
+    } else {
+      seats.className = 'nm-seats'; cv.style.display = 'block';
+      drawGrid(d, animate); legend(d.unknown ? 'unknown' : 'grid');
+    }
+  }
+
+  for (var i = 0; i !== tabs.length; i++){
+    tabs[i].addEventListener('click', function(){
+      for (var k = 0; k !== tabs.length; k++) tabs[k].setAttribute('aria-selected', 'false');
+      this.setAttribute('aria-selected', 'true');
+      cur.tab = this.getAttribute('data-nm-tab');
+      var ys = D[cur.tab].years; cur.year = ys.length ? ys[0] : '';
+      render(true);
+    });
+  }
+  elYears.addEventListener('click', function(e){
+    var b = e.target.closest('.nm-yr'); if (!b) return;
+    cur.year = b.getAttribute('data-nm-year'); render(true);
+  });
+
+  var rt = 0, lastW = 0;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ var w = root.clientWidth; if (w !== lastW){ lastW = w; if (seen) render(false); } }, 200);
+  });
+
+  render(false);
+  lastW = root.clientWidth;
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){
+      if (en[0].isIntersecting && !seen){ seen = true; render(true); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(root);
+  } else { seen = true; }
+})();
+</script>

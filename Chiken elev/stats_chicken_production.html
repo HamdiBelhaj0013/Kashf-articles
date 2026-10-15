@@ -1,0 +1,87 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+.gjc.ps1-root{--ps1-acc:#E8650A;--ps1-c1:#F4C9A6;--ps1-c2:#EE9A5C;--ps1-c3:#E8650A;--ps1-text:#1F1B16;--ps1-muted:#6B6258;--ps1-grid:#EDE6DD;direction:rtl;text-align:right;max-width:780px;margin:40px auto;padding:0 16px;box-sizing:border-box;font-family:'Almarai',sans-serif;color:var(--ps1-text)}
+.gjc.ps1-root *{box-sizing:border-box}
+.gjc.ps1-root .ps1-head{margin:0 0 6px;font-weight:800;font-size:clamp(18px,2.6vw,23px);line-height:1.5;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.gjc.ps1-root .ps1-unit{margin:0 0 22px;font-size:14px;color:var(--ps1-muted);opacity:0;transition:opacity .6s ease .15s}
+.gjc.ps1-root .ps1-chart{position:relative;display:flex;align-items:flex-end;justify-content:space-around;gap:clamp(14px,4vw,40px);height:clamp(240px,36vw,310px);padding-top:50px;border-bottom:2px solid var(--ps1-text);padding-left:clamp(4px,3vw,30px);padding-right:clamp(4px,3vw,30px)}
+.gjc.ps1-root .ps1-col{flex:1 1 0;max-width:150px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch}
+.gjc.ps1-root .ps1-val{position:absolute;left:0;right:0;bottom:calc(100% + 10px);white-space:nowrap;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(22px,4vw,34px);line-height:1;text-align:center;direction:ltr;opacity:0;transition:opacity .4s ease}
+.gjc.ps1-root .ps1-bar{position:relative;height:0;border-radius:8px 8px 0 0;transition:height 1.3s cubic-bezier(.2,.8,.2,1)}
+.gjc.ps1-root .ps1-col:nth-child(1) .ps1-bar{background:var(--ps1-c1)}
+.gjc.ps1-root .ps1-col:nth-child(2) .ps1-bar{background:var(--ps1-c2);transition-delay:.25s}
+.gjc.ps1-root .ps1-col:nth-child(3) .ps1-bar{background:var(--ps1-c3);transition-delay:.5s}
+.gjc.ps1-root .ps1-col:nth-child(2) .ps1-val{transition-delay:.25s}
+.gjc.ps1-root .ps1-col:nth-child(3) .ps1-val{transition-delay:.5s;color:var(--ps1-acc)}
+.gjc.ps1-root .ps1-years{display:flex;justify-content:space-around;gap:clamp(14px,4vw,40px);padding:10px clamp(4px,3vw,30px) 0}
+.gjc.ps1-root .ps1-year{flex:1 1 0;max-width:150px;text-align:center;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(16px,2.4vw,19px);color:var(--ps1-muted)}
+.gjc.ps1-root .ps1-month{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;margin-top:30px;padding-top:20px;border-top:1px solid var(--ps1-grid);opacity:0;transform:translateY(10px);transition:opacity .7s ease 1.6s,transform .7s ease 1.6s}
+.gjc.ps1-root .ps1-month-pre{font-size:clamp(16px,2.4vw,19px);font-weight:700}
+.gjc.ps1-root .ps1-month-num{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(38px,7vw,58px);line-height:1;color:var(--ps1-acc);direction:ltr}
+.gjc.ps1-root .ps1-month-post{font-size:clamp(16px,2.4vw,19px);font-weight:700}
+.gjc.ps1-root .ps1-src{margin:16px 0 0;font-size:13px;color:var(--ps1-muted)}
+.gjc.ps1-root .ps1-src a{color:var(--ps1-muted);text-decoration:underline;text-underline-offset:3px}
+.gjc.ps1-root.ps1-in .ps1-head{opacity:1;transform:none}
+.gjc.ps1-root.ps1-in .ps1-unit{opacity:1}
+.gjc.ps1-root.ps1-in .ps1-val{opacity:1}
+.gjc.ps1-root.ps1-in .ps1-bar{height:var(--ps1-h)}
+.gjc.ps1-root.ps1-in .ps1-month{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.gjc.ps1-root *{transition:none !important}}
+</style>
+<div class="gjc ps1-root" id="ps1-root" dir="rtl" lang="ar">
+  <p class="ps1-head">تطور إنتاج لحم الدجاج في تونس</p>
+  <p class="ps1-unit">بالألف طن</p>
+  <div class="ps1-chart" role="img" aria-label="إنتاج لحم الدجاج: 112.8 ألف طن سنة 2010، 131.50 ألف طن سنة 2020، 147.6 ألف طن سنة 2024">
+    <div class="ps1-col"><div class="ps1-bar" style="--ps1-h:76.4%"><span class="ps1-val" data-ps1-v="112.8" data-ps1-d="1">0</span></div></div>
+    <div class="ps1-col"><div class="ps1-bar" style="--ps1-h:89.1%"><span class="ps1-val" data-ps1-v="131.50" data-ps1-d="2">0</span></div></div>
+    <div class="ps1-col"><div class="ps1-bar" style="--ps1-h:100%"><span class="ps1-val" data-ps1-v="147.6" data-ps1-d="1">0</span></div></div>
+  </div>
+  <div class="ps1-years"><span class="ps1-year">2010</span><span class="ps1-year">2020</span><span class="ps1-year">2024</span></div>
+  <div class="ps1-month">
+    <span class="ps1-month-pre">أي بمعدل</span>
+    <span class="ps1-month-num" data-ps1-v="12.3" data-ps1-d="1" data-ps1-delay="1700">0</span>
+    <span class="ps1-month-post">ألف طن شهريا</span>
+  </div>
+  <p class="ps1-src">المصدر: <a href="https://www.oep.tn/fr/evolution-de-la-production-de-viande-par-espece/" target="_blank" rel="noopener">ديوان تربية الماشية والمراعي</a></p>
+</div>
+<script>
+(function(){
+  var r=document.getElementById('ps1-root');
+  if(!r){return;}
+  var nums=r.querySelectorAll('[data-ps1-v]');
+  var count=function(el){
+    var v=parseFloat(el.getAttribute('data-ps1-v'));
+    var d=parseInt(el.getAttribute('data-ps1-d'),10);
+    var wait=parseInt(el.getAttribute('data-ps1-delay')||'0',10);
+    var dur=1400;
+    setTimeout(function(){
+      var t0=null;
+      var step=function(ts){
+        if(!t0){t0=ts;}
+        var p=Math.min(1,(ts-t0)/dur);
+        var e=1-Math.pow(1-p,3);
+        el.textContent=(v*e).toFixed(d);
+        if(p!==1){requestAnimationFrame(step);}else{el.textContent=el.getAttribute('data-ps1-v');}
+      };
+      requestAnimationFrame(step);
+    },wait);
+  };
+  var go=function(){
+    r.classList.add('ps1-in');
+    Array.prototype.forEach.call(nums,function(el,i){
+      if(!el.getAttribute('data-ps1-delay')){el.setAttribute('data-ps1-delay',String(i*250));}
+      count(el);
+    });
+  };
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    r.classList.add('ps1-in');
+    Array.prototype.forEach.call(nums,function(el){el.textContent=el.getAttribute('data-ps1-v');});
+    return;
+  }
+  if(!('IntersectionObserver' in window)){go();return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){go();io.disconnect();}});},{threshold:0.35});
+  io.observe(r);
+})();
+</script>

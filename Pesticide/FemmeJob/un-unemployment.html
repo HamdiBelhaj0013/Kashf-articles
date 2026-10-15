@@ -1,0 +1,79 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+.gjc.un-root{--un-accent:#E8650A;--un-men:#5b6068;--un-ink:#23262c;--un-muted:#7a7770;--un-line:#e6e1d8;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--un-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.un-root *{box-sizing:border-box}
+.gjc.un-root .un-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 6px}
+.gjc.un-root .un-legend{display:flex;gap:18px;font-size:13px;color:var(--un-muted);margin:0 0 22px}
+.gjc.un-root .un-legend span{display:inline-flex;align-items:center;gap:6px}
+.gjc.un-root .un-legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.gjc.un-root .un-row{margin:0 0 30px}
+.gjc.un-root .un-rl{font-size:15px;font-weight:700;margin:0 0 30px}
+.gjc.un-root .un-track{position:relative;height:4px;background:var(--un-line);border-radius:2px;margin:0 18px}
+.gjc.un-root .un-gap{position:absolute;top:-2px;height:8px;background:var(--un-accent);opacity:.28;border-radius:4px;width:0;transition:width 1.2s cubic-bezier(.22,.8,.3,1)}
+.gjc.un-root .un-dot{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;transform:translate(50%,-50%);border:3px solid #fff;box-shadow:0 0 0 1px var(--un-line);transition:right 1.2s cubic-bezier(.22,.8,.3,1)}
+.gjc.un-root .un-dot b{position:absolute;bottom:22px;right:50%;transform:translateX(50%);font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;white-space:nowrap}
+.gjc.un-root .un-w{background:var(--un-accent)}
+.gjc.un-root .un-w b{color:var(--un-accent);font-size:22px}
+.gjc.un-root .un-m{background:var(--un-men)}
+.gjc.un-root .un-m b{color:var(--un-men)}
+.gjc.un-root .un-axis{position:relative;height:22px;margin:4px 18px 0;font-family:'Oswald',sans-serif;font-size:12px;color:var(--un-muted)}
+.gjc.un-root .un-axis span{position:absolute;transform:translateX(50%)}
+.gjc.un-root .un-src{font-size:12px;line-height:1.6;color:var(--un-muted);margin:10px 0 0;border-top:1px solid var(--un-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.un-root .un-gap,.gjc.un-root .un-dot{transition:none}}
+</style>
+
+<div class="gjc un-root" id="un-root" dir="rtl">
+  <h3 class="un-title">نسبة البطالة حسب الجنس، الثلاثي الأول من سنة 2024</h3>
+  <div class="un-legend"><span><i style="background:#E8650A"></i>النساء</span><span><i style="background:#5b6068"></i>الرجال</span></div>
+  <div id="un-rows"></div>
+  <div class="un-axis" id="un-axis" aria-hidden="true"></div>
+  <p class="un-src">المصدر: المعهد الوطني للإحصاء</p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('un-root');
+  if (!root) return;
+  var MAX = 35;
+  var ROWS = [
+    { label: 'نسبة البطالة', w: 22, m: 13.6 },
+    { label: 'لدى حاملي الشهادات العليا', w: 31.2, m: 13.8 }
+  ];
+  var host = document.getElementById('un-rows'), axis = document.getElementById('un-axis');
+  var parts = [];
+  function pct(v){ return (v / MAX * 100) + '%'; }
+  for (var i = 0; i !== ROWS.length; i++){
+    var r = ROWS[i];
+    var row = document.createElement('div'); row.className = 'un-row';
+    row.setAttribute('role', 'img');
+    row.setAttribute('aria-label', r.label + ': النساء ' + r.w + '%، الرجال ' + r.m + '%');
+    var lb = document.createElement('p'); lb.className = 'un-rl'; lb.textContent = r.label;
+    var tr = document.createElement('div'); tr.className = 'un-track';
+    var gap = document.createElement('div'); gap.className = 'un-gap'; gap.style.right = pct(r.m);
+    var dm = document.createElement('span'); dm.className = 'un-dot un-m'; dm.style.right = pct(r.m);
+    var bm = document.createElement('b'); bm.textContent = r.m + '%'; dm.appendChild(bm);
+    var dw = document.createElement('span'); dw.className = 'un-dot un-w'; dw.style.right = pct(r.m);
+    var bw = document.createElement('b'); bw.textContent = r.w + '%'; dw.appendChild(bw);
+    tr.appendChild(gap); tr.appendChild(dm); tr.appendChild(dw);
+    row.appendChild(lb); row.appendChild(tr); host.appendChild(row);
+    parts.push({ r: r, gap: gap, dw: dw });
+  }
+  var ticks = [0, 10, 20, 30];
+  for (var t = 0; t !== ticks.length; t++){
+    var s = document.createElement('span'); s.style.right = pct(ticks[t]); s.textContent = ticks[t] + '%'; axis.appendChild(s);
+  }
+  function go(){
+    for (var k = 0; k !== parts.length; k++){
+      var p = parts[k];
+      p.dw.style.right = pct(p.r.w);
+      p.gap.style.width = ((p.r.w - p.r.m) / MAX * 100) + '%';
+    }
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ io.disconnect(); setTimeout(go, 200); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { go(); }
+})();
+</script>

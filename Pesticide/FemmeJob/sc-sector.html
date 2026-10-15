@@ -1,0 +1,85 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+.gjc.sc-root{--sc-accent:#E8650A;--sc-ink:#23262c;--sc-muted:#7a7770;--sc-asph:#3b3e45;--sc-line:#e6e1d8;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--sc-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.sc-root *{box-sizing:border-box}
+.gjc.sc-root .sc-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 16px}
+.gjc.sc-root .sc-years{display:flex;gap:6px;margin-bottom:18px}
+.gjc.sc-root .sc-yr{border:1px solid var(--sc-line);background:#fff;border-radius:16px;padding:5px 16px;font-family:'Oswald',sans-serif;font-size:16px;color:var(--sc-muted);cursor:pointer}
+.gjc.sc-root .sc-yr.sc-on{background:var(--sc-ink);border-color:var(--sc-ink);color:#fff}
+.gjc.sc-root .sc-yr:focus-visible{outline:2px solid var(--sc-accent);outline-offset:2px}
+.gjc.sc-root .sc-pct{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(48px,12vw,76px);line-height:1;color:var(--sc-accent)}
+.gjc.sc-root .sc-pct small{font-size:.5em;margin-inline-start:2px}
+.gjc.sc-root .sc-sub{font-size:16px;line-height:1.7;margin:8px 0 20px;min-height:3.4em;max-width:46ch}
+.gjc.sc-root .sc-road{position:relative;height:96px;background:var(--sc-asph);border-radius:4px;overflow:hidden;border-top:4px solid #d9d4ca;border-bottom:4px solid #d9d4ca}
+.gjc.sc-root .sc-women{position:absolute;top:0;bottom:0;right:0;width:0;background:var(--sc-accent);transition:width 1.4s cubic-bezier(.22,.8,.3,1)}
+.gjc.sc-root .sc-women::after{content:'';position:absolute;top:0;bottom:0;left:-2px;border-left:4px dashed #fff}
+.gjc.sc-root .sc-dash{position:absolute;top:50%;left:0;right:0;height:0;border-top:3px dashed rgba(255,255,255,.35)}
+.gjc.sc-root .sc-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--sc-muted);margin-top:8px}
+.gjc.sc-root .sc-lab b{color:var(--sc-accent)}
+.gjc.sc-root .sc-src{font-size:12px;line-height:1.6;color:var(--sc-muted);margin:14px 0 0;border-top:1px solid var(--sc-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.sc-root .sc-women{transition:none}}
+</style>
+
+<div class="gjc sc-root" id="sc-root" dir="rtl">
+  <h3 class="sc-title">حصة النساء من العاملين في قطاع النقل والتخزين</h3>
+  <div class="sc-years">
+    <button class="sc-yr" data-sc-year="2017" aria-pressed="false">2017</button>
+    <button class="sc-yr" data-sc-year="2020" aria-pressed="false">2020</button>
+  </div>
+  <div class="sc-pct"><span id="sc-num">0</span><small>%</small></div>
+  <p class="sc-sub" id="sc-sub"></p>
+  <div class="sc-road" role="img" id="sc-road"><div class="sc-dash"></div><div class="sc-women" id="sc-women"></div></div>
+  <div class="sc-lab"><b>النساء</b><span>الرجال</span></div>
+  <p class="sc-src">المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى</p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('sc-root');
+  if (!root) return;
+  var D = {
+    '2017': { v: 9.94, dec: 2, sub: 'نحو 9.94% من العاملين في القطاع، أي 18 ألفًا و600 امرأة من أصل 187 ألفًا و100 عامل' },
+    '2020': { v: 7.5, dec: 1, sub: 'تراجعت حصة النساء إلى نحو 7.5%' }
+  };
+  var num = document.getElementById('sc-num'), sub = document.getElementById('sc-sub');
+  var lane = document.getElementById('sc-women'), road = document.getElementById('sc-road');
+  var btns = root.querySelectorAll('.sc-yr'), raf = 0, shown = 0, autoT = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function count(to, dec){
+    cancelAnimationFrame(raf);
+    var from = shown, start = 0, dur = reduce ? 0 : 1400;
+    function f(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1;
+      var e = 1 - Math.pow(1 - t, 3);
+      shown = from + (to - from) * e;
+      num.textContent = shown.toFixed(dec);
+      if (t !== 1) raf = requestAnimationFrame(f);
+    }
+    raf = requestAnimationFrame(f);
+  }
+  function show(y){
+    var d = D[y];
+    for (var i = 0; i !== btns.length; i++){
+      var on = btns[i].getAttribute('data-sc-year') === y;
+      btns[i].className = 'sc-yr' + (on ? ' sc-on' : '');
+      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    sub.textContent = d.sub;
+    lane.style.width = d.v + '%';
+    road.setAttribute('aria-label', 'حصة النساء ' + d.v + '% سنة ' + y);
+    count(d.v, d.dec);
+  }
+  for (var i = 0; i !== btns.length; i++){
+    btns[i].addEventListener('click', function(){ clearTimeout(autoT); show(this.getAttribute('data-sc-year')); });
+  }
+  function play(){ show('2017'); autoT = setTimeout(function(){ show('2020'); }, reduce ? 0 : 2600); }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ play(); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { play(); }
+})();
+</script>

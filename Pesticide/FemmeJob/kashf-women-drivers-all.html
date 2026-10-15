@@ -1,0 +1,656 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Oswald:wght@500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- nm-numbers -->
+<style>
+.gjc.nm-root{--nm-accent:#E8650A;--nm-ink:#23262c;--nm-muted:#7a7770;--nm-dot:#c9c5bd;--nm-line:#e6e1d8;--nm-soft:#f6f3ee;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--nm-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.nm-root *{box-sizing:border-box}
+.gjc.nm-root .nm-title{font-family:'Almarai',sans-serif;font-weight:800;font-size:clamp(20px,4.4vw,26px);line-height:1.4;margin:0 0 14px;color:var(--nm-ink)}
+.gjc.nm-root .nm-tabs{display:flex;gap:0;border-bottom:2px solid var(--nm-line);overflow-x:auto;scrollbar-width:none}
+.gjc.nm-root .nm-tabs::-webkit-scrollbar{display:none}
+.gjc.nm-root .nm-tab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;padding:10px 14px;font-family:'Almarai',sans-serif;font-size:15px;font-weight:700;color:var(--nm-muted);cursor:pointer;white-space:nowrap}
+.gjc.nm-root .nm-tab[aria-selected="true"]{color:var(--nm-ink);border-bottom-color:var(--nm-accent)}
+.gjc.nm-root .nm-tab:focus-visible,.gjc.nm-root .nm-yr:focus-visible{outline:2px solid var(--nm-accent);outline-offset:2px}
+.gjc.nm-root .nm-years{display:flex;gap:6px;margin:14px 0 0;min-height:32px}
+.gjc.nm-root .nm-yr{border:1px solid var(--nm-line);background:#fff;border-radius:16px;padding:5px 14px;font-family:'Oswald',sans-serif;font-size:15px;color:var(--nm-muted);cursor:pointer}
+.gjc.nm-root .nm-yr.nm-on{background:var(--nm-ink);border-color:var(--nm-ink);color:#fff}
+.gjc.nm-root .nm-stat{display:flex;align-items:baseline;gap:12px;margin:16px 0 12px;flex-wrap:wrap}
+.gjc.nm-root .nm-big{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(46px,11vw,72px);line-height:1;color:var(--nm-accent)}
+.gjc.nm-root .nm-lbl{font-size:16px;line-height:1.6;max-width:44ch}
+.gjc.nm-root .nm-stage{position:relative;background:var(--nm-soft);border-radius:6px;padding:14px}
+.gjc.nm-root .nm-cv{display:block;width:100%}
+.gjc.nm-root .nm-ov{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:rgba(246,243,238,.72)}
+.gjc.nm-root .nm-ov.nm-show{display:flex}
+.gjc.nm-root .nm-ov-q{font-family:'Almarai',sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--nm-accent)}
+.gjc.nm-root .nm-ov-t{font-size:15px;line-height:1.7;max-width:34ch;margin-top:8px;font-weight:700}
+.gjc.nm-root .nm-seats{display:none;flex-wrap:wrap;gap:14px;justify-content:center;padding:26px 6px}
+.gjc.nm-root .nm-seats.nm-show{display:flex}
+.gjc.nm-root .nm-seat{width:44px;height:44px;border-radius:50%;background:var(--nm-accent);border:3px solid var(--nm-accent);transition:background .7s ease,border-color .7s ease,transform .7s ease}
+.gjc.nm-root .nm-seat.nm-off{background:transparent;border-color:var(--nm-dot);border-style:dashed;transform:scale(.86)}
+.gjc.nm-root .nm-note{font-size:14px;line-height:1.7;color:var(--nm-ink);margin:12px 0 0}
+.gjc.nm-root .nm-legend{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 0;font-size:13px;color:var(--nm-muted)}
+.gjc.nm-root .nm-legend span{display:inline-flex;align-items:center;gap:6px}
+.gjc.nm-root .nm-legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
+.gjc.nm-root .nm-src{font-size:12px;line-height:1.6;color:var(--nm-muted);margin:10px 0 0;border-top:1px solid var(--nm-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.nm-root .nm-seat{transition:none}}
+</style>
+
+<div class="gjc nm-root" id="nm-root" dir="rtl">
+  <h3 class="nm-title">النساء خلف المقود بالأرقام</h3>
+  <div class="nm-tabs" role="tablist" aria-label="المهن">
+    <button class="nm-tab" role="tab" data-nm-tab="taxi" aria-selected="true">التاكسي</button>
+    <button class="nm-tab" role="tab" data-nm-tab="bus" aria-selected="false">الحافلات</button>
+    <button class="nm-tab" role="tab" data-nm-tab="metro" aria-selected="false">المترو</button>
+    <button class="nm-tab" role="tab" data-nm-tab="school" aria-selected="false">تعليم السياقة</button>
+  </div>
+  <div class="nm-years" id="nm-years"></div>
+  <div class="nm-stat"><span class="nm-big" id="nm-big"></span><span class="nm-lbl" id="nm-lbl"></span></div>
+  <div class="nm-stage">
+    <canvas class="nm-cv" id="nm-cv" aria-hidden="true"></canvas>
+    <div class="nm-ov" id="nm-ov"><div class="nm-ov-q">؟</div><div class="nm-ov-t">لا توجد معطيات منشورة تفصّل عدد النساء ضمن المكوّنين</div></div>
+    <div class="nm-seats" id="nm-seats" aria-hidden="true"></div>
+  </div>
+  <p class="nm-note" id="nm-note"></p>
+  <div class="nm-legend" id="nm-legend"></div>
+  <p class="nm-src" id="nm-src"></p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('nm-root');
+  if (!root) return;
+  var ACCENT = '#E8650A', DOT = '#c9c5bd';
+  var D = {
+    taxi: { years: ['2014','2019'], v: {
+      '2014': { w: 40, t: 16000, big: '40', lbl: 'نحو 40 سائقة من أصل 16 ألف سائق في تونس الكبرى', note: '', src: 'المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى' },
+      '2019': { w: 30, t: 18000, big: '30', lbl: 'نحو 30 سائقة من أصل 18 ألف سائق', note: '', src: 'المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى' } } },
+    bus: { years: ['قبل 2011'], v: {
+      'قبل 2011': { w: 13, t: 3382, big: '13', lbl: '13 سائقة حافلة من أصل 3382 سائقًا', note: 'أرقام تعود إلى فترة ما قبل سنة 2011', src: 'المصدر: دراسة حول النوع الاجتماعي والنقل في تونس' } } },
+    metro: { years: ['2017','2026'], v: {
+      '2017': { w: 11, t: 219, big: '11', lbl: '11 سائقة من أصل 219 سائقًا', note: '', src: 'المصدر: دراسة حول النوع الاجتماعي والنقل في تونس' },
+      '2026': { seats: true, before: 7, now: 4, big: '4', lbl: 'سائقات مترو ناشطات، بعد أن كان عددهن سبعًا', note: 'انتقلت بعض السائقات إلى مهام إدارية', src: 'المصدر: تصريح سائقة المترو ابتسام النابلي في برنامج إذاعي، أوت 2026' } } },
+    school: { years: [], v: {
+      '': { unknown: true, w: 0, t: 3265, big: '3265', lbl: 'مؤسسة لتعليم السياقة', note: 'كل نقطة تمثّل مؤسسة، لا مدرّبًا', src: 'المصدر: رئيس الغرفة النقابية الوطنية لأصحاب مدارس تعليم السياقة محمد الفاضل البكوش، سبتمبر 2025' } } }
+  };
+
+  var cv = document.getElementById('nm-cv'), ctx = cv.getContext('2d');
+  var ov = document.getElementById('nm-ov'), seats = document.getElementById('nm-seats');
+  var elBig = document.getElementById('nm-big'), elLbl = document.getElementById('nm-lbl');
+  var elNote = document.getElementById('nm-note'), elSrc = document.getElementById('nm-src');
+  var elYears = document.getElementById('nm-years'), elLegend = document.getElementById('nm-legend');
+  var tabs = root.querySelectorAll('.nm-tab');
+  var cur = { tab: 'taxi', year: '2014' }, seen = false, raf = 0, seatTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function seeded(seed){ var s = seed; return function(){ s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; }
+  function pickWomen(w, t, seed){
+    var r = seeded(seed), used = {}, out = [], guard = 0;
+    while (out.length !== w && guard !== 100000){ var k = Math.floor(r() * t); if (!used[k]){ used[k] = 1; out.push(k); } guard++; }
+    return out;
+  }
+  function layout(total){
+    var W = cv.parentNode.clientWidth - 28;
+    var tH = Math.min(380, Math.max(200, W * 0.55));
+    var p = Math.min(24, Math.sqrt(W * tH / total));
+    var cols = Math.max(1, Math.floor(W / p));
+    var rows = Math.ceil(total / cols);
+    return { W: W, H: rows * p, p: p, cols: cols, off: (W - cols * p) / 2 };
+  }
+  function pos(i, L){
+    var c = i % L.cols, r = Math.floor(i / L.cols);
+    return { x: L.W - L.off - (c + 0.5) * L.p, y: (r + 0.5) * L.p };
+  }
+  function ease(t){ var c = 1.70158; var u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; }
+
+  function drawGrid(d, animate){
+    cancelAnimationFrame(raf);
+    var L = layout(d.t), dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(L.W * dpr); cv.height = Math.round(L.H * dpr);
+    cv.style.height = L.H + 'px';
+    var base = document.createElement('canvas');
+    base.width = cv.width; base.height = cv.height;
+    var b = base.getContext('2d'); b.scale(dpr, dpr);
+    var rg = Math.max(0.9, L.p * 0.32);
+    b.fillStyle = DOT; b.globalAlpha = d.unknown ? 0.55 : 1;
+    for (var i = 0; i !== d.t; i++){ var q = pos(i, L); b.beginPath(); b.arc(q.x, q.y, rg, 0, 6.2832); b.fill(); }
+    var women = pickWomen(d.w, d.t, d.t + d.w * 7);
+    var rw = Math.max(3.4, L.p * 0.36);
+    var start = 0, dur = (animate && !reduce) ? 1600 : 0;
+    function frame(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1;
+      ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
+      ctx.globalAlpha = Math.min(1, t * 2.5); ctx.drawImage(base, 0, 0);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      var t2 = Math.max(0, Math.min(1, (t - 0.4) / 0.6));
+      var s = t2 ? ease(t2) : 0;
+      for (var j = 0; j !== women.length; j++){
+        var q = pos(women[j], L);
+        ctx.globalAlpha = 0.22 * t2; ctx.fillStyle = ACCENT;
+        ctx.beginPath(); ctx.arc(q.x, q.y, rw * 2.6 * s, 0, 6.2832); ctx.fill();
+        ctx.globalAlpha = t2; ctx.beginPath(); ctx.arc(q.x, q.y, rw * s, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (t !== 1) raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function drawSeats(d, animate){
+    clearTimeout(seatTimer);
+    seats.textContent = '';
+    for (var i = 0; i !== d.before; i++){ var s = document.createElement('span'); s.className = 'nm-seat'; seats.appendChild(s); }
+    var list = seats.children;
+    function dim(){ for (var k = d.now; k !== d.before; k++){ list[k].className = 'nm-seat nm-off'; } }
+    if (animate && !reduce) seatTimer = setTimeout(dim, 900); else dim();
+  }
+
+  function legend(kind){
+    elLegend.textContent = '';
+    var items = kind === 'seats' ? [[ACCENT,'سائقة ناشطة'],['transparent','لم تعد تقود']] : kind === 'unknown' ? [[DOT,'مؤسسة لتعليم السياقة']] : [[ACCENT,'سائقة'],[DOT,'سائق']];
+    for (var i = 0; i !== items.length; i++){
+      var sp = document.createElement('span'), dot = document.createElement('i');
+      dot.style.background = items[i][0];
+      if (items[i][0] === 'transparent') dot.style.border = '1.5px dashed ' + DOT;
+      sp.appendChild(dot); sp.appendChild(document.createTextNode(items[i][1])); elLegend.appendChild(sp);
+    }
+  }
+
+  function render(animate){
+    var set = D[cur.tab], d = set.v[cur.year];
+    elBig.textContent = d.big; elLbl.textContent = d.lbl;
+    elNote.textContent = d.note; elNote.style.display = d.note ? '' : 'none';
+    elSrc.textContent = d.src;
+    elYears.textContent = '';
+    for (var i = 0; i !== set.years.length; i++){
+      var y = set.years[i], btn = document.createElement('button');
+      btn.className = 'nm-yr' + (y === cur.year ? ' nm-on' : ''); btn.textContent = y; btn.setAttribute('data-nm-year', y);
+      btn.setAttribute('aria-pressed', y === cur.year ? 'true' : 'false');
+      elYears.appendChild(btn);
+    }
+    ov.className = 'nm-ov' + (d.unknown ? ' nm-show' : '');
+    if (d.seats){
+      cancelAnimationFrame(raf); cv.style.display = 'none'; seats.className = 'nm-seats nm-show';
+      drawSeats(d, animate); legend('seats');
+    } else {
+      seats.className = 'nm-seats'; cv.style.display = 'block';
+      drawGrid(d, animate); legend(d.unknown ? 'unknown' : 'grid');
+    }
+  }
+
+  for (var i = 0; i !== tabs.length; i++){
+    tabs[i].addEventListener('click', function(){
+      for (var k = 0; k !== tabs.length; k++) tabs[k].setAttribute('aria-selected', 'false');
+      this.setAttribute('aria-selected', 'true');
+      cur.tab = this.getAttribute('data-nm-tab');
+      var ys = D[cur.tab].years; cur.year = ys.length ? ys[0] : '';
+      render(true);
+    });
+  }
+  elYears.addEventListener('click', function(e){
+    var b = e.target.closest('.nm-yr'); if (!b) return;
+    cur.year = b.getAttribute('data-nm-year'); render(true);
+  });
+
+  var rt = 0, lastW = 0;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ var w = root.clientWidth; if (w !== lastW){ lastW = w; if (seen) render(false); } }, 200);
+  });
+
+  render(false);
+  lastW = root.clientWidth;
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){
+      if (en[0].isIntersecting && !seen){ seen = true; render(true); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(root);
+  } else { seen = true; }
+})();
+</script>
+<div style="height:56px"></div>
+
+<!-- sc-sector -->
+<style>
+.gjc.sc-root{--sc-accent:#E8650A;--sc-ink:#23262c;--sc-muted:#7a7770;--sc-asph:#3b3e45;--sc-line:#e6e1d8;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--sc-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.sc-root *{box-sizing:border-box}
+.gjc.sc-root .sc-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 16px}
+.gjc.sc-root .sc-years{display:flex;gap:6px;margin-bottom:18px}
+.gjc.sc-root .sc-yr{border:1px solid var(--sc-line);background:#fff;border-radius:16px;padding:5px 16px;font-family:'Oswald',sans-serif;font-size:16px;color:var(--sc-muted);cursor:pointer}
+.gjc.sc-root .sc-yr.sc-on{background:var(--sc-ink);border-color:var(--sc-ink);color:#fff}
+.gjc.sc-root .sc-yr:focus-visible{outline:2px solid var(--sc-accent);outline-offset:2px}
+.gjc.sc-root .sc-pct{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(48px,12vw,76px);line-height:1;color:var(--sc-accent)}
+.gjc.sc-root .sc-pct small{font-size:.5em;margin-inline-start:2px}
+.gjc.sc-root .sc-sub{font-size:16px;line-height:1.7;margin:8px 0 20px;min-height:3.4em;max-width:46ch}
+.gjc.sc-root .sc-road{position:relative;height:96px;background:var(--sc-asph);border-radius:4px;overflow:hidden;border-top:4px solid #d9d4ca;border-bottom:4px solid #d9d4ca}
+.gjc.sc-root .sc-women{position:absolute;top:0;bottom:0;right:0;width:0;background:var(--sc-accent);transition:width 1.4s cubic-bezier(.22,.8,.3,1)}
+.gjc.sc-root .sc-women::after{content:'';position:absolute;top:0;bottom:0;left:-2px;border-left:4px dashed #fff}
+.gjc.sc-root .sc-dash{position:absolute;top:50%;left:0;right:0;height:0;border-top:3px dashed rgba(255,255,255,.35)}
+.gjc.sc-root .sc-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--sc-muted);margin-top:8px}
+.gjc.sc-root .sc-lab b{color:var(--sc-accent)}
+.gjc.sc-root .sc-src{font-size:12px;line-height:1.6;color:var(--sc-muted);margin:14px 0 0;border-top:1px solid var(--sc-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.sc-root .sc-women{transition:none}}
+</style>
+
+<div class="gjc sc-root" id="sc-root" dir="rtl">
+  <h3 class="sc-title">حصة النساء من العاملين في قطاع النقل والتخزين</h3>
+  <div class="sc-years">
+    <button class="sc-yr" data-sc-year="2017" aria-pressed="false">2017</button>
+    <button class="sc-yr" data-sc-year="2020" aria-pressed="false">2020</button>
+  </div>
+  <div class="sc-pct"><span id="sc-num">0</span><small>%</small></div>
+  <p class="sc-sub" id="sc-sub"></p>
+  <div class="sc-road" role="img" id="sc-road"><div class="sc-dash"></div><div class="sc-women" id="sc-women"></div></div>
+  <div class="sc-lab"><b>النساء</b><span>الرجال</span></div>
+  <p class="sc-src">المصدر: دراسة أكاديمية حول تشغيل النساء في قطاع النقل بتونس الكبرى</p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('sc-root');
+  if (!root) return;
+  var D = {
+    '2017': { v: 9.94, dec: 2, sub: 'نحو 9.94% من العاملين في القطاع، أي 18 ألفًا و600 امرأة من أصل 187 ألفًا و100 عامل' },
+    '2020': { v: 7.5, dec: 1, sub: 'تراجعت حصة النساء إلى نحو 7.5%' }
+  };
+  var num = document.getElementById('sc-num'), sub = document.getElementById('sc-sub');
+  var lane = document.getElementById('sc-women'), road = document.getElementById('sc-road');
+  var btns = root.querySelectorAll('.sc-yr'), raf = 0, shown = 0, autoT = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function count(to, dec){
+    cancelAnimationFrame(raf);
+    var from = shown, start = 0, dur = reduce ? 0 : 1400;
+    function f(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1;
+      var e = 1 - Math.pow(1 - t, 3);
+      shown = from + (to - from) * e;
+      num.textContent = shown.toFixed(dec);
+      if (t !== 1) raf = requestAnimationFrame(f);
+    }
+    raf = requestAnimationFrame(f);
+  }
+  function show(y){
+    var d = D[y];
+    for (var i = 0; i !== btns.length; i++){
+      var on = btns[i].getAttribute('data-sc-year') === y;
+      btns[i].className = 'sc-yr' + (on ? ' sc-on' : '');
+      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    sub.textContent = d.sub;
+    lane.style.width = d.v + '%';
+    road.setAttribute('aria-label', 'حصة النساء ' + d.v + '% سنة ' + y);
+    count(d.v, d.dec);
+  }
+  for (var i = 0; i !== btns.length; i++){
+    btns[i].addEventListener('click', function(){ clearTimeout(autoT); show(this.getAttribute('data-sc-year')); });
+  }
+  function play(){ show('2017'); autoT = setTimeout(function(){ show('2020'); }, reduce ? 0 : 2600); }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ play(); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { play(); }
+})();
+</script>
+<div style="height:56px"></div>
+
+<!-- un-unemployment -->
+<style>
+.gjc.un-root{--un-accent:#E8650A;--un-men:#5b6068;--un-ink:#23262c;--un-muted:#7a7770;--un-line:#e6e1d8;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--un-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.un-root *{box-sizing:border-box}
+.gjc.un-root .un-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 6px}
+.gjc.un-root .un-legend{display:flex;gap:18px;font-size:13px;color:var(--un-muted);margin:0 0 22px}
+.gjc.un-root .un-legend span{display:inline-flex;align-items:center;gap:6px}
+.gjc.un-root .un-legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.gjc.un-root .un-row{margin:0 0 30px}
+.gjc.un-root .un-rl{font-size:15px;font-weight:700;margin:0 0 30px}
+.gjc.un-root .un-track{position:relative;height:4px;background:var(--un-line);border-radius:2px;margin:0 18px}
+.gjc.un-root .un-gap{position:absolute;top:-2px;height:8px;background:var(--un-accent);opacity:.28;border-radius:4px;width:0;transition:width 1.2s cubic-bezier(.22,.8,.3,1)}
+.gjc.un-root .un-dot{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;transform:translate(50%,-50%);border:3px solid #fff;box-shadow:0 0 0 1px var(--un-line);transition:right 1.2s cubic-bezier(.22,.8,.3,1)}
+.gjc.un-root .un-dot b{position:absolute;bottom:22px;right:50%;transform:translateX(50%);font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;white-space:nowrap}
+.gjc.un-root .un-w{background:var(--un-accent)}
+.gjc.un-root .un-w b{color:var(--un-accent);font-size:22px}
+.gjc.un-root .un-m{background:var(--un-men)}
+.gjc.un-root .un-m b{color:var(--un-men)}
+.gjc.un-root .un-axis{position:relative;height:22px;margin:4px 18px 0;font-family:'Oswald',sans-serif;font-size:12px;color:var(--un-muted)}
+.gjc.un-root .un-axis span{position:absolute;transform:translateX(50%)}
+.gjc.un-root .un-src{font-size:12px;line-height:1.6;color:var(--un-muted);margin:10px 0 0;border-top:1px solid var(--un-line);padding-top:8px}
+@media (prefers-reduced-motion:reduce){.gjc.un-root .un-gap,.gjc.un-root .un-dot{transition:none}}
+</style>
+
+<div class="gjc un-root" id="un-root" dir="rtl">
+  <h3 class="un-title">نسبة البطالة حسب الجنس، الثلاثي الأول من سنة 2024</h3>
+  <div class="un-legend"><span><i style="background:#E8650A"></i>النساء</span><span><i style="background:#5b6068"></i>الرجال</span></div>
+  <div id="un-rows"></div>
+  <div class="un-axis" id="un-axis" aria-hidden="true"></div>
+  <p class="un-src">المصدر: المعهد الوطني للإحصاء</p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('un-root');
+  if (!root) return;
+  var MAX = 35;
+  var ROWS = [
+    { label: 'نسبة البطالة', w: 22, m: 13.6 },
+    { label: 'لدى حاملي الشهادات العليا', w: 31.2, m: 13.8 }
+  ];
+  var host = document.getElementById('un-rows'), axis = document.getElementById('un-axis');
+  var parts = [];
+  function pct(v){ return (v / MAX * 100) + '%'; }
+  for (var i = 0; i !== ROWS.length; i++){
+    var r = ROWS[i];
+    var row = document.createElement('div'); row.className = 'un-row';
+    row.setAttribute('role', 'img');
+    row.setAttribute('aria-label', r.label + ': النساء ' + r.w + '%، الرجال ' + r.m + '%');
+    var lb = document.createElement('p'); lb.className = 'un-rl'; lb.textContent = r.label;
+    var tr = document.createElement('div'); tr.className = 'un-track';
+    var gap = document.createElement('div'); gap.className = 'un-gap'; gap.style.right = pct(r.m);
+    var dm = document.createElement('span'); dm.className = 'un-dot un-m'; dm.style.right = pct(r.m);
+    var bm = document.createElement('b'); bm.textContent = r.m + '%'; dm.appendChild(bm);
+    var dw = document.createElement('span'); dw.className = 'un-dot un-w'; dw.style.right = pct(r.m);
+    var bw = document.createElement('b'); bw.textContent = r.w + '%'; dw.appendChild(bw);
+    tr.appendChild(gap); tr.appendChild(dm); tr.appendChild(dw);
+    row.appendChild(lb); row.appendChild(tr); host.appendChild(row);
+    parts.push({ r: r, gap: gap, dw: dw });
+  }
+  var ticks = [0, 10, 20, 30];
+  for (var t = 0; t !== ticks.length; t++){
+    var s = document.createElement('span'); s.style.right = pct(ticks[t]); s.textContent = ticks[t] + '%'; axis.appendChild(s);
+  }
+  function go(){
+    for (var k = 0; k !== parts.length; k++){
+      var p = parts[k];
+      p.dw.style.right = pct(p.r.w);
+      p.gap.style.width = ((p.r.w - p.r.m) / MAX * 100) + '%';
+    }
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ io.disconnect(); setTimeout(go, 200); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { go(); }
+})();
+</script>
+<div style="height:56px"></div>
+
+<!-- lw-law -->
+<style>
+.gjc.lw-root{--lw-accent:#E8650A;--lw-ink:#23262c;--lw-muted:#7a7770;--lw-line:#e6e1d8;--lw-paper:#faf8f4;--lw-asph:#3b3e45;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--lw-ink);max-width:880px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.lw-root *{box-sizing:border-box}
+.gjc.lw-root .lw-grid{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch}
+.gjc.lw-root .lw-h{font-weight:800;font-size:clamp(20px,4vw,24px);margin:0 0 14px;line-height:1.3}
+.gjc.lw-root .lw-doc{background:var(--lw-paper);border:1px solid var(--lw-line);border-top:5px solid var(--lw-ink);padding:22px 22px 18px}
+.gjc.lw-root .lw-art{font-size:14px;font-weight:700;color:var(--lw-muted);margin:0 0 10px}
+.gjc.lw-root .lw-text{font-family:'Amiri',serif;font-size:clamp(19px,3.6vw,22px);line-height:1.95;margin:0}
+.gjc.lw-root .lw-link{display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:var(--lw-ink);text-decoration:underline;text-decoration-color:var(--lw-accent);text-underline-offset:4px}
+.gjc.lw-root .lw-link:focus-visible{outline:2px solid var(--lw-accent);outline-offset:2px}
+.gjc.lw-root .lw-median{position:relative;background:var(--lw-asph);margin:0 10px;border-radius:2px}
+.gjc.lw-root .lw-median::before{content:'';position:absolute;top:8px;bottom:8px;left:50%;border-left:2px dashed var(--lw-accent);transform:translateX(-1px)}
+.gjc.lw-root .lw-list{list-style:none;margin:0;padding:0}
+.gjc.lw-root .lw-item{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--lw-line);opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+.gjc.lw-root.lw-armed .lw-item{opacity:0;transform:translateY(10px)}
+.gjc.lw-root.lw-armed .lw-item.lw-in{opacity:1;transform:none}
+.gjc.lw-root .lw-item:last-child{border-bottom:0}
+.gjc.lw-root .lw-ico{width:30px;height:30px}
+.gjc.lw-root .lw-tag{display:inline-block;font-size:12px;font-weight:700;color:var(--lw-accent);margin-bottom:4px}
+.gjc.lw-root .lw-item p{margin:0;font-size:15px;line-height:1.75}
+.gjc.lw-root .lw-src{font-size:12px;line-height:1.6;color:var(--lw-muted);margin:16px 0 0;border-top:1px solid var(--lw-line);padding-top:8px}
+@media (max-width:680px){
+  .gjc.lw-root .lw-grid{grid-template-columns:1fr}
+  .gjc.lw-root .lw-median{height:30px;margin:16px 0}
+  .gjc.lw-root .lw-median::before{top:50%;bottom:auto;left:8px;right:8px;border-left:0;border-top:2px dashed var(--lw-accent);transform:translateY(-1px)}
+}
+@media (prefers-reduced-motion:reduce){.gjc.lw-root .lw-item{transition:none}}
+</style>
+
+<div class="gjc lw-root" id="lw-root" dir="rtl">
+  <div class="lw-grid">
+    <section>
+      <h3 class="lw-h">النص</h3>
+      <div class="lw-doc">
+        <p class="lw-art">الفصل 51 من دستور الجمهورية التونسية لسنة 2022</p>
+        <p class="lw-text">ينص على التزام الدولة بحماية الحقوق المكتسبة للمرأة ودعمها وتطويرها، ويضمن تكافؤ الفرص بين الرجل والمرأة في تحمّل مختلف المسؤوليات وفي جميع المجالات.</p>
+        <a class="lw-link" href="https://pm.gov.tn/sites/default/files/2023-03/constitution-2022.pdf" target="_blank" rel="noopener">نص الدستور كاملًا</a>
+      </div>
+    </section>
+    <div class="lw-median" aria-hidden="true"></div>
+    <section>
+      <h3 class="lw-h">الواقع</h3>
+      <ul class="lw-list">
+        <li class="lw-item">
+          <svg class="lw-ico" viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="3" width="24" height="24" rx="3" transform="rotate(45 15 15)" fill="none" stroke="#E8650A" stroke-width="2.2"/><rect x="13.8" y="8.5" width="2.4" height="9" fill="#E8650A"/><rect x="13.8" y="19.5" width="2.4" height="2.4" fill="#E8650A"/></svg>
+          <div><span class="lw-tag">الإطار العام</span><p>العوائق التي تواجه النساء ليست ناتجة عن منع قانوني رسمي، وإنما ترتبط أيضًا بحواجز غير رسمية وبصور اجتماعية عن طبيعة العمل ومن يصلح لممارسته.</p></div>
+        </li>
+        <li class="lw-item">
+          <svg class="lw-ico" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12" fill="none" stroke="#E8650A" stroke-width="2.2"/><rect x="8" y="13.6" width="14" height="2.8" fill="#E8650A"/></svg>
+          <div><span class="lw-tag">قبل دخول المهنة</span><p>حالات رفض فيها بعض السائقين الرجال قبول نساء كمتربصات، بدعوى أن المهنة تنطوي على مخاطر وأنهم لا يرغبون في تحمّل مسؤولية تدريبهن.</p></div>
+        </li>
+        <li class="lw-item">
+          <svg class="lw-ico" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12" fill="none" stroke="#E8650A" stroke-width="2.2"/><rect x="8" y="13.6" width="14" height="2.8" fill="#E8650A"/></svg>
+          <div><span class="lw-tag">قبل دخول المهنة</span><p>التصورات المرتبطة بكون العمل في النقل شاقًا أو مرهقًا للنساء تشكل جزءًا من التفسيرات المتداولة لتراجع حضورهن في هذه الوظائف.</p></div>
+        </li>
+        <li class="lw-item">
+          <svg class="lw-ico" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3 L28 26 H2 Z" fill="none" stroke="#E8650A" stroke-width="2.2" stroke-linejoin="round"/><rect x="13.8" y="11" width="2.4" height="8" fill="#E8650A"/><rect x="13.8" y="21" width="2.4" height="2.4" fill="#E8650A"/></svg>
+          <div><span class="lw-tag">داخل محيط العمل</span><p>شهادات تحدثت فيها بعض العاملات عن تعرضهن للتحرش الجنسي وسلوكيات عدوانية من قبل بعض الحرفاء والزملاء الرجال إلى جانب أطراف أخرى مرتبطة بالقطاع، من بينهم أعوان أمن وأصحاب رخص سيارات الأجرة.</p></div>
+        </li>
+      </ul>
+    </section>
+  </div>
+  <p class="lw-src">المصدر: دراسة «Driven out: women’s employment, the transport sector and social reproduction in Grand Tunis»، اعتمادًا على مقابلات مع 19 امرأة عاملة في قطاع النقل بتونس الكبرى</p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('lw-root');
+  if (!root || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var items = root.querySelectorAll('.lw-item');
+  root.classList.add('lw-armed');
+  var io = new IntersectionObserver(function(en){
+    if (!en[0].isIntersecting) return;
+    io.disconnect();
+    for (var i = 0; i !== items.length; i++){
+      (function(el, d){ setTimeout(function(){ el.classList.add('lw-in'); }, d); })(items[i], 250 + i * 380);
+    }
+  }, { threshold: 0.25 });
+  io.observe(root.querySelector('.lw-list'));
+})();
+</script>
+<div style="height:56px"></div>
+
+<!-- lc-license -->
+<style>
+.gjc.lc-root{--lc-accent:#E8650A;--lc-men:#5b6068;--lc-ink:#23262c;--lc-muted:#7a7770;--lc-line:#e6e1d8;--lc-rim:#ece8e1;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--lc-ink);max-width:760px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.lc-root *{box-sizing:border-box}
+.gjc.lc-root .lc-title{font-weight:800;font-size:clamp(19px,4.2vw,24px);line-height:1.5;margin:0 0 20px}
+.gjc.lc-root .lc-wheels{display:flex;justify-content:center;gap:clamp(18px,6vw,64px);flex-wrap:wrap}
+.gjc.lc-root .lc-w{text-align:center;width:min(260px,42vw);min-width:150px}
+.gjc.lc-root .lc-box{position:relative}
+.gjc.lc-root .lc-svg{display:block;width:100%;height:auto}
+.gjc.lc-root .lc-prog{transition:stroke-dashoffset 1.8s cubic-bezier(.22,.8,.3,1)}
+.gjc.lc-root .lc-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(22px,5.4vw,34px);direction:ltr}
+.gjc.lc-root .lc-name{font-size:17px;font-weight:800;margin:12px 0 0}
+.gjc.lc-root .lc-src{font-size:12px;line-height:1.6;color:var(--lc-muted);margin:22px 0 0;border-top:1px solid var(--lc-line);padding-top:8px}
+.gjc.lc-root .lc-src a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){.gjc.lc-root .lc-prog{transition:none}}
+</style>
+
+<div class="gjc lc-root" id="lc-root" dir="rtl">
+  <h3 class="lc-title">نسبة البالغين 18 سنة فأكثر الحاملين لرخصة سياقة</h3>
+  <div class="lc-wheels" id="lc-wheels"></div>
+  <p class="lc-src">المصدر: <a href="https://www.ins.tn/sites/default/files/publication/pdf/rapport%20national%20genre%20Site%20_0.pdf" target="_blank" rel="noopener">تقرير وطني حول النوع الاجتماعي</a></p>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('lc-root');
+  if (!root) return;
+  var NS = 'http://www.w3.org/2000/svg', R = 80, C = 2 * Math.PI * R;
+  var DATA = [
+    { name: 'النساء', v: 13.2, color: '#E8650A' },
+    { name: 'الرجال', v: 61.9, color: '#5b6068' }
+  ];
+  var host = document.getElementById('lc-wheels'), items = [];
+  function el(tag, attrs){ var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  for (var i = 0; i !== DATA.length; i++){
+    var d = DATA[i];
+    var w = document.createElement('div'); w.className = 'lc-w';
+    var box = document.createElement('div'); box.className = 'lc-box';
+    box.setAttribute('role', 'img'); box.setAttribute('aria-label', d.name + ' ' + d.v + '%');
+    var svg = el('svg', { viewBox: '0 0 200 200', 'class': 'lc-svg', 'aria-hidden': 'true' });
+    svg.appendChild(el('circle', { cx: 100, cy: 100, r: R, fill: 'none', stroke: '#ece8e1', 'stroke-width': 18 }));
+    var prog = el('circle', { cx: 100, cy: 100, r: R, fill: 'none', stroke: d.color, 'stroke-width': 18, 'stroke-linecap': 'round',
+      'stroke-dasharray': C, 'stroke-dashoffset': C, transform: 'rotate(-90 100 100)', 'class': 'lc-prog' });
+    svg.appendChild(prog);
+    svg.appendChild(el('path', { d: 'M22 104 Q60 92 70 104 L130 104 Q140 92 178 104', fill: 'none', stroke: '#d6d1c8', 'stroke-width': 12, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('path', { d: 'M100 130 L100 178', fill: 'none', stroke: '#d6d1c8', 'stroke-width': 12, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('circle', { cx: 100, cy: 104, r: 38, fill: '#fff', stroke: '#d6d1c8', 'stroke-width': 3 }));
+    var num = document.createElement('div'); num.className = 'lc-num'; num.style.color = d.color; num.style.paddingTop = '4%';
+    num.textContent = '0%';
+    box.appendChild(svg); box.appendChild(num);
+    var nm = document.createElement('p'); nm.className = 'lc-name'; nm.textContent = d.name;
+    w.appendChild(box); w.appendChild(nm); host.appendChild(w);
+    items.push({ d: d, prog: prog, num: num });
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(){
+    var start = 0, dur = reduce ? 0 : 1800;
+    for (var i = 0; i !== items.length; i++) items[i].prog.setAttribute('stroke-dashoffset', C * (1 - items[i].d.v / 100));
+    function f(ts){
+      if (!start) start = ts;
+      var t = dur ? Math.min(1, (ts - start) / dur) : 1, e = 1 - Math.pow(1 - t, 3);
+      for (var k = 0; k !== items.length; k++) items[k].num.textContent = (items[k].d.v * e).toFixed(1) + '%';
+      if (t !== 1) requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting){ io.disconnect(); setTimeout(go, 150); } }, { threshold: 0.4 });
+    io.observe(root);
+  } else { go(); }
+})();
+</script>
+<div style="height:56px"></div>
+
+<!-- tl-timeline -->
+<style>
+.gjc.tl-root{--tl-accent:#E8650A;--tl-ink:#23262c;--tl-muted:#7a7770;--tl-line:#e6e1d8;--tl-asph:#3b3e45;
+  direction:rtl;font-family:'Almarai',Tahoma,sans-serif;color:var(--tl-ink);max-width:720px;margin:0 auto;padding:8px 0;box-sizing:border-box}
+.gjc.tl-root *{box-sizing:border-box}
+.gjc.tl-root .tl-track{position:relative;padding-right:84px}
+.gjc.tl-root .tl-road{position:absolute;top:0;bottom:0;right:14px;width:48px;background:var(--tl-asph);border-radius:24px 24px 0 0}
+.gjc.tl-root .tl-road::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:0;border-left:3px dashed rgba(255,255,255,.45);transform:translateX(-1.5px)}
+.gjc.tl-root .tl-trail{position:absolute;top:0;right:14px;width:48px;height:0;background:linear-gradient(to bottom,rgba(232,101,10,0),rgba(232,101,10,.35));border-radius:24px 24px 0 0;pointer-events:none}
+.gjc.tl-root .tl-car{position:absolute;right:23px;top:0;width:30px;height:52px;transform:translateY(-50%);z-index:3;will-change:top}
+.gjc.tl-root .tl-item{position:relative;padding:0 0 42px}
+.gjc.tl-root .tl-item:last-child{padding-bottom:10px}
+.gjc.tl-root .tl-node{position:absolute;right:-62px;top:12px;width:32px;height:32px;border-radius:50%;background:#fff;border:3px solid #8b8f96;z-index:2;transition:border-color .4s ease,background .4s ease}
+.gjc.tl-root .tl-card{border:1px solid var(--tl-line);border-right:4px solid var(--tl-line);background:#fff;padding:14px 16px;transition:border-color .4s ease}
+.gjc.tl-root .tl-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.gjc.tl-root .tl-year{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,7vw,38px);line-height:1;color:var(--tl-muted);transition:color .4s ease}
+.gjc.tl-root .tl-ico{width:30px;height:30px;color:var(--tl-muted);transition:color .4s ease}
+.gjc.tl-root .tl-card p{margin:0;font-size:16px;line-height:1.75}
+.gjc.tl-root .tl-item.tl-on .tl-node{border-color:var(--tl-accent);background:var(--tl-accent)}
+.gjc.tl-root .tl-item.tl-on .tl-card{border-right-color:var(--tl-accent)}
+.gjc.tl-root .tl-item.tl-on .tl-year,.gjc.tl-root .tl-item.tl-on .tl-ico{color:var(--tl-accent)}
+@media (prefers-reduced-motion:reduce){.gjc.tl-root .tl-node,.gjc.tl-root .tl-card,.gjc.tl-root .tl-year,.gjc.tl-root .tl-ico{transition:none}}
+</style>
+
+<div class="gjc tl-root" id="tl-root" dir="rtl">
+  <div class="tl-track" id="tl-track">
+    <div class="tl-road" aria-hidden="true"></div>
+    <div class="tl-trail" id="tl-trail" aria-hidden="true"></div>
+    <svg class="tl-car" id="tl-car" viewBox="0 0 30 52" aria-hidden="true">
+      <rect x="2" y="2" width="26" height="48" rx="9" fill="#E8650A"/>
+      <rect x="6" y="12" width="18" height="10" rx="3" fill="#2b2e34" opacity=".85"/>
+      <rect x="6" y="34" width="18" height="7" rx="3" fill="#2b2e34" opacity=".85"/>
+      <rect x="10" y="24" width="10" height="7" rx="1.5" fill="#fff"/>
+      <rect x="5" y="3" width="5" height="3" rx="1.5" fill="#fff4c2"/>
+      <rect x="20" y="3" width="5" height="3" rx="1.5" fill="#fff4c2"/>
+    </svg>
+
+    <div class="tl-item">
+      <span class="tl-node" aria-hidden="true"></span>
+      <div class="tl-card">
+        <div class="tl-top"><span class="tl-year">1974</span>
+          <svg class="tl-ico" viewBox="0 0 30 30" aria-hidden="true"><path d="M5 19 L7.5 12 Q8.2 10 10.3 10 H19.7 Q21.8 10 22.5 12 L25 19 V24 H5 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="11" y="5" width="8" height="4" rx="1" fill="currentColor"/><circle cx="10" cy="24" r="2.6" fill="currentColor"/><circle cx="20" cy="24" r="2.6" fill="currentColor"/></svg>
+        </div>
+        <p>بداية موثقة في الدراسة لحضور النساء في قيادة سيارات الأجرة.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-node" aria-hidden="true"></span>
+      <div class="tl-card">
+        <div class="tl-top"><span class="tl-year">1981</span>
+          <svg class="tl-ico" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3 Q17 3 17 6 V12 L27 18 V21 L17 18 V24 L20 26 V28 L15 27 L10 28 V26 L13 24 V18 L3 21 V18 L13 12 V6 Q13 3 15 3 Z" fill="currentColor"/></svg>
+        </div>
+        <p>التحاق علياء المنشاري بالخطوط التونسية كمساعدة طيار.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-node" aria-hidden="true"></span>
+      <div class="tl-card">
+        <div class="tl-top"><span class="tl-year">1990</span>
+          <svg class="tl-ico" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3 Q17 3 17 6 V12 L27 18 V21 L17 18 V24 L20 26 V28 L15 27 L10 28 V26 L13 24 V18 L3 21 V18 L13 12 V6 Q13 3 15 3 Z" fill="currentColor"/></svg>
+        </div>
+        <p>محطة مهمة في مسيرتها كطيارة.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-node" aria-hidden="true"></span>
+      <div class="tl-card">
+        <div class="tl-top"><span class="tl-year">2017</span>
+          <svg class="tl-ico" viewBox="0 0 30 30" aria-hidden="true"><rect x="6" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="8" width="12" height="6" rx="1" fill="currentColor"/><circle cx="11" cy="18.5" r="1.6" fill="currentColor"/><circle cx="19" cy="18.5" r="1.6" fill="currentColor"/><path d="M9 23 L6 28 M21 23 L24 28 M13 2 H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <p>11 سائقة مترو من أصل 219 سائقًا</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-node" aria-hidden="true"></span>
+      <div class="tl-card">
+        <div class="tl-top"><span class="tl-year">2026</span>
+          <svg class="tl-ico" viewBox="0 0 30 30" aria-hidden="true"><rect x="6" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="8" width="12" height="6" rx="1" fill="currentColor"/><circle cx="11" cy="18.5" r="1.6" fill="currentColor"/><circle cx="19" cy="18.5" r="1.6" fill="currentColor"/><path d="M9 23 L6 28 M21 23 L24 28 M13 2 H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <p>4 سائقات مترو ناشطات وفق تصريح ابتسام النابلي.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var track = document.getElementById('tl-track');
+  if (!track) return;
+  var car = document.getElementById('tl-car'), trail = document.getElementById('tl-trail');
+  var items = track.querySelectorAll('.tl-item'), ticking = false;
+  function update(){
+    ticking = false;
+    var rect = track.getBoundingClientRect(), vh = window.innerHeight || 800;
+    var H = track.offsetHeight;
+    var y = Math.max(0, Math.min(H, vh * 0.55 - rect.top));
+    car.style.top = y + 'px';
+    trail.style.height = y + 'px';
+    for (var i = 0; i !== items.length; i++){
+      var node = items[i].querySelector('.tl-node');
+      var ny = items[i].offsetTop + node.offsetTop + 16;
+      var d = y - ny;
+      if (d === Math.abs(d)) items[i].classList.add('tl-on'); else items[i].classList.remove('tl-on');
+    }
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+</script>
+<div style="height:56px"></div>
